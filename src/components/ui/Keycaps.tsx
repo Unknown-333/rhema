@@ -1,0 +1,88 @@
+import React from "react";
+import { formatKeyCombination } from "@/lib/utils/keyboard";
+import { useOsType } from "@/hooks/useOsType";
+
+/**
+ * A shortcut drawn as physical keys instead of the sentence "Left Ctrl + Left
+ * Windows". People recognise keys faster than they read a string. Editing
+ * is provided by ShortcutKeysButton wherever the shortcut is shown.
+ *
+ * Two finishes: `default` is a light keycap with a pressed-in bottom edge for
+ * cards, `hero` is a solid key for feature banners.
+ */
+
+type KeycapSize = "sm" | "md" | "lg";
+
+interface KeycapsProps {
+  /** Raw binding string as stored, e.g. `ctrl_left+super_left`. */
+  binding: string | null | undefined;
+  size?: KeycapSize;
+  variant?: "default" | "hero";
+  className?: string;
+  /** Rendered when there is no binding. */
+  fallback?: React.ReactNode;
+}
+
+/** Split a stored binding into display labels, one per key. */
+export const bindingKeyLabels = (
+  binding: string,
+  osType: ReturnType<typeof useOsType>,
+): string[] =>
+  formatKeyCombination(binding, osType)
+    .split(" + ")
+    .map((label) => label.trim())
+    // "Left Ctrl" reads as two things; the key says "Ctrl".
+    .map((label) => label.replace(/^(Left|Right)\s+/i, ""))
+    // The ⊞ key is printed "Win" on the keyboard itself.
+    .map((label) => (label === "Windows" ? "Win" : label))
+    // And Escape is printed "Esc".
+    .map((label) => (label === "Escape" ? "Esc" : label))
+    .filter(Boolean);
+
+/**
+ * The same keys in a sentence, as the keycaps label them: "Ctrl + Win", not
+ * "Left Ctrl + Left Windows". A sentence that names the keys should name what
+ * the user sees on the row beside it.
+ */
+export const shortKeyCombination = (
+  binding: string | null | undefined,
+  osType: ReturnType<typeof useOsType>,
+): string => (binding ? bindingKeyLabels(binding, osType).join(" + ") : "");
+
+const SIZES: Record<KeycapSize, string> = {
+  sm: "h-[1.375rem] min-w-[1.375rem] px-1.5 text-[0.6875rem] rounded-[0.3125rem]",
+  md: "h-[1.625rem] min-w-[1.625rem] px-[0.4375rem] text-[0.75rem] rounded-md",
+  lg: "h-9 min-w-9 px-3 text-[0.875rem] rounded-lg",
+};
+
+export const Keycaps: React.FC<KeycapsProps> = ({
+  binding,
+  size = "md",
+  variant = "default",
+  className = "",
+  fallback = null,
+}) => {
+  const osType = useOsType();
+  if (!binding) return <>{fallback}</>;
+  const keys = bindingKeyLabels(binding, osType);
+  if (keys.length === 0) return <>{fallback}</>;
+
+  const finish = variant === "hero" ? "keycap-hero" : "keycap text-ink-soft";
+
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center ${size === "lg" ? "gap-1.5" : "gap-1"} ${className}`}
+      aria-label={keys.join(" + ")}
+    >
+      {keys.map((key, index) => (
+        <kbd
+          key={`${key}-${index}`}
+          aria-hidden="true"
+          className={`inline-flex items-center justify-center font-sans font-medium whitespace-nowrap ${finish} ${SIZES[size]}`}
+        >
+          {key}
+        </kbd>
+      ))}
+    </span>
+  );
+};

@@ -1,0 +1,105 @@
+name: rema_mobile
+description: "REMA for Android and iOS: a wireless mic and keyboard for REMA on your computer."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.2
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^1.6.0
+  web_socket_channel: ^3.0.3
+  flutter_secure_storage: ^11.2.0
+  flutter_web_auth_2: ^5.1.0
+  record: ^7.1.2
+  path_provider: ^2.1.6
+  shared_preferences: ^2.5.6
+  crypto: ^3.0.7
+  # Live view (features/screen): the WebRTC peer connection, and keeping the
+  # screen on while watching.
+  flutter_webrtc: ^1.6.2
+  wakelock_plus: 1.8.1
+  # The assistant's answers are Markdown (features/assistant).
+  flutter_markdown_plus: ^1.0.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+  web_socket: ^1.0.1
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+flutter:
+  uses-material-design: true
+
+  # REMA's type (docs/rema-brand.md, Studio): Geist for everything you
+  # read and operate, Geist Mono for figures that line up, Plus Jakarta Sans
+  # 800 for the wordmark only. Static instances from the official releases;
+  # the licences sit beside them. Then the Phosphor icon fonts.
+  assets:
+    - assets/fonts/OFL-Geist.txt
+    - assets/fonts/OFL-PlusJakartaSans.txt
+    - assets/fonts/LICENSE-Phosphor.txt
+
+  fonts:
+    - family: Geist
+      fonts:
+        - asset: assets/fonts/Geist-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Geist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Geist-SemiBold.ttf
+          weight: 600
+    - family: GeistMono
+      fonts:
+        - asset: assets/fonts/GeistMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/GeistMono-Medium.ttf
+          weight: 500
+    # Phosphor icons (MIT), the official fonts of phosphor_flutter 2.1.0;
+    # lib/src/design/icons.dart names the glyphs.
+    - family: PhosphorRegular
+      fonts:
+        - asset: assets/fonts/Phosphor-Regular.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/fonts/Phosphor-Fill.ttf
+    - family: PhosphorDuotone
+      fonts:
+        - asset: assets/fonts/Phosphor-Duotone.ttf
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans-800.ttf
+          weight: 800

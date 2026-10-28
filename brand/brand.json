@@ -1,0 +1,13 @@
+{
+  "product": "REMA",
+  "status": "pre-release",
+  "applicationId": "com.rema.desktop",
+  "mobileApplicationId": "com.rema.mobile",
+  "mark": "brand/svg/mark.svg",
+  "colors": {
+    "tile": "#000000",
+    "ink": "#FFFFFF",
+    "signal": "#FF4D3A"
+  },
+  "source": "brand/bitmaps.mjs"
+}

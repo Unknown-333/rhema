@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=REMA
+Comment=Local voice dictation and AI assistant
+Exec=rema
+Icon=rema
+Terminal=false
+Categories=AudioVideo;Audio;
+StartupNotify=true
+StartupWMClass=REMA

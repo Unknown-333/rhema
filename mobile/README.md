@@ -1,0 +1,147 @@
+# REMA for phones
+
+The Android and iOS app. Sign in with the same account as REMA on your
+computer, and the phone becomes a wireless mic and keyboard for it: speak on
+the phone, and the computer transcribes with its own speech model and pastes
+at its cursor (or sends the text back); type on the phone, and the computer
+pastes it. The account server stores accounts and devices (and the feedback
+sent from Account → Send feedback), never recordings or dictated text. The wire format is [`server/PROTOCOL.md`](../server/PROTOCOL.md).
+
+## Run it
+
+Needs Flutter 3.44 or newer (`flutter doctor`), and for Android the Android
+SDK (`ANDROID_HOME`) with JDK 17; for iOS a Mac with Xcode.
+
+```bash
+cd mobile
+flutter pub get
+flutter run                     # the emulator, simulator or phone that is connected
+flutter test
+flutter analyze
+dart format lib test            # this folder is not formatted by prettier
+```
+
+Start an account server first (see `server/`). Until the discovery address
+(below) has answered once, a debug or profile build looks for it on the
+development machine at port 8787: `http://10.0.2.2:8787` from the Android
+emulator, `http://localhost:8787` from the iOS simulator.
+
+## Finding the server
+
+The app has no server setting: the account server's address only ever comes
+from discovery ([`PROTOCOL.md`](../server/PROTOCOL.md), "Finding the
+server"). The app asks `discoveryUrl` in `lib/src/core/config.dart`
+(`https://discovery.rema.invalid`) at launch, and again when the server
+does not answer (at most once a minute), and keeps the last answer. The answer
+is JSON such as `{"apiBaseUrl":"http://192.168.1.20:8787"}` (`apiBaseUrl`
+first, then the older `domain`, then the answer's only string field); the app
+uses its origin. A signed-in session follows the server to a new address with
+the same token.
+
+Plain `http://` is accepted from discovery in every build, because the
+production server is an http address on the local network. Only the
+discovery answer, itself fetched over https and following redirects on its
+own host only, can name a server; a release build refuses a loopback host.
+Android allows cleartext (`android:usesCleartextTraffic` in
+`AndroidManifest.xml`) and iOS allows local-network http
+(`NSAllowsLocalNetworking` in `Info.plist`); the app's own traffic goes
+through `dart:io`, which consults neither, but platform networking does.
+
+An install from an older version that saved a server typed by hand
+(`server_url`) forgets it at launch, and a session signed in on such a server
+is signed out unless it is the server discovery names.
+
+Until discovery has answered once, a debug or profile build uses the
+development machine (above). For development only, `flutter run
+--dart-define=REMA_SERVER_URL=http://192.168.1.20:8787` pins the server and
+turns discovery off; release builds ignore it.
+
+## Release builds
+
+- No server address is needed or possible: release builds only use
+  discovery. Until it first answers, the sign-in screen says it can't find
+  the server and keeps trying (it never falls back to the development
+  machine).
+- Android signs with the key named in `android/key.properties` (`storeFile`,
+  `storePassword`, `keyAlias`, `keyPassword`; never committed). Without that
+  file the debug key signs it, which Play refuses.
+
+## Google sign-in
+
+Shown only when the server says it is set up (`GET /v1/config` →
+`google: true`). The app opens an auth session (Custom Tabs on Android,
+`ASWebAuthenticationSession` on iOS) at
+`{server}/v1/auth/google/start` with a PKCE challenge, and the server sends the
+browser back to **`rema://auth/callback`**. Android catches that scheme with
+flutter_web_auth_2's `CallbackActivity` (in `AndroidManifest.xml`); iOS needs no
+registration because the auth session receives it directly.
+
+## How the code is laid out
+
+```
+lib/src/
+  core/       server URL and discovery, HTTP client, session storage, the relay socket
+  design/     the design system: tokens (colour, type, spacing, motion), the theme,
+              the REMA mark, and the shared pieces (surfaces, notices, the mic,
+              the composer)
+  features/   assistant/ (Ask), command/ (Do), dictate/ (Dictate), screen/ (Screen
+              and the live view), auth/, account/: one folder per feature, its
+              strings included
+  shell/      the navigation bar, the top bar and the live view's place under it;
+              features.dart is where features register
+```
+
+The pages are Ask, Do, Dictate and Screen, in a navigation bar (a rail on wide
+screens); Account opens from the avatar in the top bar. Screens use only the
+theme and `context.rema` for colour, never colours of their own, so light
+and dark stay one system. The type is Inter and Plus Jakarta Sans, bundled
+under `assets/fonts/` with their OFL licences.
+
+The live view (`features/screen/`, PROTOCOL.md "Live view") starts in
+**View**: pinch zooms and one finger moves the zoomed picture, and only keys
+and typed text reach the computer. **Control** starts a new watch with
+`control: true`: a tap is a left click, a double tap a double click, a long
+press a right click, and two fingers dragged together scroll; pinch and the
+one-finger move still work, since the protocol has no mouse drag. Touches are
+mapped through the zoom, the pan and the letterbox to 0..1 of the picture
+(`view_geometry.dart::pictureCoords`), and a tap on the bars clicks nothing.
+A click the computer answers with `confirm` (a control that sends, buys,
+posts or deletes) asks Cancel or Do it and is resent `confirmed` only on Do
+it (`WatchController.click`).
+
+`flutter test test_screens --dart-define=OUT=<folder>` renders every page,
+light and dark, to PNG with the real fonts, for design review. It is not part
+of `flutter test`.
+
+`RelayClient` (`core/relay_client.dart`) is the one WebSocket. It is open only
+while signed in and either the app is on screen or a request still waits for
+its result (`busy`), so a phone locked while its computer asks to allow it
+still gets the answer. `request(deviceId, body)` sends a request under a new
+`requestId` and returns every `progress` and the final `result` for it;
+`cancel(requestId)` asks the computer to stop. A request does not outlive its
+socket: if the socket closes first, it fails with `RelayError.interrupted`,
+because the computer may have acted on it and its result is lost.
+
+### Adding a feature
+
+A new feature (the phone-to-computer agent, for instance, whose relay kinds
+all start with `agent.`) goes in its own folder under `lib/src/features/` and
+registers in `lib/src/shell/features.dart`:
+
+- a `FeatureTab` in `featureTabs`, with `requires:` set to the capability a
+  computer must advertise for the tab to show, and `actions:` for buttons of
+  its own in the top bar;
+- if computers send this phone requests of its own, a handler in
+  `relayHandlers`. Its kind is then also advertised in `hello`.
+
+Talking to a computer is `relay.request(computerId, {'kind': 'agent.…', …})`
+and listening to the stream it returns. Anything stored for the signed-in
+account should use a preference key starting with `account.` so sign-out
+removes it.
+
+## App identity
+
+- Android `applicationId` / iOS bundle id: `com.rema.mobile`
+- Name on the home screen: REMA
+- `appVersion` sent to the server is `lib/src/core/config.dart`'s
+  `appVersion`; keep it equal to `version` in `pubspec.yaml`.

@@ -1,0 +1,2385 @@
+//! `compose_email`: open a filled-in Gmail draft, and send it only when the
+//! user says so.
+//!
+//! The draft is Gmail's own compose page (`view=cm&fs=1`) opened in the
+//! default browser, so it is the user's real account, already signed in, and
+//! they can see and edit every word before anything leaves. That is the
+//! reversible half. The send is the irreversible half and runs only from
+//! [`send`], after the user confirms: it brings the draft's window forward
+//! and presses Gmail's send shortcut (Ctrl+Enter, Cmd+Enter on a Mac).
+//!
+//! **The send only ever goes to the window the draft opened in.** [`run`]
+//! watches the foreground after opening the link and records the Gmail
+//! window that came forward (id, app and title). [`send`] focuses exactly that
+//! window, and reads the foreground again immediately before the key press:
+//! same id, and the title it had (or a Gmail title naming the subject). Any
+//! other window, a tab switched in the meantime, or a draft that was never
+//! identified, and nothing is pressed. An earlier version took the front-most
+//! window whose title merely mentioned Gmail, "compose", "new message" or the
+//! subject, which matched `docker-compose.yml` in an editor, an Outlook "New
+//! Message", a Teams chat named after the subject and any open Gmail reply,
+//! and Ctrl+Enter in any of those sends something.
+//!
+//! **A file can go with it** (`attach`: "email me the project report", "send
+//! the invoice PDF to Ron"). The file is found the way `open_file` finds one
+//! (recent files first, then a bounded walk of Documents, Downloads, Desktop
+//! and home), restricted to what [`files::send_refusal`] lets leave the
+//! computer, and checked against Gmail's 25 MB limit before any draft opens.
+//! It is attached in the draft itself, through Gmail's own Attach button and
+//! the file dialog it opens ([`attach`]), and the draft only goes on to be
+//! sent once Gmail's chip says "Attachment: <file>": a draft whose file did
+//! not attach is never sent, and [`send`] checks the chip again before it
+//! presses Send. "Me" is the user's own address (`command_own_email`, filled
+//! from the signed-in REMA account), asked for once when unknown and then
+//! remembered (`remember_as_mine`, [`address_to_remember`]).
+//!
+//! Recipients are spoken names, so they go through the contact book, and the
+//! rule is the contact book's: one clear person with an address is used,
+//! anything else becomes a question. Mailing the wrong person is worse than
+//! asking. A model-written "Name <address>" is not taken on trust either (see
+//! [`resolve_recipient`]), and the confirmation names every address, so the
+//! user confirms where the mail goes, not only to whom.
+
+use log::{info, warn};
+use reqwest::Url;
+use serde_json::{json, Value};
+use std::path::PathBuf;
+use std::time::{Duration, Instant};
+
+use crate::command_mode::contacts::{looks_like_email, Contact, ContactMatch};
+use crate::command_mode::effects::{AttachState, KeyCombo, WindowEntry};
+use crate::command_mode::files;
+use crate::command_mode::tools::open_file::{self, FileLookup};
+use crate::command_mode::registry::{
+    arg_str, arg_strings, Feedback, PendingAction, Risk, ToolCtx, ToolOutcome, ToolSpec,
+    ALL_PLATFORMS,
+};
+
+/// Browsers and Gmail both handle far longer URLs, but some launch paths
+/// (`ShellExecute`, `open`, `xdg-open` through a desktop file) and some
+/// proxies cut a command line or request line around 8 KB. Staying under this
+/// keeps the draft intact everywhere; a longer body is cut at a word.
+const MAX_URL_LEN: usize = 7500;
+
+/// Appended to a body that had to be cut, so the user sees it in the draft.
+const TRUNCATION_MARK: &str = " …";
+
+/// How long the draft window gets to take the keyboard before the send
+/// shortcut is pressed. Activation is asynchronous on every platform, and a
+/// key pressed too early lands in whatever was in front before. The
+/// foreground is read again after it, so this only makes a refusal rarer.
+const FOCUS_SETTLE: Duration = Duration::from_millis(400);
+
+/// Whether the waits below run at their real length: always outside tests,
+/// and in a live test (`REMA_LIVE_RUN`), where a real browser has to come
+/// up. Unit tests use a sliver of each, since most never put a Gmail window
+/// in front.
+fn real_waits() -> bool {
+    !cfg!(test) || std::env::var_os("REMA_LIVE_RUN").is_some()
+}
+
+/// How long [`run`] watches for the draft to come forward after opening the
+/// link, and how often it looks. A browser that has to start, or a busy
+/// machine, takes seconds to show the tab; past this the draft is left
+/// unidentified and the send refuses.
+fn draft_wait() -> (Duration, Duration) {
+    if real_waits() {
+        (Duration::from_secs(10), Duration::from_millis(250))
+    } else {
+        (Duration::from_millis(30), Duration::from_millis(5))
+    }
+}
+
+/// How long [`send`] waits for Gmail to finish drawing the compose page
+/// before pressing the send shortcut, how often it looks, and how long it
+/// then lets the page settle. A send carried out straight after the draft
+/// opened used to press Ctrl+Enter into a page still loading, which Gmail
+/// ignored; the user confirming later never hit that, because by then it had
+/// loaded.
+fn compose_wait() -> (Duration, Duration, Duration) {
+    if real_waits() {
+        (
+            Duration::from_secs(15),
+            Duration::from_millis(250),
+            Duration::from_millis(1500),
+        )
+    } else {
+        (Duration::from_millis(30), Duration::from_millis(5), Duration::ZERO)
+    }
+}
+
+/// How long [`send`] watches for the evidence that Gmail sent the draft
+/// (its window closed, or no longer the compose page), and how often it looks.
+/// Gmail takes up to several seconds to send and close the compose page
+/// (measured: about six, from the Send button); past this the send is
+/// reported as not confirmed, never as done.
+fn sent_wait() -> (Duration, Duration) {
+    if real_waits() {
+        (Duration::from_secs(15), Duration::from_millis(250))
+    } else {
+        (Duration::from_millis(30), Duration::from_millis(5))
+    }
+}
+
+/// How long [`attach`] waits for the file dialog to take the keyboard after
+/// Attach is pressed, and how often it looks (measured: 0.6 to 0.8 s).
+fn picker_wait() -> (Duration, Duration) {
+    if real_waits() {
+        (Duration::from_secs(8), Duration::from_millis(200))
+    } else {
+        (Duration::from_millis(30), Duration::from_millis(5))
+    }
+}
+
+/// How long [`attach`] waits for Gmail to finish uploading a file of `bytes`
+/// (measured: under 4 s for a small file), and how often it looks: a floor,
+/// plus time for the upload itself on a slow link (about 2 s a megabyte),
+/// capped at three minutes.
+fn upload_wait(bytes: u64) -> (Duration, Duration) {
+    if real_waits() {
+        let per_mb = Duration::from_secs(2) * (bytes / (1024 * 1024)) as u32;
+        (
+            (Duration::from_secs(20) + per_mb).min(Duration::from_secs(180)),
+            Duration::from_millis(400),
+        )
+    } else {
+        (Duration::from_millis(30), Duration::from_millis(5))
+    }
+}
+
+/// What every Gmail window title carries ("Compose Mail - … - Gmail"),
+/// compared lowercase. The only title fragment trusted on its own: "compose"
+/// and "new message" also name editors, Outlook and Apple Mail.
+const GMAIL_MARK: &str = "gmail";
+
+/// Why a confirmed send pressed nothing, when the draft was never identified.
+const NO_DRAFT_WINDOW: &str =
+    "I couldn't confirm which window holds the draft, so nothing was sent. Press Send in Gmail yourself.";
+
+pub static SPEC: ToolSpec = ToolSpec {
+    name: "compose_email",
+    description: "Write and send an email in Gmail: opens a filled-in draft in the browser \
+                  and sends it. With confirm_first the draft is left open for the user to \
+                  check and send. Use for any request to email, mail or message someone by \
+                  email, and to email a file from this computer (attach): \"email me the \
+                  project report\", \"send the invoice PDF to Ron\", \"mero report mail ma \
+                  pathau\".",
+    schema,
+    risk: Risk::NeedsConfirmation,
+    platforms: ALL_PLATFORMS,
+    keywords: &[
+        "email", "mail", "gmail", "send", "write", "message", "attach", "file", "pathau",
+    ],
+    handler: run,
+    on_confirm: Some(send),
+};
+
+fn schema() -> Value {
+    json!({
+        "type": "object",
+        "properties": {
+            "to": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500,
+                "description": "Who the email is for: a contact's name as the user said it \
+                                (\"Ron\", \"Hermione Granger\"), an email address the user \
+                                said, written alone, or \"me\" when the user means themself \
+                                (\"email me\", \"send it to myself\", \"malai\"). Several \
+                                recipients are separated by commas."
+            },
+            "attach": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 260,
+                "description": "A file on this computer to attach, as the user named it \
+                                (\"the project report\", \"invoice pdf\", \"Q3 budget\"). For \
+                                \"this file\", the file open in the window in front (its \
+                                name is in that window's title). Only when the user asks to \
+                                send or attach a file."
+            },
+            "attach_kind": {
+                "type": "string",
+                "enum": ["document", "spreadsheet", "presentation", "pdf", "image", "video", "audio", "any"],
+                "description": "The kind of file to attach when the user said it (\"the \
+                                budget spreadsheet\", \"the invoice PDF\"); otherwise omit."
+            },
+            "remember_as_mine": {
+                "type": "boolean",
+                "description": "True only when `to` is an email address the user just gave \
+                                as their own, answering what their address is."
+            },
+            "subject": {
+                "type": "string",
+                "maxLength": 300,
+                "description": "A short subject line. Write one from the request if the user \
+                                did not say it."
+            },
+            "body": {
+                "type": "string",
+                "maxLength": 20000,
+                "description": "The full email text, ready to send, written in the user's \
+                                voice. Use \\n for line breaks. No signature placeholder."
+            },
+            "cc": {
+                "type": "array",
+                "maxItems": 10,
+                "items": { "type": "string", "minLength": 1, "maxLength": 320 },
+                "description": "People to copy, as names or addresses. Only when asked."
+            }
+        },
+        "required": ["to", "subject", "body"],
+        "additionalProperties": false
+    })
+}
+
+/// One recipient, resolved to an address.
+#[derive(Debug, Clone, PartialEq)]
+struct Recipient {
+    name: String,
+    email: String,
+}
+
+/// Open the draft and wait for "send".
+fn run(ctx: &ToolCtx, args: Value) -> ToolOutcome {
+    let Some(to_raw) = arg_str(&args, "to") else {
+        return ToolOutcome::ask("Who should the email go to?", Vec::new());
+    };
+    let subject = arg_str(&args, "subject").unwrap_or("");
+    let body = args
+        .get("body")
+        .and_then(Value::as_str)
+        .map(str::trim)
+        .unwrap_or("");
+
+    let mut to = Vec::new();
+    for query in split_recipients(to_raw) {
+        match resolve_recipient(ctx, &query) {
+            Ok(recipient) => to.push(recipient),
+            Err(question) => return question,
+        }
+    }
+    if to.is_empty() {
+        return ToolOutcome::ask("Who should the email go to?", Vec::new());
+    }
+    let mut cc = Vec::new();
+    for query in arg_strings(&args, "cc")
+        .iter()
+        .flat_map(|item| split_recipients(item))
+    {
+        match resolve_recipient(ctx, &query) {
+            Ok(recipient) => cc.push(recipient),
+            Err(question) => return question,
+        }
+    }
+
+    // The file is found, judged and sized before anything opens, so a file
+    // that cannot go never leaves a draft behind.
+    let attachment = match arg_str(&args, "attach") {
+        Some(spoken) => match find_attachment(ctx, spoken, arg_str(&args, "attach_kind")) {
+            Ok(file) => Some(file),
+            Err(outcome) => return outcome,
+        },
+        None => None,
+    };
+
+    let account = ctx.settings.command_google_account.trim();
+    let draft = match build_draft_url(&to, &cc, subject, body, account) {
+        Ok(draft) => draft,
+        Err(e) => return ToolOutcome::failed(e, false),
+    };
+
+    // What was in front before the link opened, so a Gmail tab that was
+    // already there is not mistaken for the draft.
+    let before = if ctx.dry_run {
+        None
+    } else {
+        ctx.effects.foreground_window()
+    };
+    if let Err(e) = ctx.effects.open_url(draft.url.as_str()) {
+        warn!("command mode: compose_email could not open the draft: {e}");
+        return ToolOutcome::failed(e, false);
+    }
+    info!(
+        "command mode: compose_email opened a draft ({} recipient(s), {} cc, body {} chars{})",
+        to.len(),
+        cc.len(),
+        body.chars().count(),
+        if draft.truncated { ", cut to fit" } else { "" }
+    );
+    // A dry run opened nothing, so there is no window to wait for.
+    let window = if ctx.dry_run {
+        None
+    } else {
+        wait_for_draft_window(ctx, before.as_ref())
+    };
+    let unidentified = !ctx.dry_run && window.is_none();
+    if unidentified {
+        warn!("command mode: compose_email saw no Gmail window come forward; the send will refuse");
+    }
+    // The file goes into the draft now, so a draft the user reviews already
+    // has it, and one it never reached is never sent.
+    if let Some(file) = &attachment {
+        if unidentified {
+            return ToolOutcome::failed(
+                format!(
+                    "I couldn't tell which window the Gmail draft opened in, so I couldn't \
+                     attach {} and nothing was sent.",
+                    file.name
+                ),
+                false,
+            );
+        }
+        if let Some(window) = &window {
+            if let Err(why) = attach(ctx, window, file) {
+                warn!("command mode: compose_email could not attach the file: {why}");
+                return ToolOutcome::failed(
+                    format!(
+                        "I couldn't attach {}, so nothing was sent. {why} The draft is open in \
+                         Gmail.",
+                        file.name
+                    ),
+                    false,
+                );
+            }
+            info!(
+                "command mode: compose_email attached a file ({})",
+                files::readable_size(file.bytes)
+            );
+        }
+    }
+
+    let names = to
+        .iter()
+        .map(|r| r.name.as_str())
+        .collect::<Vec<_>>()
+        .join(", ");
+    let emails = to
+        .iter()
+        .map(|r| r.email.as_str())
+        .collect::<Vec<_>>()
+        .join(",");
+    // The confirmation names every address: a familiar name alone could hide
+    // an address the user never gave.
+    let addressed = recipient_labels(&to);
+    let mut summary = format!("Send email to {addressed}");
+    if !cc.is_empty() {
+        summary.push_str(&format!(", cc {}", recipient_labels(&cc)));
+    }
+    if let Some(file) = &attachment {
+        summary.push_str(&format!(" with {}", file.name));
+    }
+    if !subject.is_empty() {
+        summary.push_str(&format!(" · {subject}"));
+    }
+    if unidentified {
+        summary.push_str(" (I couldn't identify the draft window, so I can't press Send for you)");
+    }
+    let feedback = if let Some(file) = &attachment {
+        Feedback::new(
+            "emailDraftFile",
+            "Draft to {{name}} with {{file}} is open. Say send or cancel.",
+            &[("name", &addressed), ("file", &file.name)],
+        )
+    } else if draft.truncated {
+        Feedback::new(
+            "emailDraftTruncated",
+            "Draft to {{name}} is open. The message was too long to pass to Gmail, so it was \
+             cut short; check the end before sending. Say send or cancel.",
+            &[("name", &addressed)],
+        )
+    } else {
+        Feedback::new(
+            "emailDraft",
+            "Draft to {{name}} is open. Say send or cancel.",
+            &[("name", &addressed)],
+        )
+    };
+    let window = window.map(|w| json!({"id": w.id, "app": w.app, "title": w.title}));
+    let mut payload = json!({
+        "subject": subject,
+        "to_name": names,
+        "to_email": emails,
+        "window": window,
+    });
+    if let Some(file) = &attachment {
+        payload["attachment"] = json!({"name": file.name, "bytes": file.bytes});
+    }
+    ToolOutcome::NeedsConfirmation {
+        pending: PendingAction {
+            tool: "compose_email",
+            summary,
+            payload,
+        },
+        feedback,
+    }
+}
+
+/// Watch the foreground until a Gmail window comes forward that was not
+/// already there before the link opened (`before`: a different window, or the
+/// same browser window now showing another tab), or until [`draft_wait`] runs
+/// out.
+fn wait_for_draft_window(ctx: &ToolCtx, before: Option<&WindowEntry>) -> Option<WindowEntry> {
+    let (wait, poll) = draft_wait();
+    let deadline = Instant::now() + wait;
+    loop {
+        if let Some(front) = ctx.effects.foreground_window() {
+            let already_there = before.is_some_and(|b| b.id == front.id && b.title == front.title);
+            if is_gmail_title(&front.title) && !already_there {
+                return Some(front);
+            }
+        }
+        if Instant::now() >= deadline {
+            return None;
+        }
+        std::thread::sleep(poll);
+    }
+}
+
+fn is_gmail_title(title: &str) -> bool {
+    title.to_lowercase().contains(GMAIL_MARK)
+}
+
+/// "Ron Weasley <ron@example.com>, luna@quibbler.example": each recipient
+/// with the address the mail goes to.
+fn recipient_labels(recipients: &[Recipient]) -> String {
+    recipients
+        .iter()
+        .map(|r| {
+            if r.name.trim().eq_ignore_ascii_case(r.email.trim()) {
+                r.email.clone()
+            } else {
+                format!("{} <{}>", r.name, r.email)
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
+/// The window [`run`] recorded, from the pending payload. `None` when it
+/// recorded none (`"window": null`) or the payload is malformed.
+fn stored_window(payload: &Value) -> Option<WindowEntry> {
+    let window = payload.get("window")?;
+    Some(WindowEntry {
+        id: window.get("id")?.as_i64()?,
+        app: window.get("app")?.as_str()?.to_string(),
+        title: window.get("title")?.as_str()?.to_string(),
+    })
+}
+
+/// Whether `front`, read just before the key press, is still the draft
+/// [`run`] recorded: the same window showing the same title, or the same
+/// window with a Gmail title that is the compose page's own ("Compose Mail -
+/// … - Gmail") or names the subject (Gmail retitles a draft once it has one).
+///
+/// The title [`run`] records is often only the page loading ("Gmail"),
+/// because the window comes forward before Gmail has drawn the draft; by the
+/// time the user says send it reads "Compose Mail - <account> - Gmail". The
+/// compose page never shows the subject, so requiring an unchanged title or
+/// the subject refused every real draft opened that way. "Compose" alone is
+/// still not trusted: it has to be the same window and a Gmail title.
+fn still_the_draft(front: &WindowEntry, draft: &WindowEntry, subject: &str) -> bool {
+    if front.id != draft.id {
+        return false;
+    }
+    if front.title == draft.title {
+        return true;
+    }
+    let title = front.title.to_lowercase();
+    if !title.contains(GMAIL_MARK) {
+        return false;
+    }
+    if title.starts_with(COMPOSE_TITLE) {
+        return true;
+    }
+    let subject = subject.trim().to_lowercase();
+    !subject.is_empty() && title.contains(&subject)
+}
+
+/// How the title of Gmail's compose page starts (`view=cm`), lowercase.
+const COMPOSE_TITLE: &str = "compose mail";
+
+/// Send the draft [`run`] opened: focus its window, check it is still the one
+/// in front, and press the send shortcut.
+///
+/// Phase 1 cannot verify that Gmail actually sent it: there is no API call
+/// and nothing on screen is read back. What it does guarantee is that no key
+/// is pressed unless the recorded draft window is the foreground at the
+/// moment of the press, because Ctrl+Enter in any other app can submit
+/// anything.
+fn send(ctx: &ToolCtx, payload: Value) -> ToolOutcome {
+    let subject = payload.get("subject").and_then(Value::as_str).unwrap_or("");
+    let name = payload
+        .get("to_name")
+        .and_then(Value::as_str)
+        .filter(|n| !n.trim().is_empty())
+        .unwrap_or("them");
+    let combo = KeyCombo {
+        modifiers: vec![ctx.platform.primary_modifier()],
+        key: "enter".to_string(),
+    };
+    let attached: Option<(String, u64)> = payload.get("attachment").and_then(|a| {
+        Some((
+            a.get("name")?.as_str()?.to_string(),
+            a.get("bytes").and_then(Value::as_u64).unwrap_or(0),
+        ))
+    });
+    let sent = || match &attached {
+        Some((file, _)) => ToolOutcome::done(
+            "emailSentFile",
+            "Sent {{file}} to {{name}}.",
+            &[("file", file), ("name", name)],
+        ),
+        None => ToolOutcome::done("emailSent", "Sent to {{name}}.", &[("name", name)]),
+    };
+
+    // A dry run touches no real window: the press is only recorded, and
+    // there is no draft to check because none was opened.
+    if ctx.dry_run {
+        return match press_send(ctx, &combo, name) {
+            ToolOutcome::Done { .. } => sent(),
+            failed => failed,
+        };
+    }
+
+    let Some(draft) = stored_window(&payload) else {
+        warn!("command mode: compose_email has no identified draft window; not sending");
+        return ToolOutcome::failed(NO_DRAFT_WINDOW, false);
+    };
+    let Some(window) = ctx
+        .effects
+        .open_windows()
+        .into_iter()
+        .find(|w| w.id == draft.id)
+    else {
+        warn!("command mode: compose_email's draft window is gone; not sending");
+        return ToolOutcome::failed(
+            "The Gmail draft's window has closed, so nothing was sent.",
+            false,
+        );
+    };
+
+    // Gmail's own title for the loaded compose page is the baseline the
+    // send is judged against; the one recorded at open time is often only
+    // "Gmail", from before the page had drawn.
+    let loaded = wait_for_compose(ctx, draft.id);
+    if loaded.is_none() {
+        warn!("command mode: compose_email never saw the compose page finish loading; sending anyway");
+    }
+    let baseline = loaded.unwrap_or_else(|| draft.title.clone());
+
+    // Never without its file: the chip has to still say it is attached (an
+    // upload still running is waited out).
+    if let Some((file, bytes)) = &attached {
+        if wait_for_attachment(ctx, draft.id, file, *bytes) != AttachState::Attached {
+            warn!("command mode: compose_email's attachment is no longer on the draft; not sending");
+            return ToolOutcome::failed(
+                format!("{file} isn't attached to the draft any more, so nothing was sent."),
+                false,
+            );
+        }
+    }
+
+    if let Err(e) = ctx.effects.focus_window(&window) {
+        warn!("command mode: compose_email could not focus the draft: {e}");
+        return ToolOutcome::failed(
+            format!("I couldn't bring the Gmail draft to the front, so nothing was sent. {e}"),
+            false,
+        );
+    }
+    std::thread::sleep(FOCUS_SETTLE);
+
+    // The last read before the key: a click, a toast or a tab switch in the
+    // moments since focusing must not receive Ctrl+Enter.
+    match ctx.effects.foreground_window() {
+        // `foreground_is_exactly` as well: a dialog the draft's browser owns
+        // can be reported under the draft's id and title.
+        Some(front)
+            if still_the_draft(&front, &draft, subject)
+                && ctx.effects.foreground_is_exactly(draft.id) => {}
+        front => {
+            // Why, without the titles themselves (they name the email).
+            let front_title = front.as_ref().map(|f| f.title.to_lowercase());
+            warn!(
+                "command mode: compose_email's draft was not in front at send time; not sending (front window: {}, same window: {}, gmail title: {}, compose title: {}, exactly that window: {})",
+                front.is_some(),
+                front.as_ref().is_some_and(|f| f.id == draft.id),
+                front_title.as_deref().is_some_and(|t| t.contains(GMAIL_MARK)),
+                front_title.as_deref().is_some_and(|t| t.starts_with(COMPOSE_TITLE)),
+                ctx.effects.foreground_is_exactly(draft.id),
+            );
+            return ToolOutcome::failed(
+                "The Gmail draft wasn't in front when I went to send, so nothing was sent. \
+                 Press Send in Gmail yourself.",
+                false,
+            );
+        }
+    }
+    // Gmail's own Send button first: Ctrl+Enter only sends from inside the
+    // compose form, and a focused window does not put the keyboard there (a
+    // send carried out the moment the draft opened pressed it into nothing).
+    // The shortcut stays as the fallback where the tree finds no button.
+    // How many compose pages the window holds before the send: a browser
+    // window with another draft in a tab of its own shows that tab, with the
+    // same title, once Gmail closes this one.
+    let compose_tabs = compose_tab_count(ctx, draft.id);
+    let pressed = match ctx.effects.press_button(draft.id, "send") {
+        Ok(true) => {
+            info!("command mode: compose_email pressed Gmail's Send button");
+            sent()
+        }
+        Ok(false) => press_send(ctx, &combo, name),
+        Err(e) => {
+            warn!("command mode: compose_email could not press the Send button ({e}); trying the shortcut");
+            press_send(ctx, &combo, name)
+        }
+    };
+    match pressed {
+        ToolOutcome::Done { .. } => {
+            if gmail_took_the_draft(ctx, draft.id, &baseline, compose_tabs) {
+                info!("command mode: compose_email saw Gmail take the draft");
+                sent()
+            } else {
+                warn!("command mode: compose_email pressed send but the draft is still open");
+                ToolOutcome::failed(
+                    "I pressed Send, but Gmail still shows the draft, so it may not have gone. Check the draft in Gmail.",
+                    false,
+                )
+            }
+        }
+        failed => failed,
+    }
+}
+
+/// Whether Gmail took the draft after the send shortcut: its window closed,
+/// or it no longer shows the compose page (Gmail moves on to the inbox once
+/// a message is sent; a draft it refused, for a bad address say, stays with
+/// an error on it), or one compose tab fewer in the window than
+/// `compose_tabs` before the send (Gmail closed this draft's tab and another
+/// compose tab, with the same title, came to the front). Only evidence
+/// counts: a send is never reported done because a key was pressed. The
+/// title comes from the foreground when that is the draft's window, since on
+/// a Mac the window list names only the app.
+fn gmail_took_the_draft(
+    ctx: &ToolCtx,
+    id: i64,
+    baseline: &str,
+    compose_tabs: Option<usize>,
+) -> bool {
+    let (wait, poll) = sent_wait();
+    let deadline = Instant::now() + wait;
+    loop {
+        let Some(title) = window_title(ctx, id) else {
+            return true;
+        };
+        let lower = title.to_lowercase();
+        if !lower.starts_with(COMPOSE_TITLE) && title != baseline {
+            return true;
+        }
+        if let (Some(before), Some(now)) = (compose_tabs, compose_tab_count(ctx, id)) {
+            if now < before {
+                return true;
+            }
+        }
+        if Instant::now() >= deadline {
+            return false;
+        }
+        std::thread::sleep(poll);
+    }
+}
+
+/// How many of window `id`'s tabs show Gmail's compose page, where its tab
+/// strip can be read.
+fn compose_tab_count(ctx: &ToolCtx, id: i64) -> Option<usize> {
+    ctx.effects.tab_titles(id).map(|tabs| {
+        tabs.iter()
+            .filter(|tab| tab.to_lowercase().starts_with(COMPOSE_TITLE))
+            .count()
+    })
+}
+
+/// The title of window `id` now, from the foreground when that is the
+/// window (on a Mac the window list names only the app), else from the list.
+/// `None` when the window has closed.
+fn window_title(ctx: &ToolCtx, id: i64) -> Option<String> {
+    let listed = ctx
+        .effects
+        .open_windows()
+        .into_iter()
+        .find(|w| w.id == id)?;
+    Some(match ctx.effects.foreground_window() {
+        Some(front) if front.id == id => front.title,
+        _ => listed.title,
+    })
+}
+
+/// Wait for window `id` to show Gmail's compose page ("Compose Mail - …"),
+/// then let it settle ([`compose_wait`]). The loaded title, or `None` when it
+/// never came (a Gmail in another language titles it otherwise; the send is
+/// then tried anyway and judged by its evidence).
+fn wait_for_compose(ctx: &ToolCtx, id: i64) -> Option<String> {
+    let (wait, poll, settle) = compose_wait();
+    let deadline = Instant::now() + wait;
+    loop {
+        let title = window_title(ctx, id)?;
+        if title.to_lowercase().starts_with(COMPOSE_TITLE) {
+            std::thread::sleep(settle);
+            return Some(title);
+        }
+        if Instant::now() >= deadline {
+            return None;
+        }
+        std::thread::sleep(poll);
+    }
+}
+
+/// Press the send shortcut in whatever has the keyboard; [`send`] has
+/// already made sure that is the draft.
+fn press_send(ctx: &ToolCtx, combo: &KeyCombo, name: &str) -> ToolOutcome {
+    if let Err(e) = ctx.effects.press_keys(combo) {
+        warn!(
+            "command mode: compose_email could not press {}: {e}",
+            combo.label()
+        );
+        return ToolOutcome::failed(
+            format!("I couldn't press send in the Gmail draft. {e}"),
+            false,
+        );
+    }
+    info!(
+        "command mode: compose_email pressed {} in the draft",
+        combo.label()
+    );
+    ToolOutcome::done("emailSent", "Sent to {{name}}.", &[("name", name)])
+}
+
+/// "Ron, hermione@example.com; Ginny" → three queries. A `Name <address>`
+/// entry keeps its comma-free form.
+fn split_recipients(raw: &str) -> Vec<String> {
+    raw.split([',', ';'])
+        .map(str::trim)
+        .filter(|part| !part.is_empty())
+        .map(str::to_string)
+        .collect()
+}
+
+/// Turn one spoken recipient into an address, or the question to ask.
+///
+/// A "Name <address>" is written by the model, even when it repeats a choice
+/// from an earlier question (the answer goes back through the router), so the
+/// address in it is not taken on trust. It is used when it is one of a
+/// contact's own addresses (named after that contact), or when it stands
+/// alone ("<address>"). Otherwise the name decides, through the contact book.
+/// The written address is used only where the book has none to prefer: nobody
+/// by that name (the recipient is then named after the address, which is no
+/// more than a bare address would get), or a contact with no address on file.
+/// Either way the confirmation shows exactly where the mail goes.
+fn resolve_recipient(ctx: &ToolCtx, query: &str) -> Result<Recipient, ToolOutcome> {
+    if means_self(query) {
+        let own = ctx.settings.command_own_email.trim();
+        if looks_like_email(own) {
+            return Ok(Recipient {
+                name: "you".to_string(),
+                email: own.to_string(),
+            });
+        }
+        return Err(ToolOutcome::ask(
+            "What's your email address? I'll remember it.",
+            Vec::new(),
+        ));
+    }
+    if let Some((name, email)) = parse_named_address(query) {
+        if let Some(contact) = contact_with_address(ctx, &email) {
+            return Ok(Recipient {
+                name: contact.name.clone(),
+                email,
+            });
+        }
+        if name == email {
+            return resolve_query(ctx, &email);
+        }
+        return match ctx.contacts.resolve(&name) {
+            ContactMatch::None => Ok(Recipient {
+                name: email.clone(),
+                email,
+            }),
+            // The answer to "I don't have an email address for Neville. What
+            // is it?": the book has no address to prefer, and the summary
+            // shows the one given.
+            ContactMatch::Unique(contact) if contact.primary_email().is_none() => Ok(Recipient {
+                name: contact.name.clone(),
+                email,
+            }),
+            _ => resolve_query(ctx, &name),
+        };
+    }
+    resolve_query(ctx, query)
+}
+
+/// The contact that has `email` among its addresses, compared without case.
+fn contact_with_address<'a>(ctx: &'a ToolCtx, email: &str) -> Option<&'a Contact> {
+    ctx.contacts.contacts().iter().find(|contact| {
+        contact
+            .emails
+            .iter()
+            .any(|e| e.trim().eq_ignore_ascii_case(email.trim()))
+    })
+}
+
+/// A name or a bare address, through the contact book.
+fn resolve_query(ctx: &ToolCtx, query: &str) -> Result<Recipient, ToolOutcome> {
+    match ctx.contacts.resolve(query) {
+        ContactMatch::Unique(contact) => match contact.primary_email() {
+            Some(email) => Ok(Recipient {
+                name: contact.name.clone(),
+                email: email.to_string(),
+            }),
+            None => Err(ToolOutcome::ask(
+                format!(
+                    "I don't have an email address for {}. What is it?",
+                    contact.name
+                ),
+                Vec::new(),
+            )),
+        },
+        ContactMatch::Ambiguous(options) => Err(ToolOutcome::ask(
+            format!("Which {query}?"),
+            options.iter().map(choice_label).collect(),
+        )),
+        ContactMatch::None => {
+            let question = match &ctx.contacts.load_error {
+                Some(e) => {
+                    warn!("command mode: contacts unavailable: {e}");
+                    format!(
+                        "Who is {query}? I couldn't read your contacts file, so say their \
+                         email address."
+                    )
+                }
+                None => format!("Who is {query}? Say their email address."),
+            };
+            Err(ToolOutcome::ask(question, Vec::new()))
+        }
+    }
+}
+
+/// "Name <address>" → (name, address), when the address is one.
+fn parse_named_address(query: &str) -> Option<(String, String)> {
+    let open = query.rfind('<')?;
+    let close = query[open..].find('>')? + open;
+    let email = query[open + 1..close].trim();
+    if !looks_like_email(email) {
+        return None;
+    }
+    let name = query[..open].trim().trim_matches('"').trim();
+    let name = if name.is_empty() { email } else { name };
+    Some((name.to_string(), email.to_string()))
+}
+
+/// How a contact is offered as a choice: "Ron Weasley <ron@example.com>".
+fn choice_label(contact: &Contact) -> String {
+    match contact.primary_email() {
+        Some(email) => format!("{} <{email}>", contact.name),
+        None => contact.name.clone(),
+    }
+}
+
+/// Whether a spoken recipient is the user themself: "me", "myself", "my
+/// email", or the Nepali "malai" / "mero email".
+fn means_self(query: &str) -> bool {
+    const SELF: &[&str] = &[
+        "me",
+        "myself",
+        "my self",
+        "my email",
+        "my email address",
+        "my own email",
+        "my address",
+        "my mail",
+        "my inbox",
+        "malai",
+        "mailai",
+        "mero email",
+        "mero mail",
+    ];
+    let spoken = query.trim().trim_end_matches('.').to_lowercase();
+    SELF.contains(&spoken.as_str())
+}
+
+/// The address to keep as the user's own, from a planned call: an email
+/// whose `remember_as_mine` is set and whose `to` is one address.
+pub(crate) fn address_to_remember(tool: &str, args: &Value) -> Option<String> {
+    if tool != SPEC.name || args.get("remember_as_mine").and_then(Value::as_bool) != Some(true) {
+        return None;
+    }
+    let to = arg_str(args, "to")?.trim();
+    let to = parse_named_address(to).map_or_else(|| to.to_string(), |(_, email)| email);
+    looks_like_email(&to).then_some(to)
+}
+
+/// A file found to attach.
+#[derive(Debug, Clone, PartialEq)]
+struct Attachment {
+    path: PathBuf,
+    /// Its name, as Gmail's chip shows it.
+    name: String,
+    bytes: u64,
+}
+
+/// Find the file `spoken` names among the user's own documents, or the
+/// outcome to give instead: a question when several match, a refusal when
+/// the only match may not leave the computer or is too big for Gmail.
+fn find_attachment(
+    ctx: &ToolCtx,
+    spoken: &str,
+    kind: Option<&str>,
+) -> Result<Attachment, ToolOutcome> {
+    let Some(home) = files::home_dir() else {
+        return Err(ToolOutcome::failed(
+            "I couldn't find your user folder, so I can't look for the file.",
+            false,
+        ));
+    };
+    let found =
+        match open_file::find_file(ctx, spoken, kind, &|path| files::may_send(path, &home)) {
+            FileLookup::One(path) => path,
+            FileLookup::Several(labels) => {
+                return Err(ToolOutcome::ask("Which file should I attach?", labels));
+            }
+            FileLookup::OnlyPrograms => {
+                return Err(ToolOutcome::failed(
+                    "I only attach documents, and Gmail doesn't take programs.",
+                    false,
+                ));
+            }
+            FileLookup::Nothing => {
+                // Said apart from "not found": a file that is there but may
+                // not leave the computer.
+                let private = matches!(
+                    open_file::find_file(ctx, spoken, kind, &|_| true),
+                    FileLookup::One(_) | FileLookup::Several(_)
+                );
+                let why = if private {
+                    format!(
+                        "I won't email {spoken}: it looks private (a key, a password or an \
+                         app's data), or it is outside your user folder."
+                    )
+                } else {
+                    format!("I couldn't find a file called {spoken} to attach.")
+                };
+                return Err(ToolOutcome::failed(why, false));
+            }
+        };
+    let path = files::followed(&found).ok_or_else(|| {
+        ToolOutcome::failed("I couldn't tell which file that shortcut opens.", false)
+    })?;
+    if let Some(why) = files::send_refusal(&path, &home) {
+        return Err(ToolOutcome::failed(
+            format!("I won't email that file: {why}."),
+            false,
+        ));
+    }
+    let name = path
+        .file_name()
+        .map(|n| n.to_string_lossy().into_owned())
+        .unwrap_or_else(|| spoken.to_string());
+    let bytes = std::fs::metadata(&path).map(|m| m.len()).unwrap_or(0);
+    if bytes > files::MAX_ATTACHMENT_BYTES {
+        return Err(ToolOutcome::failed(
+            format!(
+                "{name} is {}, and Gmail attaches at most 25 MB, so nothing was sent.",
+                files::readable_size(bytes)
+            ),
+            false,
+        ));
+    }
+    info!(
+        "command mode: compose_email will attach a file ({})",
+        files::readable_size(bytes)
+    );
+    Ok(Attachment { path, name, bytes })
+}
+
+/// Put `file` into the draft in `window`: Gmail's Attach button opens the
+/// file dialog, its name box (which has the keyboard) gets the full path,
+/// Enter attaches, and Gmail's chip has to come to "Attachment: <file>".
+/// The path is typed only while the dialog is what holds the keyboard.
+fn attach(ctx: &ToolCtx, window: &WindowEntry, file: &Attachment) -> Result<(), String> {
+    if wait_for_compose(ctx, window.id).is_none() {
+        warn!("command mode: compose_email attaching to a compose page that never said it loaded");
+    }
+    ctx.effects
+        .focus_window(window)
+        .map_err(|e| format!("I couldn't bring the draft forward. {e}"))?;
+    std::thread::sleep(FOCUS_SETTLE);
+    match ctx.effects.open_file_picker(window.id, "attach") {
+        Ok(true) => {}
+        Ok(false) => return Err("I couldn't find Gmail's Attach button.".into()),
+        Err(e) => return Err(format!("Gmail's Attach button didn't open. {e}")),
+    }
+    let (wait, poll) = picker_wait();
+    let deadline = Instant::now() + wait;
+    while !ctx.effects.file_picker_ready(window.id) {
+        if Instant::now() >= deadline {
+            return Err("The file picker didn't open.".into());
+        }
+        std::thread::sleep(poll);
+    }
+    ctx.effects
+        .type_text(&file.path.display().to_string())
+        .map_err(|e| format!("I couldn't type the file's location. {e}"))?;
+    std::thread::sleep(Duration::from_millis(250));
+    if !ctx.effects.file_picker_ready(window.id) {
+        return Err("The file picker closed before I could choose the file.".into());
+    }
+    let enter = KeyCombo {
+        modifiers: Vec::new(),
+        key: "enter".to_string(),
+    };
+    ctx.effects
+        .press_keys(&enter)
+        .map_err(|e| format!("I couldn't choose the file. {e}"))?;
+    match wait_for_attachment(ctx, window.id, &file.name, file.bytes) {
+        AttachState::Attached => Ok(()),
+        AttachState::Uploading => Err("Gmail was still uploading it.".into()),
+        AttachState::Absent => Err("Gmail didn't show it on the draft.".into()),
+    }
+}
+
+/// Wait while Gmail uploads `file` to the draft in window `id`, until its
+/// chip says it is attached or [`upload_wait`] runs out. What the page last
+/// said.
+fn wait_for_attachment(ctx: &ToolCtx, id: i64, file: &str, bytes: u64) -> AttachState {
+    let (wait, poll) = upload_wait(bytes);
+    let deadline = Instant::now() + wait;
+    loop {
+        let state = ctx.effects.attachment_state(id, file);
+        if state == AttachState::Attached || Instant::now() >= deadline {
+            return state;
+        }
+        std::thread::sleep(poll);
+    }
+}
+
+struct Draft {
+    url: Url,
+    truncated: bool,
+}
+
+/// Gmail's compose URL for this email, with the body cut at a word if the
+/// whole thing would pass [`MAX_URL_LEN`].
+fn build_draft_url(
+    to: &[Recipient],
+    cc: &[Recipient],
+    subject: &str,
+    body: &str,
+    account: &str,
+) -> Result<Draft, String> {
+    let without_body = compose_url(to, cc, subject, "", account)?;
+    // `body=` is already in it, with an empty value: what is left is the
+    // room for the encoded body.
+    let budget = MAX_URL_LEN.saturating_sub(without_body.as_str().len());
+    if encoded_len(body) <= budget {
+        return Ok(Draft {
+            url: compose_url(to, cc, subject, body, account)?,
+            truncated: false,
+        });
+    }
+    let cut = cut_to_fit(body, budget.saturating_sub(encoded_len(TRUNCATION_MARK)));
+    let shortened = format!("{}{TRUNCATION_MARK}", cut.trim_end());
+    Ok(Draft {
+        url: compose_url(to, cc, subject, &shortened, account)?,
+        truncated: true,
+    })
+}
+
+fn compose_url(
+    to: &[Recipient],
+    cc: &[Recipient],
+    subject: &str,
+    body: &str,
+    account: &str,
+) -> Result<Url, String> {
+    let mut url = Url::parse("https://mail.google.com/mail/")
+        .map_err(|e| format!("Could not build the Gmail address: {e}"))?;
+    {
+        let mut query = url.query_pairs_mut();
+        query.append_pair("view", "cm").append_pair("fs", "1");
+        if !account.is_empty() {
+            query.append_pair("authuser", account);
+        }
+        query.append_pair("to", &join_emails(to));
+        if !cc.is_empty() {
+            query.append_pair("cc", &join_emails(cc));
+        }
+        query.append_pair("su", subject).append_pair("body", body);
+    }
+    Ok(url)
+}
+
+fn join_emails(recipients: &[Recipient]) -> String {
+    recipients
+        .iter()
+        .map(|r| r.email.as_str())
+        .collect::<Vec<_>>()
+        .join(",")
+}
+
+/// The length `text` takes once form-encoded the way `query_pairs_mut` does
+/// it (`application/x-www-form-urlencoded`): ASCII letters, digits and
+/// `*-._` stay, a space becomes `+`, every other byte becomes `%XX`.
+fn encoded_len(text: &str) -> usize {
+    text.bytes().map(encoded_byte_len).sum()
+}
+
+fn encoded_byte_len(byte: u8) -> usize {
+    match byte {
+        b'*' | b'-' | b'.' | b'_' | b' ' => 1,
+        b if b.is_ascii_alphanumeric() => 1,
+        _ => 3,
+    }
+}
+
+/// The longest prefix of `text` that encodes into `budget` bytes, ending at a
+/// word boundary when there is one; a single word longer than the budget is
+/// cut mid-word rather than dropped.
+fn cut_to_fit(text: &str, budget: usize) -> &str {
+    let mut used = 0;
+    let mut last_break = None;
+    for (index, ch) in text.char_indices() {
+        if ch.is_whitespace() {
+            last_break = Some(index);
+        }
+        let mut buf = [0u8; 4];
+        let cost: usize = ch.encode_utf8(&mut buf).bytes().map(encoded_byte_len).sum();
+        if used + cost > budget {
+            return match last_break {
+                Some(at) if at > 0 => &text[..at],
+                _ => &text[..index],
+            };
+        }
+        used += cost;
+    }
+    text
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::command_mode::contacts::ContactBook;
+    use crate::command_mode::context::CommandContext;
+    use crate::command_mode::effects::fake::FakeEffects;
+    use crate::command_mode::effects::{AppEntry, Effects, MediaAction, VolumeAction};
+    use crate::command_mode::registry::Platform;
+    use chrono::{FixedOffset, TimeZone};
+    use std::path::{Path, PathBuf};
+    use std::sync::Arc;
+
+    fn contact(name: &str, aliases: &[&str], emails: &[&str]) -> Contact {
+        Contact {
+            name: name.into(),
+            aliases: aliases.iter().map(|a| a.to_string()).collect(),
+            emails: emails.iter().map(|e| e.to_string()).collect(),
+            phones: Vec::new(),
+        }
+    }
+
+    fn book() -> ContactBook {
+        ContactBook::new(vec![
+            contact("Ron Weasley", &["Ron"], &["ron@example.com"]),
+            contact("Ginny Weasley", &[], &["ginny@example.com"]),
+            contact("Hermione Granger", &[], &["hermione@example.com"]),
+            contact("Neville Longbottom", &[], &[]),
+        ])
+    }
+
+    fn ctx(fake: &Arc<FakeEffects>, contacts: ContactBook, platform: Platform) -> ToolCtx {
+        ctx_over(fake.clone(), contacts, platform)
+    }
+
+    fn ctx_over(effects: Arc<dyn Effects>, contacts: ContactBook, platform: Platform) -> ToolCtx {
+        let mut settings = crate::settings::get_default_settings();
+        settings.command_google_account = String::new();
+        settings.command_search_url = "https://www.google.com/search?q={query}".into();
+        settings.command_dry_run = false;
+        let now = FixedOffset::east_opt(5 * 3600 + 45 * 60)
+            .unwrap()
+            .with_ymd_and_hms(2026, 10, 22, 9, 15, 0)
+            .unwrap();
+        ToolCtx {
+            settings,
+            context: CommandContext::at(now, Some("Asia/Kathmandu".into()), platform, None, None),
+            effects,
+            contacts: Arc::new(contacts),
+            platform,
+            dry_run: false,
+        }
+    }
+
+    fn opened_url(fake: &FakeEffects) -> String {
+        let actions = fake.actions();
+        assert_eq!(actions.len(), 1, "{actions:?}");
+        actions[0]
+            .strip_prefix("open_url ")
+            .expect("an open_url action")
+            .to_string()
+    }
+
+    fn pairs(url: &str) -> Vec<(String, String)> {
+        Url::parse(url)
+            .unwrap()
+            .query_pairs()
+            .map(|(k, v)| (k.into_owned(), v.into_owned()))
+            .collect()
+    }
+
+    fn pair(url: &str, key: &str) -> Option<String> {
+        pairs(url)
+            .into_iter()
+            .find(|(k, _)| k == key)
+            .map(|(_, v)| v)
+    }
+
+    /// The draft carries exactly what the model wrote: spaces, line breaks,
+    /// punctuation and non-ASCII all survive the round trip through the URL.
+    #[test]
+    fn the_draft_url_encodes_every_field_and_decodes_back_exactly() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let body = "Hi Ron,\n\nMeeting at 9:00 & bring 50% of the café notes?\nThanks";
+        let outcome = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Meeting at 9:00", "body": body}),
+        );
+        assert!(
+            matches!(outcome, ToolOutcome::NeedsConfirmation { .. }),
+            "{outcome:?}"
+        );
+
+        let url = opened_url(&fake);
+        assert!(
+            url.starts_with("https://mail.google.com/mail/?view=cm&fs=1&"),
+            "{url}"
+        );
+        assert!(url.contains("su=Meeting+at+9%3A00"), "{url}");
+        assert!(url.contains("%0A%0A"), "newlines must be %0A: {url}");
+        assert_eq!(
+            pairs(&url),
+            vec![
+                ("view".to_string(), "cm".to_string()),
+                ("fs".to_string(), "1".to_string()),
+                ("to".to_string(), "ron@example.com".to_string()),
+                ("su".to_string(), "Meeting at 9:00".to_string()),
+                ("body".to_string(), body.to_string()),
+            ]
+        );
+    }
+
+    /// With a Google account set, the draft opens in that account rather than
+    /// the browser's default one; without, no `authuser` is sent at all.
+    #[test]
+    fn the_google_account_setting_becomes_authuser() {
+        let fake = Arc::new(FakeEffects::default());
+        let mut ctx = ctx(&fake, book(), Platform::Windows);
+        ctx.settings.command_google_account = "me@work.example".into();
+        run(&ctx, json!({"to": "Ron", "subject": "Hi", "body": "Hello"}));
+        assert_eq!(
+            pair(&opened_url(&fake), "authuser").as_deref(),
+            Some("me@work.example")
+        );
+
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = super::tests::ctx(&fake, book(), Platform::Windows);
+        run(&ctx, json!({"to": "Ron", "subject": "Hi", "body": "Hello"}));
+        assert_eq!(pair(&opened_url(&fake), "authuser"), None);
+    }
+
+    /// A body too long for one URL is cut at a word, marked, and the user is
+    /// told; the rest of the draft is intact.
+    #[test]
+    fn a_very_long_body_is_cut_at_a_word_and_the_user_is_told() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let body = "lorem ipsum dolor sit amet, ".repeat(400);
+        let outcome = run(&ctx, json!({"to": "Ron", "subject": "Long", "body": body}));
+        let ToolOutcome::NeedsConfirmation { feedback, .. } = outcome else {
+            panic!("expected a draft");
+        };
+        assert_eq!(feedback.key, "commandMode.feedback.emailDraftTruncated");
+
+        let url = opened_url(&fake);
+        assert!(url.len() <= MAX_URL_LEN, "url is {} bytes", url.len());
+        assert!(
+            url.len() > MAX_URL_LEN - 100,
+            "cut far too much: {}",
+            url.len()
+        );
+        let sent = pair(&url, "body").unwrap();
+        let kept = sent.strip_suffix(TRUNCATION_MARK).expect("marked as cut");
+        assert!(body.starts_with(kept));
+        let next = body[kept.len()..].chars().next();
+        assert!(
+            next.is_some_and(|c| c.is_whitespace()) || kept.ends_with(','),
+            "not cut at a word: …{:?} / {next:?}",
+            &kept[kept.len().saturating_sub(10)..]
+        );
+        assert_eq!(pair(&url, "su").as_deref(), Some("Long"));
+    }
+
+    /// The word-boundary cut counts encoded bytes, so multi-byte text is not
+    /// split inside a character and still fits.
+    #[test]
+    fn the_cut_counts_encoded_bytes_and_respects_characters() {
+        assert_eq!(cut_to_fit("hello world", 100), "hello world");
+        assert_eq!(cut_to_fit("hello world again", 13), "hello world");
+        // "é" is two bytes, six once encoded.
+        assert_eq!(cut_to_fit("éééé", 13), "éé");
+        assert_eq!(encoded_len("a b\n"), 1 + 1 + 1 + 3);
+        assert_eq!(cut_to_fit("abcdefgh", 3), "abc");
+    }
+
+    #[test]
+    fn a_contact_without_an_address_is_asked_for_it() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = run(&ctx, json!({"to": "Neville", "subject": "x", "body": "y"}));
+        assert_eq!(
+            outcome,
+            ToolOutcome::ask(
+                "I don't have an email address for Neville Longbottom. What is it?",
+                vec![]
+            )
+        );
+        assert!(fake.actions().is_empty());
+    }
+
+    /// Two people fit the name: the question lists them with their addresses,
+    /// and nothing is opened.
+    #[test]
+    fn an_ambiguous_name_asks_which_one_with_addresses() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::AskUser { question, choices } =
+            run(&ctx, json!({"to": "Weasley", "subject": "x", "body": "y"}))
+        else {
+            panic!("expected a question");
+        };
+        assert_eq!(question, "Which Weasley?");
+        assert!(
+            choices.contains(&"Ron Weasley <ron@example.com>".to_string()),
+            "{choices:?}"
+        );
+        assert!(
+            choices.contains(&"Ginny Weasley <ginny@example.com>".to_string()),
+            "{choices:?}"
+        );
+        assert!(fake.actions().is_empty());
+    }
+
+    /// The answer to that question comes back as the choice text, which
+    /// resolves to the address in it because that address is the contact's.
+    #[test]
+    fn a_chosen_name_with_its_own_address_is_used() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = run(
+            &ctx,
+            json!({"to": "Ginny Weasley <GINNY@example.com>", "subject": "x", "body": "y"}),
+        );
+        let ToolOutcome::NeedsConfirmation { pending, .. } = outcome else {
+            panic!("expected a draft");
+        };
+        assert_eq!(pending.payload["to_name"], "Ginny Weasley");
+        assert_eq!(
+            pair(&opened_url(&fake), "to").as_deref(),
+            Some("GINNY@example.com")
+        );
+    }
+
+    fn resolved(ctx: &ToolCtx, query: &str) -> Result<Recipient, ToolOutcome> {
+        resolve_recipient(ctx, query)
+    }
+
+    fn recipient(name: &str, email: &str) -> Recipient {
+        Recipient {
+            name: name.into(),
+            email: email.into(),
+        }
+    }
+
+    /// A model-written "Name <address>" cannot smuggle an address in behind a
+    /// familiar name: an address that is not the contact's gives way to the
+    /// name, and an unknown name is shown as the bare address.
+    #[test]
+    fn a_written_address_is_trusted_only_where_the_book_has_none_to_prefer() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        // A known name with a stranger's address: the contact's own address.
+        assert_eq!(
+            resolved(&ctx, "Ron <attacker@evil.example>"),
+            Ok(recipient("Ron Weasley", "ron@example.com"))
+        );
+        // A known address under another name: named after its owner.
+        assert_eq!(
+            resolved(&ctx, "Ron <hermione@example.com>"),
+            Ok(recipient("Hermione Granger", "hermione@example.com"))
+        );
+        // Nobody by that name: the address, named after itself.
+        assert_eq!(
+            resolved(&ctx, "Albus Dumbledore <albus@hogwarts.example>"),
+            Ok(recipient(
+                "albus@hogwarts.example",
+                "albus@hogwarts.example"
+            ))
+        );
+        // An address alone, bracketed or bare, is the user's own.
+        assert_eq!(
+            resolved(&ctx, "<luna@quibbler.example>"),
+            Ok(recipient("luna@quibbler.example", "luna@quibbler.example"))
+        );
+        // A contact with no address on file takes the one given for them.
+        assert_eq!(
+            resolved(&ctx, "Neville <neville@hogwarts.example>"),
+            Ok(recipient("Neville Longbottom", "neville@hogwarts.example"))
+        );
+        // A name that fits several people is still a question.
+        assert!(matches!(
+            resolved(&ctx, "Weasley <x@evil.example>"),
+            Err(ToolOutcome::AskUser { .. })
+        ));
+    }
+
+    /// Whoever the recipient is named after, the confirmation shows the
+    /// address the draft goes to.
+    #[test]
+    fn the_summary_shows_an_unknown_address_bare() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::NeedsConfirmation { pending, .. } = run(
+            &ctx,
+            json!({"to": "Ron Weasley <x@evil.example>, Albus <albus@hogwarts.example>", "subject": "Hi", "body": "y"}),
+        ) else {
+            panic!("expected a draft");
+        };
+        assert!(
+            pending.summary.starts_with(
+                "Send email to Ron Weasley <ron@example.com>, albus@hogwarts.example · Hi"
+            ),
+            "{}",
+            pending.summary
+        );
+    }
+
+    #[test]
+    fn an_unknown_name_asks_for_the_address_and_mentions_a_broken_contacts_file() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        assert_eq!(
+            run(
+                &ctx,
+                json!({"to": "Dumbledore", "subject": "x", "body": "y"})
+            ),
+            ToolOutcome::ask("Who is Dumbledore? Say their email address.", vec![])
+        );
+
+        let ctx = super::tests::ctx(&fake, ContactBook::parse("[{"), Platform::Windows);
+        let ToolOutcome::AskUser { question, .. } = run(
+            &ctx,
+            json!({"to": "Dumbledore", "subject": "x", "body": "y"}),
+        ) else {
+            panic!("expected a question");
+        };
+        assert!(
+            question.contains("couldn't read your contacts file"),
+            "{question}"
+        );
+        assert!(fake.actions().is_empty());
+    }
+
+    /// A spoken address needs no contact, even with no contacts file at all.
+    #[test]
+    fn a_spoken_address_and_cc_names_are_resolved() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = run(
+            &ctx,
+            json!({
+                "to": "luna@quibbler.example",
+                "subject": "Hi",
+                "body": "Hello",
+                "cc": ["Hermione", "Ron"]
+            }),
+        );
+        assert!(
+            matches!(outcome, ToolOutcome::NeedsConfirmation { .. }),
+            "{outcome:?}"
+        );
+        let url = opened_url(&fake);
+        assert_eq!(pair(&url, "to").as_deref(), Some("luna@quibbler.example"));
+        assert_eq!(
+            pair(&url, "cc").as_deref(),
+            Some("hermione@example.com,ron@example.com")
+        );
+    }
+
+    /// A cc that cannot be resolved stops the draft with a question, like `to`.
+    #[test]
+    fn an_ambiguous_cc_asks_before_opening_anything() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "x", "body": "y", "cc": ["Weasley"]}),
+        );
+        assert!(
+            matches!(outcome, ToolOutcome::AskUser { .. }),
+            "{outcome:?}"
+        );
+        assert!(fake.actions().is_empty());
+    }
+
+    /// What waits for confirmation says who and what, with every address, and
+    /// carries the window the send must use.
+    #[test]
+    fn the_pending_send_names_the_recipient_its_address_and_the_subject() {
+        let fake = Arc::new(FakeEffects::default());
+        let draft = window(
+            2,
+            "Compose Mail - me@example.com - Gmail - Google Chrome",
+            "chrome",
+        );
+        let ctx = ctx_over(browser(&fake, Some(draft)), book(), Platform::Windows);
+        let ToolOutcome::NeedsConfirmation { pending, feedback } = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Meeting at 9:00", "body": "See you", "cc": ["Hermione"]}),
+        ) else {
+            panic!("expected a draft");
+        };
+        assert_eq!(pending.tool, "compose_email");
+        assert_eq!(
+            pending.summary,
+            "Send email to Ron Weasley <ron@example.com>, cc Hermione Granger \
+             <hermione@example.com> · Meeting at 9:00"
+        );
+        assert_eq!(
+            pending.payload,
+            json!({
+                "subject": "Meeting at 9:00",
+                "to_name": "Ron Weasley",
+                "to_email": "ron@example.com",
+                "window": {
+                    "id": 2,
+                    "app": "chrome",
+                    "title": "Compose Mail - me@example.com - Gmail - Google Chrome"
+                }
+            })
+        );
+        assert_eq!(feedback.key, "commandMode.feedback.emailDraft");
+        assert_eq!(
+            feedback.render_en(),
+            "Draft to Ron Weasley <ron@example.com> is open. Say send or cancel."
+        );
+    }
+
+    #[test]
+    fn a_browser_that_will_not_open_fails_without_escalating() {
+        let fake = Arc::new(FakeEffects {
+            fail_with: Some("No browser".into()),
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        assert_eq!(
+            run(&ctx, json!({"to": "Ron", "subject": "x", "body": "y"})),
+            ToolOutcome::failed("No browser", false)
+        );
+    }
+
+    fn window(id: i64, title: &str, app: &str) -> WindowEntry {
+        WindowEntry {
+            id,
+            title: title.into(),
+            app: app.into(),
+        }
+    }
+
+    /// [`FakeEffects`] plus a browser: opening a URL brings `opens_to` to the
+    /// front, the way a real browser shows the new tab. `run` needs the
+    /// foreground to change after the link opens, which the plain fake never
+    /// does.
+    struct Browser {
+        inner: Arc<FakeEffects>,
+        opens_to: Option<WindowEntry>,
+    }
+
+    impl Effects for Browser {
+        fn installed_apps(&self) -> Vec<AppEntry> {
+            self.inner.installed_apps()
+        }
+        fn open_windows(&self) -> Vec<WindowEntry> {
+            self.inner.open_windows()
+        }
+        fn recent_files(&self) -> Vec<PathBuf> {
+            self.inner.recent_files()
+        }
+        fn known_folders(&self) -> Vec<PathBuf> {
+            self.inner.known_folders()
+        }
+        fn foreground_window(&self) -> Option<WindowEntry> {
+            self.inner.foreground_window()
+        }
+        fn open_url(&self, url: &str) -> Result<(), String> {
+            self.inner.open_url(url)?;
+            if let Some(window) = &self.opens_to {
+                *self.inner.foreground.lock().unwrap() = Some(window.clone());
+            }
+            Ok(())
+        }
+        fn open_path(&self, path: &Path) -> Result<(), String> {
+            self.inner.open_path(path)
+        }
+        fn launch_app(&self, app: &AppEntry) -> Result<(), String> {
+            self.inner.launch_app(app)
+        }
+        fn focus_window(&self, window: &WindowEntry) -> Result<(), String> {
+            self.inner.focus_window(window)
+        }
+        fn foreground_is_exactly(&self, id: i64) -> bool {
+            self.inner.foreground_is_exactly(id)
+        }
+        fn press_button(&self, window_id: i64, first_word: &str) -> Result<bool, String> {
+            self.inner.press_button(window_id, first_word)
+        }
+        fn open_file_picker(&self, window_id: i64, first_word: &str) -> Result<bool, String> {
+            self.inner.open_file_picker(window_id, first_word)
+        }
+        fn file_picker_ready(&self, window_id: i64) -> bool {
+            self.inner.file_picker_ready(window_id)
+        }
+        fn attachment_state(&self, window_id: i64, file_name: &str) -> AttachState {
+            self.inner.attachment_state(window_id, file_name)
+        }
+        fn tab_titles(&self, window_id: i64) -> Option<Vec<String>> {
+            self.inner.tab_titles(window_id)
+        }
+        fn type_text(&self, text: &str) -> Result<(), String> {
+            self.inner.type_text(text)
+        }
+        fn press_keys(&self, combo: &KeyCombo) -> Result<(), String> {
+            self.inner.press_keys(combo)
+        }
+        fn media(&self, action: MediaAction) -> Result<(), String> {
+            self.inner.media(action)
+        }
+        fn volume(&self, action: VolumeAction) -> Result<(), String> {
+            self.inner.volume(action)
+        }
+    }
+
+    fn browser(fake: &Arc<FakeEffects>, opens_to: Option<WindowEntry>) -> Arc<dyn Effects> {
+        Arc::new(Browser {
+            inner: fake.clone(),
+            opens_to,
+        })
+    }
+
+    const DRAFT_TITLE: &str = "Compose Mail - me@example.com - Gmail - Google Chrome";
+    /// What the draft's window shows once Gmail has sent it.
+    const INBOX_TITLE: &str = "Inbox (3) - me@example.com - Gmail - Google Chrome";
+
+    /// A send is reported done only on evidence: Ctrl+Enter was pressed in
+    /// the draft, but Gmail still shows the compose page (a bad address, a
+    /// key Gmail did not take), so the user hears it may not have gone.
+    #[test]
+    fn a_send_gmail_did_not_take_is_not_reported_sent() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![draft.clone()],
+            foreground: std::sync::Mutex::new(Some(draft)),
+            focus_follows: true,
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::Failed { reason, escalate } = send(&ctx, payload()) else {
+            panic!("expected an unconfirmed send");
+        };
+        assert!(reason.contains("may not have gone"), "{reason}");
+        assert!(!escalate);
+        assert!(fake.actions().contains(&ctrl_enter()), "{:?}", fake.actions());
+    }
+
+    /// Gmail's Send button is pressed through the accessibility tree when it
+    /// is there, and the shortcut is then not pressed at all.
+    #[test]
+    fn the_send_button_is_pressed_before_the_shortcut() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![draft.clone()],
+            foreground: std::sync::Mutex::new(Some(draft)),
+            focus_follows: true,
+            send_retitles: Some(INBOX_TITLE.into()),
+            buttons: vec![(2, "Send".into())],
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = send(&ctx, payload());
+        assert!(matches!(outcome, ToolOutcome::Done { .. }), "{outcome:?}");
+        assert_eq!(
+            fake.actions(),
+            vec!["focus_window 2".to_string(), "press_button 2 send".to_string()]
+        );
+    }
+
+    /// Gmail closing the draft's window is evidence too.
+    #[test]
+    fn a_draft_window_that_closes_after_the_send_counts_as_sent() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = FakeEffects {
+            windows: vec![],
+            foreground: std::sync::Mutex::new(None),
+            ..Default::default()
+        };
+        let ctx = ctx_over(Arc::new(fake), book(), Platform::Windows);
+        assert!(gmail_took_the_draft(&ctx, draft.id, &draft.title, None));
+    }
+
+    fn payload_with(window: Value) -> Value {
+        json!({
+            "subject": "Meeting at 9:00",
+            "to_name": "Ron Weasley",
+            "to_email": "ron@example.com",
+            "window": window,
+        })
+    }
+
+    fn payload() -> Value {
+        payload_with(json!({"id": 2, "app": "chrome", "title": DRAFT_TITLE}))
+    }
+
+    fn ctrl_enter() -> String {
+        let combo = KeyCombo {
+            modifiers: vec![crate::command_mode::registry::Modifier::Ctrl],
+            key: "enter".into(),
+        };
+        format!("press_keys {}", combo.label())
+    }
+
+    /// The whole path: the draft comes forward after the link opens, is
+    /// recorded, and confirming focuses exactly that window, finds it still
+    /// in front and presses Ctrl+Enter there.
+    #[test]
+    fn the_draft_window_is_recorded_and_the_send_goes_to_it() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![window(1, "Spotify Premium", "Spotify"), draft.clone()],
+            foreground: std::sync::Mutex::new(Some(window(1, "Spotify Premium", "Spotify"))),
+            focus_follows: true,
+            send_retitles: Some(INBOX_TITLE.into()),
+            ..Default::default()
+        });
+        let ctx = ctx_over(browser(&fake, Some(draft)), book(), Platform::Windows);
+        let ToolOutcome::NeedsConfirmation { pending, .. } = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Meeting at 9:00", "body": "See you"}),
+        ) else {
+            panic!("expected a draft");
+        };
+        assert_eq!(pending.payload["window"]["id"], 2);
+        // Something else in front by the time the user says "send".
+        *fake.foreground.lock().unwrap() = Some(window(1, "Spotify Premium", "Spotify"));
+
+        let outcome = send(&ctx, pending.payload);
+        assert_eq!(
+            outcome,
+            ToolOutcome::done("emailSent", "Sent to {{name}}.", &[("name", "Ron Weasley")])
+        );
+        let actions = fake.actions();
+        assert_eq!(actions.len(), 3, "{actions:?}");
+        assert!(actions[0].starts_with("open_url "), "{actions:?}");
+        assert_eq!(actions[1..], [String::from("focus_window 2"), ctrl_enter()]);
+    }
+
+    /// A dialog the browser owns ("Leave site?") has the keyboard, reported
+    /// under the draft's own id and title: Ctrl+Enter must not go to it.
+    #[test]
+    fn a_dialog_over_the_draft_gets_no_key() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![draft.clone()],
+            foreground: std::sync::Mutex::new(Some(draft)),
+            focus_follows: true,
+            popup_in_front: true,
+            ..Default::default()
+        });
+        let ctx = ctx_over(fake.clone(), book(), Platform::Windows);
+        let outcome = send(&ctx, payload());
+        assert!(
+            matches!(
+                outcome,
+                ToolOutcome::Failed {
+                    escalate: false,
+                    ..
+                }
+            ),
+            "{outcome:?}"
+        );
+        assert!(
+            !fake.actions().iter().any(|a| a.starts_with("press_keys")),
+            "{:?}",
+            fake.actions()
+        );
+    }
+
+    /// The user (or a toast, or another app) takes the foreground between the
+    /// focus and the key: nothing is pressed.
+    #[test]
+    fn a_window_that_takes_the_foreground_after_the_focus_gets_no_key() {
+        let fake = Arc::new(FakeEffects {
+            windows: vec![window(2, DRAFT_TITLE, "chrome")],
+            // focus_follows is off: the focus "succeeds" but Teams stays in
+            // front, as when focus stealing prevention refuses the switch.
+            foreground: std::sync::Mutex::new(Some(window(
+                5,
+                "Meeting at 9:00 | Microsoft Teams",
+                "Teams",
+            ))),
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::Failed { reason, escalate } = send(&ctx, payload()) else {
+            panic!("expected a refusal");
+        };
+        assert!(reason.contains("nothing was sent"), "{reason}");
+        assert!(!escalate);
+        assert_eq!(fake.actions(), vec!["focus_window 2".to_string()]);
+    }
+
+    /// Same browser window, but another tab in front (a Gmail thread with a
+    /// reply open): Ctrl+Enter there would send that reply, so no key.
+    #[test]
+    fn the_same_window_showing_another_gmail_tab_gets_no_key() {
+        let fake = Arc::new(FakeEffects {
+            windows: vec![window(2, DRAFT_TITLE, "chrome")],
+            foreground: std::sync::Mutex::new(Some(window(
+                2,
+                "Re: budget - me@example.com - Gmail - Google Chrome",
+                "chrome",
+            ))),
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        assert!(matches!(
+            send(&ctx, payload()),
+            ToolOutcome::Failed {
+                escalate: false,
+                ..
+            }
+        ));
+        assert!(
+            !fake.actions().contains(&ctrl_enter()),
+            "{:?}",
+            fake.actions()
+        );
+    }
+
+    /// Gmail retitles a draft after its subject; that is still the draft.
+    #[test]
+    fn the_draft_retitled_with_its_subject_is_still_the_draft() {
+        let retitled = window(2, "Meeting at 9:00 - me@example.com - Gmail", "chrome");
+        assert!(still_the_draft(
+            &retitled,
+            &window(2, DRAFT_TITLE, "chrome"),
+            "Meeting at 9:00"
+        ));
+        // Without a subject there is nothing to recognise it by.
+        assert!(!still_the_draft(
+            &retitled,
+            &window(2, DRAFT_TITLE, "chrome"),
+            ""
+        ));
+        // A subject in a non-Gmail title, or in another window, is not enough.
+        let teams = window(2, "Meeting at 9:00 | Microsoft Teams", "Teams");
+        assert!(!still_the_draft(
+            &teams,
+            &window(2, DRAFT_TITLE, "chrome"),
+            "Meeting at 9:00"
+        ));
+        let other = window(3, DRAFT_TITLE, "chrome");
+        assert!(!still_the_draft(
+            &other,
+            &window(2, DRAFT_TITLE, "chrome"),
+            "Meeting at 9:00"
+        ));
+    }
+
+    /// The window came forward while Gmail was still loading, so the title
+    /// recorded was "Gmail"; at send time it is the compose page's own title,
+    /// which never names the subject. That is the draft (a real refusal on
+    /// Brave: "Compose Mail - … - Gmail - Brave").
+    #[test]
+    fn the_compose_page_title_after_loading_is_still_the_draft() {
+        let loading = window(2, "Gmail - Brave", "brave");
+        let loaded = window(2, "Compose Mail - me@example.com - Gmail - Brave", "brave");
+        assert!(still_the_draft(&loaded, &loading, "Feature update"));
+        assert!(still_the_draft(&loaded, &loading, ""));
+        // Not in another window, and not a non-Gmail "Compose" window.
+        let elsewhere = window(3, "Compose Mail - me@example.com - Gmail - Brave", "brave");
+        assert!(!still_the_draft(&elsewhere, &loading, "Feature update"));
+        let outlook = window(2, "Compose mail - Outlook", "brave");
+        assert!(!still_the_draft(&outlook, &loading, "Feature update"));
+    }
+
+    /// The draft's window was closed before the confirmation: nothing is
+    /// focused and nothing is pressed, whatever else is open.
+    #[test]
+    fn a_draft_window_that_is_gone_gets_nothing() {
+        let fake = Arc::new(FakeEffects {
+            windows: vec![
+                window(4, "Inbox (3) - Gmail - Google Chrome", "chrome"),
+                window(6, "docker-compose.yml - Visual Studio Code", "Code"),
+            ],
+            foreground: std::sync::Mutex::new(Some(window(
+                4,
+                "Inbox (3) - Gmail - Google Chrome",
+                "chrome",
+            ))),
+            focus_follows: true,
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::Failed { reason, .. } = send(&ctx, payload()) else {
+            panic!("expected a refusal");
+        };
+        assert!(reason.contains("nothing was sent"), "{reason}");
+        assert!(fake.actions().is_empty(), "{:?}", fake.actions());
+    }
+
+    /// No Gmail window came forward after the link opened (the browser was
+    /// slow, or a Gmail inbox that was already in front stayed there): the
+    /// draft is still offered, the summary says the window is unknown, and
+    /// the send refuses without touching anything.
+    #[test]
+    fn a_draft_whose_window_never_appeared_cannot_be_sent() {
+        let inbox = window(4, "Inbox (3) - Gmail - Google Chrome", "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![inbox.clone()],
+            foreground: std::sync::Mutex::new(Some(inbox)),
+            focus_follows: true,
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::NeedsConfirmation { pending, .. } = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Meeting at 9:00", "body": "See you"}),
+        ) else {
+            panic!("expected a draft");
+        };
+        assert_eq!(pending.payload["window"], Value::Null);
+        assert!(
+            pending
+                .summary
+                .contains("couldn't identify the draft window"),
+            "{}",
+            pending.summary
+        );
+
+        assert_eq!(
+            send(&ctx, pending.payload),
+            ToolOutcome::failed(NO_DRAFT_WINDOW, false)
+        );
+        let actions = fake.actions();
+        assert_eq!(actions.len(), 1, "only the draft opened: {actions:?}");
+        assert!(actions[0].starts_with("open_url "));
+    }
+
+    /// A dry run waits for no window and checks none: the send's key press
+    /// is only recorded by the effects.
+    #[test]
+    fn a_dry_run_records_the_send_without_looking_for_a_window() {
+        let fake = Arc::new(FakeEffects::default());
+        let mut ctx = ctx(&fake, book(), Platform::Windows);
+        ctx.dry_run = true;
+        let ToolOutcome::NeedsConfirmation { pending, .. } = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Meeting at 9:00", "body": "See you"}),
+        ) else {
+            panic!("expected a draft");
+        };
+        assert_eq!(pending.payload["window"], Value::Null);
+        assert!(
+            !pending.summary.contains("couldn't identify"),
+            "{}",
+            pending.summary
+        );
+
+        assert!(matches!(
+            send(&ctx, pending.payload),
+            ToolOutcome::Done { .. }
+        ));
+        let actions = fake.actions();
+        assert_eq!(actions.len(), 2, "{actions:?}");
+        assert_eq!(actions[1], ctrl_enter());
+    }
+
+    /// On a Mac the send shortcut is Cmd+Enter. The window id is the app's
+    /// pid there, and the foreground's title is the real window title read
+    /// through Accessibility, while the window list only names the app.
+    #[test]
+    fn on_a_mac_the_send_uses_cmd_enter_in_the_recorded_window() {
+        let fake = Arc::new(FakeEffects {
+            windows: vec![window(7, "Notes", "Notes"), window(9, "Safari", "Safari")],
+            foreground: std::sync::Mutex::new(Some(window(9, DRAFT_TITLE, "Safari"))),
+            send_retitles: Some(INBOX_TITLE.into()),
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::MacOs);
+        let outcome = send(
+            &ctx,
+            payload_with(json!({"id": 9, "app": "Safari", "title": DRAFT_TITLE})),
+        );
+        assert!(matches!(outcome, ToolOutcome::Done { .. }), "{outcome:?}");
+        let cmd_enter = KeyCombo {
+            modifiers: vec![crate::command_mode::registry::Modifier::Meta],
+            key: "enter".into(),
+        };
+        assert_eq!(
+            fake.actions(),
+            vec![
+                "focus_window 9".to_string(),
+                format!("press_keys {}", cmd_enter.label())
+            ]
+        );
+    }
+
+    /// If the window cannot be focused, the key press would land elsewhere,
+    /// so it is not made.
+    #[test]
+    fn a_draft_that_cannot_be_focused_is_not_sent() {
+        let fake = Arc::new(FakeEffects {
+            windows: vec![window(2, DRAFT_TITLE, "chrome")],
+            foreground: std::sync::Mutex::new(Some(window(2, DRAFT_TITLE, "chrome"))),
+            fail_with: Some("Access denied".into()),
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let ToolOutcome::Failed { reason, escalate } = send(&ctx, payload()) else {
+            panic!("expected a failure");
+        };
+        assert!(reason.contains("nothing was sent"), "{reason}");
+        assert!(!escalate);
+        assert!(fake.actions().is_empty());
+    }
+
+    #[test]
+    fn named_addresses_and_recipient_lists_parse() {
+        assert_eq!(
+            parse_named_address("\"Ron Weasley\" <ron@example.com>"),
+            Some(("Ron Weasley".into(), "ron@example.com".into()))
+        );
+        assert_eq!(
+            parse_named_address("<ron@example.com>"),
+            Some(("ron@example.com".into(), "ron@example.com".into()))
+        );
+        assert_eq!(parse_named_address("Ron <not an address>"), None);
+        assert_eq!(parse_named_address("Ron"), None);
+        assert_eq!(
+            split_recipients("Ron, a@b.co; ,Ginny"),
+            vec!["Ron".to_string(), "a@b.co".to_string(), "Ginny".to_string()]
+        );
+    }
+
+    #[test]
+    fn the_schema_requires_the_recipient_subject_and_body() {
+        let schema = schema();
+        assert!(crate::command_mode::schema::check_schema(&schema).is_ok());
+        assert!(crate::command_mode::schema::validate(
+            &schema,
+            &json!({"to": "Ron", "subject": "", "body": ""})
+        )
+        .is_ok());
+        assert!(crate::command_mode::schema::validate(&schema, &json!({"to": "Ron"})).is_err());
+        assert!(crate::command_mode::schema::validate(
+            &schema,
+            &json!({"to": "Ron", "subject": "", "body": "", "bcc": ["x"]})
+        )
+        .is_err());
+    }
+    // ── Attachments ──────────────────────────────────────────────────────
+
+    /// A temporary user folder with `files` (relative paths) in Documents,
+    /// standing in for the real one on this thread.
+    fn home_with(files: &[&str]) -> tempfile::TempDir {
+        let home = tempfile::tempdir().unwrap();
+        for rel in files {
+            let path = home.path().join("Documents").join(rel);
+            std::fs::create_dir_all(path.parent().unwrap()).unwrap();
+            std::fs::write(&path, "report").unwrap();
+        }
+        crate::command_mode::files::set_test_home(home.path());
+        home
+    }
+
+    /// A Gmail draft that opens, takes an attachment as `attaches_as`, and
+    /// sends from its Send button.
+    fn attaching_browser(
+        home: &Path,
+        attaches_as: Option<AttachState>,
+    ) -> (Arc<FakeEffects>, Arc<dyn Effects>) {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![draft.clone()],
+            folders: vec![home.join("Documents")],
+            foreground: std::sync::Mutex::new(None),
+            focus_follows: true,
+            send_retitles: Some(INBOX_TITLE.into()),
+            buttons: vec![(2, "Send".into())],
+            picker_buttons: vec![(2, "Attach".into())],
+            attaches_as,
+            ..Default::default()
+        });
+        let effects = browser(&fake, Some(draft));
+        (fake, effects)
+    }
+
+    fn own_ctx(effects: Arc<dyn Effects>) -> ToolCtx {
+        let mut ctx = ctx_over(effects, book(), Platform::Windows);
+        ctx.settings.command_own_email = "me@example.com".into();
+        ctx
+    }
+
+    /// "Email me the project report": the file is found in Documents, put
+    /// into the draft through Gmail's Attach button and the file dialog, and
+    /// the send reports the file by name, to "you".
+    #[test]
+    fn a_file_is_found_attached_and_sent_to_me() {
+        let home = home_with(&["Project report.pdf", "holiday.jpg"]);
+        let (fake, effects) = attaching_browser(home.path(), Some(AttachState::Attached));
+        let ctx = own_ctx(effects);
+        let ToolOutcome::NeedsConfirmation { pending, feedback } = run(
+            &ctx,
+            json!({"to": "me", "subject": "Project report", "body": "Here it is.",
+                   "attach": "the project report"}),
+        ) else {
+            panic!("expected a draft with the file");
+        };
+        assert_eq!(feedback.key, "commandMode.feedback.emailDraftFile");
+        assert!(pending.summary.contains("me@example.com"), "{}", pending.summary);
+        assert!(pending.summary.contains("with Project report.pdf"), "{}", pending.summary);
+        assert_eq!(pending.payload["attachment"]["name"], "Project report.pdf");
+        let path = home.path().join("Documents").join("Project report.pdf");
+        let actions = fake.actions();
+        assert!(actions[0].starts_with("open_url "), "{actions:?}");
+        assert!(actions[0].contains("me%40example.com"), "{actions:?}");
+        assert_eq!(
+            actions[1..],
+            [
+                "focus_window 2".to_string(),
+                "open_file_picker 2 attach".to_string(),
+                format!("type_text {}", path.display()),
+                "press_keys Enter".to_string(),
+            ]
+        );
+
+        let outcome = send(&ctx, pending.payload);
+        assert_eq!(
+            outcome,
+            ToolOutcome::done(
+                "emailSentFile",
+                "Sent {{file}} to {{name}}.",
+                &[("file", "Project report.pdf"), ("name", "you")]
+            )
+        );
+        assert!(fake.actions().contains(&"press_button 2 send".to_string()));
+    }
+
+    /// A file the draft never showed as attached is never sent: the run
+    /// fails honestly and nothing waits to be sent.
+    #[test]
+    fn a_file_that_did_not_attach_is_never_sent() {
+        let home = home_with(&["invoice.pdf"]);
+        for shown in [None, Some(AttachState::Uploading)] {
+            let (fake, effects) = attaching_browser(home.path(), shown);
+            let ctx = own_ctx(effects);
+            let outcome = run(
+                &ctx,
+                json!({"to": "Ron", "subject": "Invoice", "body": "Attached.",
+                       "attach": "invoice", "attach_kind": "pdf"}),
+            );
+            let ToolOutcome::Failed { reason, .. } = outcome else {
+                panic!("expected a failure, got {outcome:?}");
+            };
+            assert!(reason.contains("couldn't attach invoice.pdf"), "{reason}");
+            assert!(reason.contains("nothing was sent"), "{reason}");
+            assert!(
+                !fake.actions().iter().any(|a| a.contains("send")),
+                "{:?}",
+                fake.actions()
+            );
+        }
+    }
+
+    /// The send itself checks the chip again: a file removed from the draft
+    /// since it was attached stops the send.
+    #[test]
+    fn the_send_checks_the_file_is_still_attached() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = Arc::new(FakeEffects {
+            windows: vec![draft.clone()],
+            foreground: std::sync::Mutex::new(Some(draft)),
+            focus_follows: true,
+            send_retitles: Some(INBOX_TITLE.into()),
+            buttons: vec![(2, "Send".into())],
+            ..Default::default()
+        });
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let mut payload = payload();
+        payload["attachment"] = json!({"name": "invoice.pdf", "bytes": 1200});
+        let ToolOutcome::Failed { reason, .. } = send(&ctx, payload.clone()) else {
+            panic!("expected a refusal");
+        };
+        assert!(reason.contains("isn't attached"), "{reason}");
+        assert!(!fake.actions().iter().any(|a| a.contains("press_button")));
+
+        *fake.attachment.lock().unwrap() = Some(AttachState::Attached);
+        let outcome = send(&ctx, payload);
+        assert_eq!(
+            outcome,
+            ToolOutcome::done(
+                "emailSentFile",
+                "Sent {{file}} to {{name}}.",
+                &[("file", "invoice.pdf"), ("name", "Ron Weasley")]
+            )
+        );
+    }
+
+    /// Several close files are a question naming each, and nothing opens.
+    #[test]
+    fn several_close_files_are_a_question() {
+        let home = home_with(&["report 2025.pdf", "report 2026.pdf"]);
+        let (fake, effects) = attaching_browser(home.path(), Some(AttachState::Attached));
+        let ctx = own_ctx(effects);
+        let outcome = run(
+            &ctx,
+            json!({"to": "me", "subject": "Report", "body": "", "attach": "report"}),
+        );
+        let ToolOutcome::AskUser { question, choices } = outcome else {
+            panic!("expected a question, got {outcome:?}");
+        };
+        assert_eq!(question, "Which file should I attach?");
+        assert_eq!(choices.len(), 2, "{choices:?}");
+        assert!(fake.actions().is_empty(), "{:?}", fake.actions());
+    }
+
+    /// A file that reads as a secret is refused by name, and one that is
+    /// not there is said to be missing; neither opens a draft.
+    #[test]
+    fn private_and_missing_files_are_said_apart() {
+        let home = home_with(&["my passwords.txt"]);
+        let (fake, effects) = attaching_browser(home.path(), Some(AttachState::Attached));
+        let ctx = own_ctx(effects);
+        let ToolOutcome::Failed { reason, .. } = run(
+            &ctx,
+            json!({"to": "me", "subject": "x", "body": "", "attach": "my passwords"}),
+        ) else {
+            panic!("expected a refusal");
+        };
+        assert!(reason.contains("won't email"), "{reason}");
+        let ToolOutcome::Failed { reason, .. } = run(
+            &ctx,
+            json!({"to": "me", "subject": "x", "body": "", "attach": "tax return"}),
+        ) else {
+            panic!("expected not found");
+        };
+        assert!(reason.contains("couldn't find a file called tax return"), "{reason}");
+        assert!(fake.actions().is_empty(), "{:?}", fake.actions());
+    }
+
+    /// A file over Gmail's 25 MB is refused before any draft opens.
+    #[test]
+    fn a_file_too_big_for_gmail_is_refused_first() {
+        let home = home_with(&[]);
+        let big = home.path().join("Documents").join("site backup.zip");
+        std::fs::create_dir_all(big.parent().unwrap()).unwrap();
+        std::fs::File::create(&big)
+            .unwrap()
+            .set_len(30 * 1024 * 1024)
+            .unwrap();
+        let (fake, effects) = attaching_browser(home.path(), Some(AttachState::Attached));
+        let ctx = own_ctx(effects);
+        let ToolOutcome::Failed { reason, .. } = run(
+            &ctx,
+            json!({"to": "Ron", "subject": "Backup", "body": "", "attach": "site backup"}),
+        ) else {
+            panic!("expected a refusal");
+        };
+        assert!(reason.contains("30 MB"), "{reason}");
+        assert!(reason.contains("25 MB"), "{reason}");
+        assert!(fake.actions().is_empty(), "{:?}", fake.actions());
+    }
+
+    /// A browser window with another draft in a tab of its own still reads
+    /// "Compose Mail" once Gmail closes the one just sent; one compose tab
+    /// fewer is the evidence then.
+    #[test]
+    fn one_compose_tab_fewer_counts_as_sent() {
+        let draft = window(2, DRAFT_TITLE, "chrome");
+        let fake = FakeEffects {
+            windows: vec![draft.clone()],
+            foreground: std::sync::Mutex::new(Some(draft.clone())),
+            tabs: std::sync::Mutex::new(Some(vec![
+                "Compose Mail - me@example.com - Gmail".into(),
+                "Believer - YouTube".into(),
+            ])),
+            ..Default::default()
+        };
+        let ctx = ctx_over(Arc::new(fake), book(), Platform::Windows);
+        assert!(gmail_took_the_draft(&ctx, draft.id, &draft.title, Some(2)));
+        assert!(!gmail_took_the_draft(&ctx, draft.id, &draft.title, Some(1)));
+        assert!(!gmail_took_the_draft(&ctx, draft.id, &draft.title, None));
+    }
+
+    /// "Me" with no address known is a question, asked once.
+    #[test]
+    fn me_without_an_address_asks_for_it() {
+        let fake = Arc::new(FakeEffects::default());
+        let ctx = ctx(&fake, book(), Platform::Windows);
+        let outcome = run(&ctx, json!({"to": "me", "subject": "Hi", "body": "Hello"}));
+        let ToolOutcome::AskUser { question, .. } = outcome else {
+            panic!("expected a question, got {outcome:?}");
+        };
+        assert!(question.contains("your email address"), "{question}");
+        assert!(fake.actions().is_empty());
+    }
+
+    #[test]
+    fn the_user_themself_is_recognised_in_english_and_nepali() {
+        for spoken in ["me", "Me", "myself", "my email", "malai", "mero email", "me."] {
+            assert!(means_self(spoken), "{spoken}");
+        }
+        for spoken in ["Ron", "meera", "my boss", "mero sathi"] {
+            assert!(!means_self(spoken), "{spoken}");
+        }
+    }
+
+    /// Only an address the user gave as their own is kept.
+    #[test]
+    fn only_an_address_given_as_ones_own_is_remembered() {
+        let given = json!({"to": "isang@example.com", "subject": "", "body": "",
+                           "remember_as_mine": true});
+        assert_eq!(
+            address_to_remember("compose_email", &given).as_deref(),
+            Some("isang@example.com")
+        );
+        let named = json!({"to": "Isang <isang@example.com>", "remember_as_mine": true});
+        assert_eq!(
+            address_to_remember("compose_email", &named).as_deref(),
+            Some("isang@example.com")
+        );
+        for args in [
+            json!({"to": "isang@example.com"}),
+            json!({"to": "isang@example.com", "remember_as_mine": false}),
+            json!({"to": "Ron", "remember_as_mine": true}),
+        ] {
+            assert_eq!(address_to_remember("compose_email", &args), None, "{args}");
+        }
+        assert_eq!(address_to_remember("open_url", &given), None);
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "rema-brand",
+  "private": true,
+  "type": "module",
+  "description": "Generates REMA's logo, icons and wordmark from brand/bitmaps.mjs",
+  "scripts": {
+    "build": "bun build.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2"
+  }
+}
