@@ -91,7 +91,10 @@ LAUNCH_PLAN.md
 # local scratch documents, not product documentation, so the whole folder stays
 # out of the public repo. User-facing docs live in README.md, BUILD.md,
 # CONTRIBUTING.md, PRIVACY.md and on rhema.invalid/docs.
-docs/
+docs/*
+# Audit outputs that are product documentation, kept in the repo on purpose.
+!docs/DIFFERENCE.md
+!docs/DECISIONS.md
 
 # Demo / marketing capture tooling (not shipped, regenerable, dev-only).
 # The capture harness, its config, the demo-only entry points, and the
