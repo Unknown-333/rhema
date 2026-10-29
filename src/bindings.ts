@@ -1977,8 +1977,8 @@ async shareInsightsCard(pngBase64: string, title: string, anchor: ShareAnchor) :
 /**
  * Send a typed message to the assistant (keyboard alternative to voice).
  * 
- * A typed quick ask is one job, exactly like a spoken one, so it starts from an
- * empty conversation (a no-op during a call, which owns the conversation).
+ * A typed quick ask starts like a spoken one: empty, or as a follow-up while the
+ * last one is remembered (a no-op during a call, which owns the conversation).
  */
 async assistantSendText(text: string) : Promise<Result<null, string>> {
     try {
@@ -3869,208 +3869,6 @@ async getSettingsNotices() : Promise<SettingsNotice[]> {
 async dismissSettingsNotice(kind: SettingsNoticeKind) : Promise<void> {
     await TAURI_INVOKE("dismiss_settings_notice", { kind });
 },
-/**
- * Run a command typed into Settings → Debug. `dry_run` overrides the saved
- * `command_dry_run` setting for this one command; `null` uses the setting.
- * 
- * Not gated on `command_mode_enabled`: this box is the developer surface
- * (the Debug tab is itself hidden behind debug mode), and testing a command
- * must not require switching the feature on for the hotkey too.
- */
-async commandRunText(text: string, dryRun: boolean | null) : Promise<CommandReport> {
-    return await TAURI_INVOKE("command_run_text", { text, dryRun });
-},
-/**
- * Answer the question a command asked (`status: needs_answer`), by the
- * report's `id`. The command carries on from where it stopped.
- */
-async commandAnswer(id: number, answer: string) : Promise<CommandReport> {
-    return await TAURI_INVOKE("command_answer", { id, answer });
-},
-/**
- * Accept (`true`, "send") or decline what a command left waiting for
- * confirmation (`status: awaiting_confirmation`), by the report's `id`.
- */
-async commandConfirm(id: number, accept: boolean) : Promise<CommandReport> {
-    return await TAURI_INVOKE("command_confirm", { id, accept });
-},
-/**
- * Open the contacts file in the user's editor, creating it with one example
- * contact first if there is none. A file that exists is never touched, even
- * an empty or broken one: it is the user's, and the loader already says
- * what is wrong with it.
- */
-async commandOpenContactsFile() : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("command_open_contacts_file") };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * Turn command mode on or off.
- */
-async changeCommandModeEnabledSetting(enabled: boolean) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_mode_enabled_setting", { enabled }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The provider (a `post_process_providers` id) that routes commands. Empty
- * goes back to the default.
- */
-async changeCommandRouterProviderIdSetting(providerId: string) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_router_provider_id_setting", { providerId }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The model that routes commands. Empty goes back to the default.
- */
-async changeCommandRouterModelSetting(model: string) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_router_model_setting", { model }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * Whether commands hold every send, post or delete for the user's Do it
- * ("Ask before irreversible actions"). Off: they are carried out unless the
- * user asks to review.
- */
-async changeCommandConfirmIrreversibleSetting(enabled: boolean) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_confirm_irreversible_setting", { enabled }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * Whether commands show what they would do instead of doing it.
- */
-async changeCommandDryRunSetting(enabled: boolean) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_dry_run_setting", { enabled }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The Google account (`authuser=`) Gmail and Calendar links open in. Empty
- * means the browser's default account.
- */
-async changeCommandGoogleAccountSetting(account: string) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_google_account_setting", { account }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The search page a web search opens. It must contain `{query}`; anything
- * else goes back to the default rather than opening a page that ignores
- * what was asked.
- */
-async changeCommandSearchUrlSetting(url: string) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_search_url_setting", { url }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * Whether a command no tool fits is handed to the screen agent.
- */
-async changeCommandAutoEscalateSetting(enabled: boolean) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_auto_escalate_setting", { enabled }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The model the screen agent runs on. Empty goes back to the default.
- */
-async changeCommandAgentModelSetting(model: string) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_model_setting", { model }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * The most LLM rounds one agent task may use, kept within 1–60.
- */
-async changeCommandAgentMaxStepsSetting(steps: number) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_max_steps_setting", { steps }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * What one agent task may cost, in US dollars, kept within $0.01–$20.
- */
-async changeCommandAgentMaxCostUsdSetting(usd: number) : Promise<Result<null, string>> {
-    try {
-    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_max_cost_usd_setting", { usd }) };
-} catch (e) {
-    if(e instanceof Error) throw e;
-    else return { status: "error", error: e  as any };
-}
-},
-/**
- * Stop the command that is running, if any: an agent task stops before its
- * next request or action and leaves the screen as it is. Esc and `--cancel`
- * do the same through `utils::cancel_current_operation`.
- */
-async commandCancel() : Promise<void> {
-    await TAURI_INVOKE("command_cancel");
-},
-async commandModelInUse() : Promise<CommandModelInUse> {
-    return await TAURI_INVOKE("command_model_in_use");
-},
-/**
- * The spoken command's card in the corner, for a window that just loaded.
- */
-async commandCard() : Promise<CommandCard | null> {
-    return await TAURI_INVOKE("command_card");
-},
-/**
- * Send (`true`) or Cancel on a command card that waits for confirmation.
- */
-async commandCardConfirm(seq: number, accept: boolean) : Promise<void> {
-    await TAURI_INVOKE("command_card_confirm", { seq, accept });
-},
-/**
- * One of a command card's choices, as the answer to its question.
- */
-async commandCardAnswer(seq: number, answer: string) : Promise<void> {
-    await TAURI_INVOKE("command_card_answer", { seq, answer });
-},
-/**
- * Close a command card: its own timer ran out, or Cancel on a question. A
- * confirmation it held is declined.
- */
-async commandCardDismiss(seq: number) : Promise<void> {
-    await TAURI_INVOKE("command_card_dismiss", { seq });
-},
 async accountGetStatus() : Promise<AccountStatus> {
     return await TAURI_INVOKE("account_get_status");
 },
@@ -4218,6 +4016,208 @@ async setAccountSyncSecrets(enabled: boolean) : Promise<Result<null, string>> {
     if(e instanceof Error) throw e;
     else return { status: "error", error: e  as any };
 }
+},
+/**
+ * Run a command typed into Settings → Debug. `dry_run` overrides the saved
+ * `command_dry_run` setting for this one command; `null` uses the setting.
+ * 
+ * Not gated on `command_mode_enabled`: this box is the developer surface
+ * (the Debug tab is itself hidden behind debug mode), and testing a command
+ * must not require switching the feature on for the hotkey too.
+ */
+async commandRunText(text: string, dryRun: boolean | null) : Promise<CommandReport> {
+    return await TAURI_INVOKE("command_run_text", { text, dryRun });
+},
+/**
+ * Answer the question a command asked (`status: needs_answer`), by the
+ * report's `id`. The command carries on from where it stopped.
+ */
+async commandAnswer(id: number, answer: string) : Promise<CommandReport> {
+    return await TAURI_INVOKE("command_answer", { id, answer });
+},
+/**
+ * Accept (`true`, "send") or decline what a command left waiting for
+ * confirmation (`status: awaiting_confirmation`), by the report's `id`.
+ */
+async commandConfirm(id: number, accept: boolean) : Promise<CommandReport> {
+    return await TAURI_INVOKE("command_confirm", { id, accept });
+},
+/**
+ * Open the contacts file in the user's editor, creating it with one example
+ * contact first if there is none. A file that exists is never touched, even
+ * an empty or broken one: it is the user's, and the loader already says
+ * what is wrong with it.
+ */
+async commandOpenContactsFile() : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("command_open_contacts_file") };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * Turn command mode on or off.
+ */
+async changeCommandModeEnabledSetting(enabled: boolean) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_mode_enabled_setting", { enabled }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The provider (a `post_process_providers` id) that routes commands. Empty
+ * goes back to the default.
+ */
+async changeCommandRouterProviderIdSetting(providerId: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_router_provider_id_setting", { providerId }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The model that routes commands. Empty goes back to the default.
+ */
+async changeCommandRouterModelSetting(model: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_router_model_setting", { model }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * Whether commands show what they would do instead of doing it.
+ */
+async changeCommandDryRunSetting(enabled: boolean) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_dry_run_setting", { enabled }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * Whether commands hold every send, post or delete for the user's Do it
+ * ("Ask before irreversible actions"). Off: they are carried out unless the
+ * user asks to review.
+ */
+async changeCommandConfirmIrreversibleSetting(enabled: boolean) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_confirm_irreversible_setting", { enabled }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The Google account (`authuser=`) Gmail and Calendar links open in. Empty
+ * means the browser's default account.
+ */
+async changeCommandGoogleAccountSetting(account: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_google_account_setting", { account }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The search page a web search opens. It must contain `{query}`; anything
+ * else goes back to the default rather than opening a page that ignores
+ * what was asked.
+ */
+async changeCommandSearchUrlSetting(url: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_search_url_setting", { url }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * Whether a command no tool fits is handed to the screen agent.
+ */
+async changeCommandAutoEscalateSetting(enabled: boolean) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_auto_escalate_setting", { enabled }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The model the screen agent runs on. Empty goes back to the default.
+ */
+async changeCommandAgentModelSetting(model: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_model_setting", { model }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * The most LLM rounds one agent task may use, kept within 1–60.
+ */
+async changeCommandAgentMaxStepsSetting(steps: number) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_max_steps_setting", { steps }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * What one agent task may cost, in US dollars, kept within $0.01–$20.
+ */
+async changeCommandAgentMaxCostUsdSetting(usd: number) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("change_command_agent_max_cost_usd_setting", { usd }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
+/**
+ * Stop the command that is running, if any: an agent task stops before its
+ * next request or action and leaves the screen as it is. Esc and `--cancel`
+ * do the same through `utils::cancel_current_operation`.
+ */
+async commandCancel() : Promise<void> {
+    await TAURI_INVOKE("command_cancel");
+},
+async commandModelInUse() : Promise<CommandModelInUse> {
+    return await TAURI_INVOKE("command_model_in_use");
+},
+/**
+ * The spoken command's card in the corner, for a window that just loaded.
+ */
+async commandCard() : Promise<CommandCard | null> {
+    return await TAURI_INVOKE("command_card");
+},
+/**
+ * Send (`true`) or Cancel on a command card that waits for confirmation.
+ */
+async commandCardConfirm(seq: number, accept: boolean) : Promise<void> {
+    await TAURI_INVOKE("command_card_confirm", { seq, accept });
+},
+/**
+ * One of a command card's choices, as the answer to its question.
+ */
+async commandCardAnswer(seq: number, answer: string) : Promise<void> {
+    await TAURI_INVOKE("command_card_answer", { seq, answer });
+},
+/**
+ * Close a command card: its own timer ran out, or Cancel on a question. A
+ * confirmation it held is declined.
+ */
+async commandCardDismiss(seq: number) : Promise<void> {
+    await TAURI_INVOKE("command_card_dismiss", { seq });
 }
 }
 
@@ -4886,75 +4886,6 @@ web_search_api_keys?: SecretMap; theme?: Theme; ui_text_size?: UiTextSize;
  */
 main_window_width?: number | null; main_window_height?: number | null; 
 /**
- * Command mode: say what you want done and the app does it on screen
- * (`command_mode/`). Off by default, because a command acts in the
- * user's apps and sends the transcript to the router's provider.
- */
-command_mode_enabled?: boolean;
-/**
- * Hold to talk (true) or Tap to toggle (false) for the command shortcut
- * ([`COMMAND_BINDING_ID`]), its own setting like the ask's. See
- * [`holds_to_record`].
- */
-command_push_to_talk?: boolean;
-/**
- * The provider (an id from `post_process_providers`) that routes a
- * command to a tool. Its key is the one already saved for that provider.
- */
-command_router_provider_id?: string;
-/**
- * The model that routes a command: small and fast, since every command
- * costs one call to it.
- */
-command_router_model?: string;
-/**
- * Show what a command would do instead of doing it. The Debug box and
- * `--dry-run` can still override it for one command.
- */
-command_dry_run?: boolean;
-/**
- * "Ask before irreversible actions": hold every send, post or delete for
- * the user's Do it. Off by default: a command the user spoke is the
- * request, so it is carried out, Send included, and waits only when the
- * user's own words ask to review (`command_mode::review`).
- */
-command_confirm_irreversible?: boolean;
-/**
- * The Google account Gmail and Calendar links open in, sent as
- * `authuser=`. Empty means the browser's default Google account.
- */
-command_google_account?: string;
-/**
- * The search page a web search opens; `{query}` is replaced with the
- * URL-encoded query.
- */
-command_search_url?: string;
-/**
- * When no tool fits a command (or a tool fails in a way another approach
- * could fix), hand it to the tier-2 agent that works the app's controls
- * through the accessibility tree (`command_mode/agent/`). On by default:
- * the agent holds anything that sends, buys or deletes for the user, and
- * the step and cost limits below bound it. Off reports that the command
- * needs computer use instead.
- */
-command_auto_escalate?: boolean;
-/**
- * The model the agent runs on, on the router's provider. Stronger than
- * the router's, since it plans over many steps.
- */
-command_agent_model?: string;
-/**
- * The most LLM rounds one agent task may use
- * (`clamp_command_agent_max_steps`).
- */
-command_agent_max_steps?: number;
-/**
- * What one agent task may cost, in US dollars, priced from the agent's
- * table (`command_mode::agent::price_per_mtok`). A model the table does
- * not know is held to the step limit alone.
- */
-command_agent_max_cost_usd?: number; 
-/**
  * Deprecated and ignored: the Custom account server earlier versions let
  * the user type. The account server now comes only from discovery
  * (`account/discovery.rs`), so an install that had a custom server follows
@@ -4987,7 +4918,83 @@ account_sync_secrets?: boolean;
  * dictate and type here. Cleared when the computer signs out; ids that
  * leave the account are dropped.
  */
-account_approved_devices?: string[] }
+account_approved_devices?: string[]; 
+/**
+ * Command mode: say what you want done and the app does it on screen
+ * (`command_mode/`). Off by default, because a command acts in the
+ * user's apps and sends the transcript to the router's provider.
+ */
+command_mode_enabled?: boolean; 
+/**
+ * Hold to talk (true) or Tap to toggle (false) for the command shortcut
+ * ([`COMMAND_BINDING_ID`]), its own setting like the ask's. See
+ * [`holds_to_record`].
+ */
+command_push_to_talk?: boolean; 
+/**
+ * The provider (an id from `post_process_providers`) that routes a
+ * command to a tool. Its key is the one already saved for that provider.
+ */
+command_router_provider_id?: string; 
+/**
+ * The model that routes a command: small and fast, since every command
+ * costs one call to it.
+ */
+command_router_model?: string; 
+/**
+ * Show what a command would do instead of doing it. The Debug box and
+ * `--dry-run` can still override it for one command.
+ */
+command_dry_run?: boolean; 
+/**
+ * "Ask before irreversible actions": hold every send, post or delete for
+ * the user's Do it. Off by default: a command the user spoke is the
+ * request, so it is carried out, Send included, and waits only when the
+ * user's own words ask to review (`command_mode::review`).
+ */
+command_confirm_irreversible?: boolean; 
+/**
+ * The Google account Gmail and Calendar links open in, sent as
+ * `authuser=`. Empty means the browser's default Google account.
+ */
+command_google_account?: string; 
+/**
+ * The user's own email address, which "email me" and "send it to
+ * myself" mean. Empty: the signed-in RHEMA account's address is used
+ * (`command_mode::command_settings`), and failing that the command asks
+ * once and keeps the answer here.
+ */
+command_own_email?: string; 
+/**
+ * The search page a web search opens; `{query}` is replaced with the
+ * URL-encoded query.
+ */
+command_search_url?: string; 
+/**
+ * When no tool fits a command (or a tool fails in a way another approach
+ * could fix), hand it to the tier-2 agent that works the app's controls
+ * through the accessibility tree (`command_mode/agent/`). On by default:
+ * the agent holds anything that sends, buys or deletes for the user, and
+ * the step and cost limits below bound it. Off reports that the command
+ * needs computer use instead.
+ */
+command_auto_escalate?: boolean; 
+/**
+ * The model the agent runs on, on the router's provider. Stronger than
+ * the router's, since it plans over many steps.
+ */
+command_agent_model?: string; 
+/**
+ * The most LLM rounds one agent task may use
+ * (`clamp_command_agent_max_steps`).
+ */
+command_agent_max_steps?: number; 
+/**
+ * What one agent task may cost, in US dollars, priced from the agent's
+ * table (`command_mode::agent::price_per_mtok`). A model the table does
+ * not know is held to the step limit alone.
+ */
+command_agent_max_cost_usd?: number }
 /**
  * Where the assistant's Ask card opens on screen.
  * 
@@ -5167,19 +5174,6 @@ export type AssistantResponseLength =
  * No length directive — use the system prompt as-is.
  */
 "default" | "short" | "medium" | "long"
-/**
- * How long a quick ask remembers the one before it ("Remember the
- * conversation").
- */
-export type QuickAskMemory = 
-/**
- * Every quick ask starts empty.
- */
-"off" | "five_minutes" | "ten_minutes" | "thirty_minutes" | 
-/**
- * Until the user starts a new conversation (or the app restarts).
- */
-"until_cleared"
 /**
  * How thorough a web search should be. This is the single dial that replaces
  * the old raw "max results" number. It reaches the provider request (Tavily
@@ -5505,9 +5499,6 @@ export type CloudSttUnavailableReason = "not_enabled" | "selected_provider_missi
  */
 "sign_in_required"
 /**
- * Where a command came from.
- */
-/**
  * One command's report, as the corner card shows it. `seq` changes every
  * time the card does, so an answer or a timer for an earlier card is ignored.
  */
@@ -5530,15 +5521,18 @@ borrowed: boolean;
  * The provider in use can take a request: it has a key or needs none.
  */
 ready: boolean }
-export type CommandOrigin =
+/**
+ * Where a command came from.
+ */
+export type CommandOrigin = 
 /**
  * Settings → Debug text box.
  */
-"typed" |
+"typed" | 
 /**
  * `--run-command` on the command line.
  */
-"cli" |
+"cli" | 
 /**
  * The command-mode hotkey (Phase 2).
  */
@@ -5554,44 +5548,49 @@ export type CommandOrigin =
 /**
  * Everything about one command, for the UI, the CLI and the log.
  */
-export type CommandReport = {
+export type CommandReport = { 
 /**
  * Identifies the pending confirmation or question, if any.
  */
-id: number; origin: CommandOrigin; transcript: string; status: CommandStatus;
+id: number; origin: CommandOrigin; transcript: string; status: CommandStatus; 
 /**
  * What to show and say, in order.
  */
-feedback: Feedback[]; steps: StepReport[];
+feedback: Feedback[]; steps: StepReport[]; 
 /**
  * What "send" will do, while awaiting confirmation.
  */
-pending_summary: string | null; question: string | null; choices: string[];
+pending_summary: string | null; question: string | null; choices: string[]; 
 /**
  * The task handed to computer use, when the router escalated.
  */
-escalation: string | null; dry_run: boolean;
+escalation: string | null; dry_run: boolean; 
 /**
  * In a dry run, every action that would have happened.
  */
 dry_run_actions: string[]; model: string; llm_calls: number; usage: Usage; latency_ms: number; error: string | null }
-export type CommandStatus =
+export type CommandStatus = 
 /**
  * Every call ran.
  */
-"done" |
+"done" | 
 /**
  * A tool did its reversible half and waits for "send" / "cancel".
  */
-"awaiting_confirmation" |
+"awaiting_confirmation" | 
 /**
  * The model or a tool needs an answer before going on.
  */
-"needs_answer" |
+"needs_answer" | 
 /**
- * No tool fits; the computer-use fallback would take over (Phase 3).
+ * No tool fits, and the agent that would take over is switched off,
+ * not set up, or not available on this system.
  */
-"needs_computer_use" | "cancelled" | "failed"
+"needs_computer_use" | 
+/**
+ * Declined, expired, or replaced by a newer command.
+ */
+"cancelled" | "failed"
 /**
  * Where a conversation happened. The quick ask is one question and one answer;
  * a call is a back-and-forth conversation. History lists them separately and
@@ -5742,13 +5741,13 @@ export type EngineType = "Whisper" | "Parakeet" | "Moonshine" | "MoonshineStream
 "NativeTts"
 /**
  * What a user-facing message says, as a translation key plus parameters.
- *
+ * 
  * Feedback is built from templates rather than a second LLM call. The key is
  * looked up in the frontend's translations (`commandMode.feedback.*`), and
  * [`Feedback::render_en`] gives the English text for logs, the CLI and
  * anywhere without the frontend.
  */
-export type Feedback = { key: string; params: [string, string][];
+export type Feedback = { key: string; params: ([string, string])[]; 
 /**
  * The English rendering, so a surface without translations still has words.
  */
@@ -5768,6 +5767,8 @@ export type FeedbackSystemInfo = { app_version: string; os: string; arch: string
  * A text-like file attached to a turn as context (content extracted in the
  * webview or by `assistant_read_file`).
  */
+export type FileAttachment = { name: string; content: string }
+export type FinishedUpdate = { from: string; to: string }
 /**
  * The free allowance as the server reports it.
  */
@@ -5792,8 +5793,6 @@ balance: FreeCreditBalance | null;
  * The server answered `402 credit_exhausted` (or reported nothing left).
  */
 exhausted: boolean; serving: FreeCreditJobs }
-export type FileAttachment = { name: string; content: string }
-export type FinishedUpdate = { from: string; to: string }
 /**
  * A persona drafted by the model from a short description. Not persisted by
  * the backend — the UI shows it for review, then saves it via
@@ -6409,6 +6408,21 @@ export type PostProcessUnavailableReason = "no_providers" | "selected_provider_m
  */
 "sign_in_required"
 /**
+ * How long a quick ask remembers the one before it ("Remember the
+ * conversation"). Within that time of the last answer, the next quick ask is a
+ * follow-up; after it, or after the user starts a new conversation, it starts
+ * empty. Calls and a phone's questions keep their own conversations.
+ */
+export type QuickAskMemory = 
+/**
+ * Every quick ask starts empty.
+ */
+"off" | "five_minutes" | "ten_minutes" | "thirty_minutes" | 
+/**
+ * Until the user starts a new conversation (or the app restarts).
+ */
+"until_cleared"
+/**
  * How long unstarred dictation/Flow recordings are kept.
  * 
  * **The string on each variant is load-bearing and must stay explicit.** serde's
@@ -6654,11 +6668,11 @@ export type SpeakerSource =
 /**
  * One tool call, as the report shows it.
  */
-export type StepReport = { tool: string;
+export type StepReport = { tool: string; 
 /**
  * The arguments as JSON text (the frontend only displays them).
  */
-args_json: string;
+args_json: string; 
 /**
  * "done", "awaiting_confirmation", "asked", "failed", "skipped".
  */
