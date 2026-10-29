@@ -251,3 +251,45 @@ bun run tauri build -- --bundles deb
 ```
 
 Then install using the deb extraction method above.
+
+### Windows notes
+
+Toolchain gotchas seen while building on Windows (toolchain, not code — see T02).
+
+**`cargo` fails with "missing manifest in toolchain".** This machine has two
+Rust toolchains on `PATH`: a standalone install at
+`C:\Program Files\Rust stable MSVC 1.99\bin` (which carries its own
+`rust-std`, `clippy` and `rustfmt`) and a `rustup` proxy. The `rustup`
+default toolchain was left with a missing manifest (an interrupted install),
+so if `cargo` resolves to the `rustup` proxy it fails before compiling. Fix:
+put `C:\Program Files\Rust stable MSVC 1.99\bin` first on `PATH` for the
+build shell so `cargo`/`rustc` resolve to the standalone install. Do **not**
+run `rustup` installs or updates to "repair" it. Verify with
+`(Get-Command cargo).Source` — it should point inside
+`Rust stable MSVC 1.99\bin`.
+
+**`CARGO_TARGET_DIR`, `VULKAN_SDK`, `LIBCLANG_PATH` may be unset in an old
+shell.** These are set machine-wide, but a shell opened before they were set
+won't see them. Read them back from the machine (then user) environment and
+rebuild `PATH` from Machine + User at the start of the build shell:
+
+```powershell
+function Get-MachineOrUser($n){ $v=[Environment]::GetEnvironmentVariable($n,'Machine'); if(-not $v){$v=[Environment]::GetEnvironmentVariable($n,'User')}; $v }
+$env:Path = "$([Environment]::GetEnvironmentVariable('Path','Machine'));$([Environment]::GetEnvironmentVariable('Path','User'))"
+$env:VULKAN_SDK      = Get-MachineOrUser 'VULKAN_SDK'       # C:\VulkanSDK\1.4.363.0
+$env:LIBCLANG_PATH   = Get-MachineOrUser 'LIBCLANG_PATH'    # C:\Program Files\LLVM\bin
+$env:CARGO_TARGET_DIR = Get-MachineOrUser 'CARGO_TARGET_DIR' # C:\t
+```
+
+**First clean build can fail on a slow network** ("spurious network error:
+transfer too slow" downloading a crate, e.g. `brotli-decompressor`). This is
+the network, not the build. Pre-fetch all dependencies first, then build:
+
+```powershell
+cargo fetch   # retries the slow downloads; caches everything locally
+cargo build
+```
+
+With the crates already cached, a clean `cargo build` of `src-tauri` on this
+machine takes about 8 minutes; an incremental build after touching one source
+file takes about 25–30 seconds.
