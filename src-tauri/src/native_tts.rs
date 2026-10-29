@@ -2727,11 +2727,9 @@ mod tests {
     #[test]
     #[ignore]
     fn live_quality_matrix() {
-        let dir = PathBuf::from(
-            std::env::var_os("RHEMA_NATIVE_TTS_DIR").expect("RHEMA_NATIVE_TTS_DIR"),
-        );
-        let out =
-            PathBuf::from(std::env::var_os("RHEMA_TTS_WAV_DIR").expect("RHEMA_TTS_WAV_DIR"));
+        let dir =
+            PathBuf::from(std::env::var_os("RHEMA_NATIVE_TTS_DIR").expect("RHEMA_NATIVE_TTS_DIR"));
+        let out = PathBuf::from(std::env::var_os("RHEMA_TTS_WAV_DIR").expect("RHEMA_TTS_WAV_DIR"));
         init(dir);
         let only = std::env::var("RHEMA_TTS_ONLY").unwrap_or_default();
         let voices: Vec<String> = std::env::var("RHEMA_TTS_VOICES")

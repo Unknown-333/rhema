@@ -434,10 +434,7 @@ mod tests {
             None
         );
         let tauri = refusal(&settings, "mousex1", KeyboardImplementation::Tauri);
-        assert!(
-            tauri.is_some_and(|r| r.contains("RHEMA Keys")),
-            "{tauri:?}"
-        );
+        assert!(tauri.is_some_and(|r| r.contains("RHEMA Keys")), "{tauri:?}");
         let click = refusal(
             &settings,
             "ctrl+mouseright",

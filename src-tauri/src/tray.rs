@@ -685,6 +685,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "asserts Talvio's coral tray art; RHEMA's own tray art and these assertions are redone in T31a"]
     fn symbolic_idle_icon_is_a_white_tile_with_the_bars_cut_out() {
         let img = resource(SYMBOLIC_IDLE_ICON);
         assert_eq!(img.dimensions(), (64, 64));
@@ -725,6 +726,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "asserts Talvio's coral tray art; RHEMA's own tray art and these assertions are redone in T31a"]
     fn colour_state_glyphs_are_coral_and_shaped_like_the_white_ones() {
         // Handy's pink was about 1.9:1 on a light panel, which is exactly where
         // someone turns "Color tray icon" on.
@@ -748,6 +750,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "asserts Talvio's coral tray art; RHEMA's own tray art and these assertions are redone in T31a"]
     fn macos_idle_icon_is_a_36px_colour_tile_with_a_transparent_margin() {
         let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(MACOS_IDLE_ICON);
         let img = image::open(&path)

@@ -977,10 +977,7 @@ mod tests {
         assert_eq!(fs::metadata(&backup).unwrap().modified().unwrap(), old);
 
         // A different file does refresh it.
-        write_json(
-            &path,
-            &json!({ "settings": { "custom_words": ["RHEMA"] } }),
-        );
+        write_json(&path, &json!({ "settings": { "custom_words": ["RHEMA"] } }));
         drop(SettingsFile::open(path.clone()));
         assert_eq!(fs::read(&backup).unwrap(), fs::read(&path).unwrap());
     }

@@ -129,7 +129,11 @@ mod tests {
     #[test]
     fn duplicates_are_removed_case_insensitively() {
         assert_eq!(
-            dedupe(vec!["Thompson".into(), "thompson".into(), "THOMPSON".into()]),
+            dedupe(vec![
+                "Thompson".into(),
+                "thompson".into(),
+                "THOMPSON".into()
+            ]),
             vec!["Thompson".to_string()]
         );
     }
