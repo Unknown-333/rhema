@@ -16,7 +16,7 @@ interface LogoLockupProps {
 }
 
 /**
- * REMA brand lockup: the dot-wave tile next to the dot wordmark.
+ * RHEMA brand lockup: the dot-wave tile next to the dot wordmark.
  *
  * The wordmark is drawn as dot paths (generated into `wordmark.ts` by
  * `brand/build.mjs`), so it needs no font load and fills with

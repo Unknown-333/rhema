@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/design/icons.dart';
-import 'package:rema_mobile/src/features/assistant/assistant_controller.dart';
+import 'package:rhema_mobile/src/design/icons.dart';
+import 'package:rhema_mobile/src/features/assistant/assistant_controller.dart';
 
 import '../../app_test.dart' show finish, pumpApp, tabs;
 import '../../helpers.dart';
@@ -202,7 +202,7 @@ void main() {
     final id = await ask(tester, server, 'hi');
     await answer(tester, server, id, {'ok': false, 'error': 'assistant_off'});
     expect(
-      find.text('Turn on the assistant in REMA on ALEX-PC.'),
+      find.text('Turn on the assistant in RHEMA on ALEX-PC.'),
       findsOneWidget,
     );
     await tapVisible(tester, find.text('Try again'));
@@ -246,7 +246,7 @@ void main() {
 
   testWidgets('a spoken question sends the recording', (tester) async {
     final file = File(
-      '${Directory.systemTemp.createTempSync('rema-test').path}/a.wav',
+      '${Directory.systemTemp.createTempSync('rhema-test').path}/a.wav',
     )..writeAsBytesSync(List.filled(44, 9));
     final (server, relay) = await pumpApp(
       tester,
@@ -341,7 +341,7 @@ void main() {
     });
     expect(
       find.text(
-        'Turn on Voice commands in REMA on ALEX-PC (Commands page).',
+        'Turn on Voice commands in RHEMA on ALEX-PC (Commands page).',
       ),
       findsOneWidget,
     );

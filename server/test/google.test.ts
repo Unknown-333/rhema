@@ -12,7 +12,7 @@ import {
   PUBLIC_URL,
 } from "./helpers";
 
-const PHONE_REDIRECT = "rema://auth/callback";
+const PHONE_REDIRECT = "rhema://auth/callback";
 
 let h: Harness;
 beforeEach(async () => {
@@ -132,10 +132,10 @@ describe("start", () => {
     "http://127.0.0.1:5000/callback/",
     "http://127.0.0.1:5000/callback?x=1",
     "http://127.0.0.1:5000@evil.example/callback",
-    "rema://auth/callback/",
-    "rema://auth/callback?next=x",
-    "REMA://auth/callback",
-    "rema://auth/other",
+    "rhema://auth/callback/",
+    "rhema://auth/callback?next=x",
+    "RHEMA://auth/callback",
+    "rhema://auth/other",
     "https://evil.example/callback",
     "other-app://auth/callback",
     "evil://auth/callback",

@@ -3,7 +3,7 @@
  * ribbons of colour drifting through a glassy body, a bright rim, and a soft
  * halo — on a transparent canvas.
  *
- * Colour is REMA's: the icon's gradient (#FF8F3F →
+ * Colour is RHEMA's: the icon's gradient (#FF8F3F →
  * #EE3A5C) and the coral accent rise from the lit side, the ink tile's
  * blue-violet (#262B6B → #11122E) fills the depth, and warm paper light
  * (#FFE7D9) is where the ribbons cross. It is drawn as light, not as a lit

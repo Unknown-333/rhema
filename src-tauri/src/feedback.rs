@@ -1,7 +1,7 @@
 //! In-app feedback: a bug report, an idea, or a question, sent to the
 //! maintainer without leaving the app or needing a GitHub account.
 //!
-//! It goes to the REMA account server (`POST /v1/feedback`,
+//! It goes to the RHEMA account server (`POST /v1/feedback`,
 //! `server/PROTOCOL.md` "Feedback"), at the address account discovery found
 //! (`account::send_feedback`). Nobody has to be signed in; when someone is,
 //! the session token goes with it so the maintainer can tell whose it is.
@@ -75,7 +75,7 @@ pub struct FeedbackSystemInfo {
 /// The line the dialog shows ("Sent exactly as: …") and the server stores.
 pub fn system_line(info: &FeedbackSystemInfo) -> String {
     format!(
-        "REMA {} · {} · {} · {}",
+        "RHEMA {} · {} · {} · {}",
         info.app_version, info.os, info.arch, info.install
     )
 }
@@ -409,7 +409,7 @@ mod tests {
         };
         assert_eq!(
             system_line(&info),
-            "REMA 2.3.0 · Windows 10.0.26100 · x86_64 · nsis"
+            "RHEMA 2.3.0 · Windows 10.0.26100 · x86_64 · nsis"
         );
     }
 
@@ -434,7 +434,7 @@ mod tests {
             kind: FeedbackKind::Bug,
             message: "the overlay is clipped",
             email: Some("me@example.com"),
-            system: Some("REMA 2.3.0 · Windows 11 · x86_64 · nsis".into()),
+            system: Some("RHEMA 2.3.0 · Windows 11 · x86_64 · nsis".into()),
             screenshots: vec![Screenshot {
                 media_type: "image/png",
                 data: &data,
@@ -447,7 +447,7 @@ mod tests {
                 "kind": "bug",
                 "message": "the overlay is clipped",
                 "email": "me@example.com",
-                "system": "REMA 2.3.0 · Windows 11 · x86_64 · nsis",
+                "system": "RHEMA 2.3.0 · Windows 11 · x86_64 · nsis",
                 "screenshots": [{ "mediaType": "image/png", "data": b64(PNG) }],
             })
         );

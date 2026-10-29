@@ -347,7 +347,7 @@ pub(crate) const TTS_PROVIDERS: &[TtsProvider] = &[
         response_format: "mp3",
         auth: TtsAuth::Basic,
     },
-    // REMA free: the account server's OpenAI-compatible speech route, paid
+    // RHEMA free: the account server's OpenAI-compatible speech route, paid
     // for by the account's free credit. No fixed root and no key here: both
     // come from the account session at request time (`crate::free_credit`).
     TtsProvider {
@@ -416,7 +416,7 @@ fn active_provider(settings: &AppSettings) -> Result<&'static TtsProvider, Strin
         .ok_or_else(|| format!("Unknown TTS engine: {}", settings.assistant_tts_engine))
 }
 
-/// The engine that speaks: the chosen one, or REMA free when the chosen
+/// The engine that speaks: the chosen one, or RHEMA free when the chosen
 /// one is a remote engine still waiting for its key and the account's free
 /// credit can speak instead. A voice that needs nothing (Kokoro, the native
 /// voices, a custom server) is never replaced.
@@ -432,7 +432,7 @@ pub(crate) fn effective_engine(settings: &AppSettings, free_usable: bool) -> Str
 }
 
 /// `settings` as the engine that really speaks sees them: unchanged, or moved
-/// to REMA free with its own model and voice when that engine stands in.
+/// to RHEMA free with its own model and voice when that engine stands in.
 fn speaking_settings(settings: &AppSettings) -> std::borrow::Cow<'_, AppSettings> {
     let engine = effective_engine(settings, crate::free_credit::usable());
     if engine == settings.assistant_tts_engine.trim() {
@@ -1439,7 +1439,7 @@ async fn openai_speech_attempt(
     if let Some(speed) = speed_for(provider, settings) {
         body["speed"] = serde_json::json!(speed);
     }
-    // REMA free authenticates with the account session, never a saved key.
+    // RHEMA free authenticates with the account session, never a saved key.
     let key = if provider.id == crate::free_credit::PROVIDER_ID {
         crate::free_credit::access()
             .map(|access| access.token)
@@ -2140,7 +2140,7 @@ pub async fn list_azure_voices(settings: &AppSettings) -> Result<Vec<AzureVoice>
 /// voice picker. Errors are returned for inline display.
 pub async fn list_tts_voices(settings: &AppSettings) -> Result<Vec<TtsVoice>, String> {
     let provider = active_provider(settings)?;
-    // REMA free speaks with OpenAI's voices and has no listing to ask.
+    // RHEMA free speaks with OpenAI's voices and has no listing to ask.
     if provider.id == crate::free_credit::PROVIDER_ID {
         return Ok(voices_from(OPENAI_TTS_VOICES));
     }
@@ -2946,7 +2946,7 @@ async fn fetch_azure_speech(settings: &AppSettings, text: &str) -> Result<Vec<u8
             "X-Microsoft-OutputFormat",
             "audio-48khz-192kbitrate-mono-mp3",
         )
-        .header("User-Agent", "REMA")
+        .header("User-Agent", "RHEMA")
         .body(ssml);
     let response = send_tts_with_retries(request).await?;
 
@@ -3272,7 +3272,7 @@ mod tests {
         assert!(voice_engine_blocker(&with_voice("kokoro", "", "")).is_none());
         assert!(voice_engine_blocker(&get_default_settings()).is_none());
         // Native voices are gated on their download, not a key (tested below).
-        // REMA free is gated on the account session (free_credit's tests).
+        // RHEMA free is gated on the account session (free_credit's tests).
         for provider in super::TTS_PROVIDERS.iter().filter(|p| {
             p.protocol != super::TtsProtocol::Native && p.id != crate::free_credit::PROVIDER_ID
         }) {

@@ -45,7 +45,7 @@ bool canChooseComputer(DictateController controller) =>
 Future<void> chooseComputer(
   BuildContext context,
   DictateController controller,
-) => showRemaSheet<void>(
+) => showRhemaSheet<void>(
   context,
   title: DictateStrings.pickComputerTitle,
   builder: (sheet) => SingleChildScrollView(
@@ -90,7 +90,7 @@ class _ComputerSwitcherState extends State<ComputerSwitcher> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final computer = widget.computer;
     final onTap = widget.onTap;
     final status = widget.connecting
@@ -137,7 +137,7 @@ class _ComputerSwitcherState extends State<ComputerSwitcher> {
                           computer.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: RemaType.title2.copyWith(color: t.ink),
+                          style: RhemaType.title2.copyWith(color: t.ink),
                         ),
                       ),
                       if (onTap != null) ...[
@@ -167,7 +167,7 @@ class _ComputerSwitcherState extends State<ComputerSwitcher> {
                             key: ValueKey(status),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: RemaType.footnote.copyWith(color: t.muted),
+                            style: RhemaType.footnote.copyWith(color: t.muted),
                           ),
                         ),
                       ),
@@ -198,7 +198,7 @@ class ComputerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return ListRow(
       leading: RowTile(
         platformIcon(computer.platform),
@@ -224,7 +224,7 @@ class PickComputer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return ListView(
       padding: const EdgeInsets.only(top: Space.s24, bottom: Space.s24),
       children: [
@@ -232,7 +232,7 @@ class PickComputer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             DictateStrings.pickComputerTitle,
-            style: RemaType.title1.copyWith(color: t.ink),
+            style: RhemaType.title1.copyWith(color: t.ink),
           ),
         ),
         const SizedBox(height: Space.s8),
@@ -240,7 +240,7 @@ class PickComputer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(
             DictateStrings.pickComputerBody,
-            style: RemaType.rowBody.copyWith(color: t.muted),
+            style: RhemaType.rowBody.copyWith(color: t.muted),
           ),
         ),
         const SizedBox(height: Space.s24),

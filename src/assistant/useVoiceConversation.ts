@@ -529,7 +529,7 @@ export function useVoiceConversation(callbacks: VoiceCallbacks) {
       // Release it with the session, including failed or cancelled startup.
       void navigator.locks
         ?.request(
-          "rema-voice-conversation",
+          "rhema-voice-conversation",
           { ifAvailable: true },
           async (lock) => {
             if (!lock || sessionRef.current !== session) return;

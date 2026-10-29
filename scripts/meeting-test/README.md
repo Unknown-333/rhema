@@ -150,7 +150,7 @@ Reading your lines aloud is fine for a smoke test and useless for comparing two
 runs. For a byte-identical mic track:
 
 1. Install a virtual audio cable (VB-CABLE is the usual free one).
-2. Set REMA's input device to **CABLE Output**.
+2. Set RHEMA's input device to **CABLE Output**.
 3. `pip install sounddevice soundfile`
 4. `python play_fixture.py --devices` to find **CABLE Input**'s index.
 5. `python play_fixture.py --mic-device <index>`
@@ -186,7 +186,7 @@ sapi` means "did this get worse than last time", which is usually what you want.
 | `score_meeting.py` | grade a meeting against ground truth. Read-only                 |
 | `silence.ps1`      | panic button: stop anything from this folder that is playing    |
 
-`seed_meeting.py` copies `rema_meetings.db` to `rema_meetings.db.bak-<timestamp>` before
+`seed_meeting.py` copies `rhema_meetings.db` to `rhema_meetings.db.bak-<timestamp>` before
 every write, only ever inserts, and `--cleanup` refuses to delete a meeting whose
 title is not prefixed `[TEST]`.
 

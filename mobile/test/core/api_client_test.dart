@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/config.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/config.dart';
 
 import '../helpers.dart';
 
@@ -212,7 +212,7 @@ void main() {
     expect(await api.googleEnabled(), isTrue);
 
     final start = api.googleStartUri(
-      redirectUri: 'rema://auth/callback',
+      redirectUri: 'rhema://auth/callback',
       challenge: 'abc',
     );
     expect(
@@ -220,7 +220,7 @@ void main() {
       isTrue,
     );
     expect(start.queryParameters, {
-      'redirect_uri': 'rema://auth/callback',
+      'redirect_uri': 'rhema://auth/callback',
       'code_challenge': 'abc',
       'code_challenge_method': 'S256',
     });

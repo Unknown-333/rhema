@@ -2,14 +2,14 @@ use std::path::PathBuf;
 use std::sync::OnceLock;
 use tauri::Manager;
 
-/// Portable mode support for REMA.
+/// Portable mode support for RHEMA.
 ///
 /// When a file named `portable` exists next to the executable, all user data
 /// (settings, models, recordings, database, logs) is stored in a `Data/`
 /// directory alongside the executable instead of `%APPDATA%`.
 
 /// Magic string written into portable marker files.
-const PORTABLE_MARKER_MAGIC: &str = "REMA Portable Mode";
+const PORTABLE_MARKER_MAGIC: &str = "RHEMA Portable Mode";
 
 static PORTABLE_DATA_DIR: OnceLock<Option<PathBuf>> = OnceLock::new();
 
@@ -87,7 +87,7 @@ mod tests {
 
     #[test]
     fn test_valid_magic_string_enables_portable() {
-        let dir = std::env::temp_dir().join("rema_test_valid");
+        let dir = std::env::temp_dir().join("rhema_test_valid");
         std::fs::create_dir_all(&dir).unwrap();
         let marker = dir.join("portable");
         let mut f = std::fs::File::create(&marker).unwrap();
@@ -98,7 +98,7 @@ mod tests {
 
     #[test]
     fn markers_from_other_apps_do_not_enable_portable() {
-        let dir = std::env::temp_dir().join("rema_test_foreign_marker");
+        let dir = std::env::temp_dir().join("rhema_test_foreign_marker");
         std::fs::create_dir_all(&dir).unwrap();
         let marker = dir.join("portable");
         let mut f = std::fs::File::create(&marker).unwrap();
@@ -108,13 +108,13 @@ mod tests {
     }
 
     #[test]
-    fn new_markers_are_written_with_the_rema_name() {
-        assert_eq!(PORTABLE_MARKER_MAGIC, "REMA Portable Mode");
+    fn new_markers_are_written_with_the_rhema_name() {
+        assert_eq!(PORTABLE_MARKER_MAGIC, "RHEMA Portable Mode");
     }
 
     #[test]
     fn test_empty_file_does_not_enable_portable() {
-        let dir = std::env::temp_dir().join("rema_test_empty");
+        let dir = std::env::temp_dir().join("rhema_test_empty");
         std::fs::create_dir_all(&dir).unwrap();
         let marker = dir.join("portable");
         std::fs::File::create(&marker).unwrap();
@@ -124,7 +124,7 @@ mod tests {
 
     #[test]
     fn test_wrong_content_does_not_enable_portable() {
-        let dir = std::env::temp_dir().join("rema_test_wrong");
+        let dir = std::env::temp_dir().join("rhema_test_wrong");
         std::fs::create_dir_all(&dir).unwrap();
         let marker = dir.join("portable");
         let mut f = std::fs::File::create(&marker).unwrap();
@@ -141,7 +141,7 @@ mod tests {
 
     #[test]
     fn test_magic_string_with_whitespace_enables_portable() {
-        let dir = std::env::temp_dir().join("rema_test_ws");
+        let dir = std::env::temp_dir().join("rhema_test_ws");
         std::fs::create_dir_all(&dir).unwrap();
         let marker = dir.join("portable");
         let mut f = std::fs::File::create(&marker).unwrap();

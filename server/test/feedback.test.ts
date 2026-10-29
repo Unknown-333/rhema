@@ -82,7 +82,7 @@ describe("POST /v1/feedback", () => {
       kind: "bug",
       message: "  The overlay hides behind Chrome.  ",
       email: " Me@Example.com ",
-      system: "REMA 2.3.0 · Windows 11 · x86_64 · nsis",
+      system: "RHEMA 2.3.0 · Windows 11 · x86_64 · nsis",
     });
     expect(reply.status).toBe(201);
     expect(typeof reply.body.id).toBe("string");
@@ -96,7 +96,7 @@ describe("POST /v1/feedback", () => {
         kind: "bug",
         message: "The overlay hides behind Chrome.",
         email: "me@example.com",
-        system: "REMA 2.3.0 · Windows 11 · x86_64 · nsis",
+        system: "RHEMA 2.3.0 · Windows 11 · x86_64 · nsis",
         user: null,
         device: null,
         screenshots: [],
@@ -201,11 +201,11 @@ describe("POST /v1/feedback", () => {
     h = await harness({ adminToken: ADMIN });
     await send({
       message: "line one\r\nline\u0000 two‮\tend\u0007",
-      system: "REMA\n2.3",
+      system: "RHEMA\n2.3",
     });
     const [entry] = (await list()).body.feedback;
     expect(entry.message).toBe("line one\nline two\tend");
-    expect(entry.system).toBe("REMA2.3");
+    expect(entry.system).toBe("RHEMA2.3");
   });
 
   test("screenshots are stored and served back to the owner", async () => {
@@ -437,7 +437,7 @@ describe("GitHub issues", () => {
       kind: "idea",
       message: "Dark overlay\nIt would be nice, @octocat.",
       email: "me@example.com",
-      system: "REMA 2.3.0 · Windows 11",
+      system: "RHEMA 2.3.0 · Windows 11",
       screenshots: [shot(PNG), shot(JPEG, "image/jpeg")],
     });
     expect(reply.status).toBe(201);
@@ -447,7 +447,7 @@ describe("GitHub issues", () => {
     expect(issue!.auth).toBe("Bearer ghp_x");
     expect(issue!.body.title).toBe("[idea] Dark overlay");
     expect(issue!.body.body).toContain("@​octocat");
-    expect(issue!.body.body).toContain("System: REMA 2.3.0 · Windows 11");
+    expect(issue!.body.body).toContain("System: RHEMA 2.3.0 · Windows 11");
     expect(issue!.body.body).toContain("Reply to: me@example.com");
     expect(issue!.body.body).toContain("2 screenshots stored on the server.");
     expect(issue!.body.body).not.toContain("/v1/admin/");

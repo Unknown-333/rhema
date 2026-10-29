@@ -1931,14 +1931,14 @@ mod tests {
     /// cargo test --lib web_search::tests::live_search_at_every_depth -- --ignored --nocapture
     /// ```
     ///
-    /// Provider from `REMA_SEARCH_PROVIDER` (default `tavily`); the key
-    /// from `REMA_SEARCH_KEY` or the app's own keychain slot.
+    /// Provider from `RHEMA_SEARCH_PROVIDER` (default `tavily`); the key
+    /// from `RHEMA_SEARCH_KEY` or the app's own keychain slot.
     #[tokio::test]
     #[ignore]
     async fn live_search_at_every_depth() {
         let provider =
-            std::env::var("REMA_SEARCH_PROVIDER").unwrap_or_else(|_| "tavily".to_string());
-        let key = std::env::var("REMA_SEARCH_KEY")
+            std::env::var("RHEMA_SEARCH_PROVIDER").unwrap_or_else(|_| "tavily".to_string());
+        let key = std::env::var("RHEMA_SEARCH_KEY")
             .ok()
             .or_else(|| {
                 crate::secret_store::get(&crate::secret_store::account_web_search(&provider))

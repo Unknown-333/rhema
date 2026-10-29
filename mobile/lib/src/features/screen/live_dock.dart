@@ -110,14 +110,14 @@ class _Dock extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Radii.lg),
           boxShadow: showPicture
-              ? Depth.raised(context.rema)
-              : Depth.card(context.rema),
+              ? Depth.raised(context.rhema)
+              : Depth.card(context.rhema),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Radii.lg),
           child: showPicture
               ? ColoredBox(
-                  color: RemaColors.mediaBg,
+                  color: RhemaColors.mediaBg,
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
                       maxHeight: (height * 0.32).clamp(0, 280),
@@ -242,9 +242,9 @@ class _PictureState extends State<_Picture>
           behavior: HitTestBehavior.opaque,
           onTap: _toggle,
           child: link == null || !w.foreground
-              ? const ColoredBox(color: RemaColors.mediaBg)
+              ? const ColoredBox(color: RhemaColors.mediaBg)
               : ColoredBox(
-                  color: RemaColors.mediaBg,
+                  color: RhemaColors.mediaBg,
                   child: link.buildVideo(),
                 ),
         ),
@@ -314,7 +314,7 @@ class _Overlay extends StatelessWidget {
                   w.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: RemaType.label.copyWith(color: Colors.white),
+                  style: RhemaType.label.copyWith(color: Colors.white),
                 ),
               ),
             ],
@@ -402,7 +402,7 @@ class GlassButton extends StatelessWidget {
                 child: Container(
                   width: 32,
                   height: 32,
-                  color: RemaColors.glass,
+                  color: RhemaColors.glass,
                   alignment: Alignment.center,
                   child: Icon(icon, size: 20, color: Colors.white),
                 ),
@@ -431,13 +431,13 @@ class LiveBadge extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 22),
             padding: const EdgeInsets.symmetric(horizontal: Space.s8),
             decoration: BoxDecoration(
-              color: RemaColors.glass,
+              color: RhemaColors.glass,
               borderRadius: BorderRadius.circular(Radii.pill),
             ),
             alignment: Alignment.center,
             child: Text(
               text,
-              style: RemaType.caption.copyWith(color: Colors.white),
+              style: RhemaType.caption.copyWith(color: Colors.white),
             ),
           ),
   );
@@ -453,7 +453,7 @@ class _Waiting extends StatelessWidget {
     final approval = watch.phase == WatchPhase.approval;
     return IgnorePointer(
       child: ColoredBox(
-        color: RemaColors.mediaBg,
+        color: RhemaColors.mediaBg,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(Space.s16),
@@ -474,14 +474,14 @@ class _Waiting extends StatelessWidget {
                 Text(
                   approval ? ScreenStrings.approval : watchStatus(watch),
                   textAlign: TextAlign.center,
-                  style: RemaType.rowTitle.copyWith(color: Colors.white),
+                  style: RhemaType.rowTitle.copyWith(color: Colors.white),
                 ),
                 if (approval) ...[
                   const SizedBox(height: Space.s4),
                   Text(
                     ScreenStrings.approvalDetail,
                     textAlign: TextAlign.center,
-                    style: RemaType.footnote.copyWith(
+                    style: RhemaType.footnote.copyWith(
                       color: Colors.white.withValues(alpha: 0.7),
                     ),
                   ),
@@ -506,7 +506,7 @@ class _Ended extends StatelessWidget {
     final error = watch.endError;
     final name = watch.computer.name;
     return ColoredBox(
-      color: RemaColors.mediaBg,
+      color: RhemaColors.mediaBg,
       child: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 44, 16, 12),
@@ -518,7 +518,7 @@ class _Ended extends StatelessWidget {
                 child: Text(
                   ScreenStrings.ended,
                   textAlign: TextAlign.center,
-                  style: RemaType.rowTitle.copyWith(color: Colors.white),
+                  style: RhemaType.rowTitle.copyWith(color: Colors.white),
                 ),
               ),
               const SizedBox(height: Space.s4),
@@ -527,7 +527,7 @@ class _Ended extends StatelessWidget {
                     ? ScreenStrings.stoppedByYou
                     : ScreenStrings.error(error, name),
                 textAlign: TextAlign.center,
-                style: RemaType.footnote.copyWith(
+                style: RhemaType.footnote.copyWith(
                   color: Colors.white.withValues(alpha: 0.7),
                 ),
               ),
@@ -575,7 +575,7 @@ class _Bar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final w = watch;
     final isLive = w.phase == WatchPhase.live && !w.reconnecting;
     return Container(
@@ -597,7 +597,7 @@ class _Bar extends StatelessWidget {
                     : '${watchStatus(w)} · ${w.title}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: RemaType.rowTitle.copyWith(color: t.ink),
+                style: RhemaType.rowTitle.copyWith(color: t.ink),
               ),
             ),
           ),

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { withoutRemaFree } from "@/lib/freeCredit";
+import { withoutRhemaFree } from "@/lib/freeCredit";
 import { useTranslation } from "react-i18next";
 import {
   Cloud,
@@ -274,7 +274,7 @@ export const CloudTranscriptionGroup: React.FC<{
     }
   };
 
-  const providerOptions = withoutRemaFree(providers).map((entry) => ({
+  const providerOptions = withoutRhemaFree(providers).map((entry) => ({
     value: entry.id,
     label: entry.label,
     ready:

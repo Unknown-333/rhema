@@ -444,7 +444,7 @@ class _WatchScreenState extends State<WatchScreen>
             AppServices.of(context).relay.devices,
           ]),
           builder: (context, _) => Scaffold(
-            backgroundColor: RemaColors.mediaBg,
+            backgroundColor: RhemaColors.mediaBg,
             body: MediaQuery.orientationOf(context) == Orientation.landscape
                 ? Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -509,7 +509,7 @@ class _WatchScreenState extends State<WatchScreen>
     child: BackdropFilter(
       filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
       child: ColoredBox(
-        color: context.rema.canvas.withValues(alpha: 0.92),
+        color: context.rhema.canvas.withValues(alpha: 0.92),
         child: child,
       ),
     ),
@@ -642,7 +642,7 @@ class _WatchScreenState extends State<WatchScreen>
                       child: SizedBox.fromSize(
                         size: viewport,
                         child: link == null || !w.foreground
-                            ? const ColoredBox(color: RemaColors.mediaBg)
+                            ? const ColoredBox(color: RhemaColors.mediaBg)
                             : ValueListenableBuilder(
                                 valueListenable: link.videoSize,
                                 builder: (context, size, child) {
@@ -703,11 +703,11 @@ class _WatchScreenState extends State<WatchScreen>
     Haptic.tick();
     final orientation = MediaQuery.orientationOf(context);
     final sideways = orientation == Orientation.landscape;
-    return showRemaSheet<void>(
+    return showRhemaSheet<void>(
       context,
       title: ScreenStrings.moreOptions,
       builder: (sheet) {
-        final t = sheet.rema;
+        final t = sheet.rhema;
         Widget? check(bool on) =>
             on ? Icon(AppIcons.check, size: 20, color: t.accent) : null;
         return SingleChildScrollView(
@@ -760,7 +760,7 @@ class _WatchScreenState extends State<WatchScreen>
 
   Widget _waiting(BuildContext context) {
     final approval = _watch.phase == WatchPhase.approval;
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Semantics(
@@ -778,14 +778,14 @@ class _WatchScreenState extends State<WatchScreen>
             Text(
               approval ? DictateStrings.approval(_name) : watchStatus(_watch),
               textAlign: TextAlign.center,
-              style: RemaType.rowTitle.copyWith(color: t.ink),
+              style: RhemaType.rowTitle.copyWith(color: t.ink),
             ),
             if (approval) ...[
               const SizedBox(height: Space.s4),
               Text(
                 ScreenStrings.approvalDetail,
                 textAlign: TextAlign.center,
-                style: RemaType.footnote.copyWith(color: t.muted),
+                style: RhemaType.footnote.copyWith(color: t.muted),
               ),
             ],
           ],
@@ -796,7 +796,7 @@ class _WatchScreenState extends State<WatchScreen>
 
   Widget _endedCard(BuildContext context) {
     final error = _watch.endError;
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: const EdgeInsets.all(Space.s24),
       child: Container(
@@ -813,7 +813,7 @@ class _WatchScreenState extends State<WatchScreen>
               liveRegion: true,
               child: Text(
                 ScreenStrings.ended,
-                style: RemaType.rowTitle.copyWith(color: t.ink),
+                style: RhemaType.rowTitle.copyWith(color: t.ink),
               ),
             ),
             const SizedBox(height: Space.s4),
@@ -822,7 +822,7 @@ class _WatchScreenState extends State<WatchScreen>
                   ? ScreenStrings.stoppedByYou
                   : ScreenStrings.error(error, _name),
               textAlign: TextAlign.center,
-              style: RemaType.footnote.copyWith(color: t.muted),
+              style: RhemaType.footnote.copyWith(color: t.muted),
             ),
             const SizedBox(height: Space.s12),
             Wrap(
@@ -852,7 +852,7 @@ class _WatchScreenState extends State<WatchScreen>
 
   /// Sound, Keys, the answer, and Stop.
   Widget _toolbar(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final w = _watch;
     final ended = w.phase == WatchPhase.ended;
     final hasAnswer = _canAsk && _shownTurn != null;
@@ -959,7 +959,7 @@ class _AnswerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Container(
       decoration: BoxDecoration(
         color: t.card,
@@ -983,7 +983,7 @@ class _AnswerCard extends StatelessWidget {
                       turn.question ?? AssistantStrings.voiceQuestion,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: RemaType.footnote.copyWith(color: t.muted),
+                      style: RhemaType.footnote.copyWith(color: t.muted),
                     ),
                   ),
                 ),
@@ -1081,7 +1081,7 @@ class _TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
@@ -1121,7 +1121,7 @@ class _TopBar extends StatelessWidget {
                               title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: RemaType.rowTitle.copyWith(
+                              style: RhemaType.rowTitle.copyWith(
                                 color: Colors.white,
                               ),
                             ),
@@ -1140,7 +1140,7 @@ class _TopBar extends StatelessWidget {
                                       '$status · $computerName',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: RemaType.footnote.copyWith(
+                                      style: RhemaType.footnote.copyWith(
                                         color: Colors.white.withValues(
                                           alpha: 0.7,
                                         ),

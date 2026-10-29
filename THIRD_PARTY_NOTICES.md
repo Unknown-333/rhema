@@ -1,6 +1,6 @@
 # Third-party notices
 
-REMA is MIT-licensed (see [LICENSE](LICENSE)). It includes, links or
+RHEMA is MIT-licensed (see [LICENSE](LICENSE)). It includes, links or
 downloads the components below, each under its own license. This list covers
 the components that ship with or are fetched by the app; every Rust crate and
 npm package also carries its license in its own package metadata
@@ -9,7 +9,7 @@ npm package also carries its license in its own package metadata
 Check this file before every release: add a row when a dependency or model is
 added, and keep the license text of anything vendored next to it.
 
-## Source code REMA is derived from
+## Source code RHEMA is derived from
 
 | Project    | License | Notice                             |
 | ---------- | ------- | ---------------------------------- |
@@ -55,7 +55,7 @@ added, and keep the license text of anything vendored next to it.
 | Lucide icons                                                  | ISC                       |
 | Simple Icons provider marks                                   | CC0-1.0                   |
 | Lobe Icons provider marks                                     | MIT                       |
-| REMA logo, wordmark and tray glyphs (`brand/`)                | Part of REMA, MIT         |
+| RHEMA logo, wordmark and tray glyphs (`brand/`)                | Part of RHEMA, MIT         |
 
 Provider names and logos shown in the settings identify those services and
 remain their owners' trademarks.

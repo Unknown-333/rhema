@@ -176,7 +176,7 @@ fn contiguous_parallel_prefix(parts_record: &[u8], file_len: u64) -> u64 {
 pub(crate) fn download_client() -> reqwest::Result<reqwest::Client> {
     reqwest::Client::builder()
         .connect_timeout(Duration::from_secs(30))
-        .user_agent(concat!("REMA/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("RHEMA/", env!("CARGO_PKG_VERSION")))
         .http1_only()
         .tcp_nodelay(true)
         .pool_max_idle_per_host(DOWNLOAD_CONCURRENCY)
@@ -482,7 +482,7 @@ fn is_retired_model(info: &ModelInfo) -> bool {
 pub fn ensure_selectable(info: &ModelInfo) -> Result<(), String> {
     if is_retired_model(info) {
         return Err(format!(
-            "{} uses an engine REMA no longer includes and can't be used.{}",
+            "{} uses an engine RHEMA no longer includes and can't be used.{}",
             info.name,
             replacement_hint(&info.id)
         ));
@@ -3225,7 +3225,7 @@ id: "gemma-3-4b".to_string(),
         let found = scan_folder(&root, &skip_dirs).len();
         if found == 0 {
             return Err(anyhow::anyhow!(
-                "No models found in that folder. REMA looks for .gguf and Whisper .bin files."
+                "No models found in that folder. RHEMA looks for .gguf and Whisper .bin files."
             ));
         }
 
@@ -3415,7 +3415,7 @@ id: "gemma-3-4b".to_string(),
         Ok(())
     }
 
-    /// Ordered list of URLs to try when downloading a model: REMA's own
+    /// Ordered list of URLs to try when downloading a model: RHEMA's own
     /// mirror first (if one is published), then the canonical source, then
     /// the catalog's mirrors. The downloader tries each in turn (retrying
     /// transient failures), so a flaky primary self-heals or falls back.
@@ -3453,7 +3453,7 @@ id: "gemma-3-4b".to_string(),
     /// downloader retries and resumes automatically.
     ///
     /// To activate a mirror: upload the exact model file as a GitHub release
-    /// asset on the REMA repo, then return its `browser_download_url`
+    /// asset on the RHEMA repo, then return its `browser_download_url`
     /// here. Until then this returns `None` and the canonical URL is used.
     // Intentional template: the match is a placeholder for per-model mirror
     // arms that maintainers uncomment once assets are uploaded, so keep it even
@@ -3464,7 +3464,7 @@ id: "gemma-3-4b".to_string(),
             // Example — uncomment and set the real release URL once the asset
             // is uploaded (Gemma 3 1B is 806 MB, well under the 2 GB limit):
             // "gemma-3-1b" => Some(
-            //     "https://github.com/OWNER/rema/releases/download/models-v1/gemma-3-1b-it-Q4_K_M.gguf".to_string(),
+            //     "https://github.com/Unknown-333/rhema/releases/download/models-v1/gemma-3-1b-it-Q4_K_M.gguf".to_string(),
             // ),
             _ => None,
         }

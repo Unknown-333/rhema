@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/features/screen/live_protocol.dart';
-import 'package:rema_mobile/src/features/screen/rtc_link.dart';
-import 'package:rema_mobile/src/features/screen/watch_controller.dart';
+import 'package:rhema_mobile/src/features/screen/live_protocol.dart';
+import 'package:rhema_mobile/src/features/screen/rtc_link.dart';
+import 'package:rhema_mobile/src/features/screen/watch_controller.dart';
 
 import '../../helpers.dart';
 import 'fakes.dart';

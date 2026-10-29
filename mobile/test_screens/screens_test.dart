@@ -18,14 +18,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/app.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/design/components.dart';
-import 'package:rema_mobile/src/features/screen/live_controller.dart';
-import 'package:rema_mobile/src/features/screen/live_protocol.dart';
-import 'package:rema_mobile/src/features/screen/rtc_link.dart';
-import 'package:rema_mobile/src/shell/home_shell.dart';
+import 'package:rhema_mobile/src/app.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/design/components.dart';
+import 'package:rhema_mobile/src/features/screen/live_controller.dart';
+import 'package:rhema_mobile/src/features/screen/live_protocol.dart';
+import 'package:rhema_mobile/src/features/screen/rtc_link.dart';
+import 'package:rhema_mobile/src/shell/home_shell.dart';
 
 import '../test/helpers.dart';
 
@@ -414,7 +414,7 @@ Future<(FakeServer, RelayClient)> app(
   final messenger = tester.binding.defaultBinaryMessenger;
   messenger.setMockMethodCallHandler(
     const MethodChannel('plugins.flutter.io/path_provider'),
-    (_) async => '/nonexistent-rema-test',
+    (_) async => '/nonexistent-rhema-test',
   );
   final random = math.Random(4);
   messenger.setMockMethodCallHandler(
@@ -451,7 +451,7 @@ Future<(FakeServer, RelayClient)> app(
   await tester.pumpWidget(
     RepaintBoundary(
       key: _root,
-      child: RemaApp(
+      child: RhemaApp(
         session: session,
         api: ApiClient(
           session,
@@ -492,7 +492,7 @@ Future<void> finish(WidgetTester tester, RelayClient relay) async {
 
 Future<void> tab(WidgetTester tester, String label) async {
   await tester.tap(
-    find.descendant(of: find.byType(RemaNavBar), matching: find.text(label)),
+    find.descendant(of: find.byType(RhemaNavBar), matching: find.text(label)),
   );
   await tester.pump();
   await tester.pump(const Duration(milliseconds: 400));
@@ -572,7 +572,7 @@ void main() {
       await tester.pumpWidget(
         RepaintBoundary(
           key: _root,
-          child: RemaApp(
+          child: RhemaApp(
             session: session,
             api: ApiClient(
               session,
@@ -733,7 +733,7 @@ void main() {
           },
           {
             'id': 'w2',
-            'title': 'Claude Code — rema',
+            'title': 'Claude Code — rhema',
             'app': 'Windows Terminal',
           },
           {'id': 'w3', 'title': 'Q4 plan.docx', 'app': 'Word'},

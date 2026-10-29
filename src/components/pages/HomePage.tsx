@@ -10,7 +10,7 @@ import { StatusHero } from "./home/StatusHero";
 import { partOfDay } from "./home/usageMath";
 
 /**
- * Home: whether REMA can listen and with what (one card, its numbers along
+ * Home: whether RHEMA can listen and with what (one card, its numbers along
  * the foot), then the shortcuts, the models doing each job, and the last few
  * things you said. The full usage picture lives on Insights.
  *

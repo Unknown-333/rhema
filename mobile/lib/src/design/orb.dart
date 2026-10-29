@@ -1,4 +1,4 @@
-// The REMA voice orb: a glass sphere of coral and orange light drifting
+// The RHEMA voice orb: a glass sphere of coral and orange light drifting
 // over the ink tile's indigo, with a soft halo. The same idea as the
 // desktop's LuminousOrb (src/assistant/orbShader.ts), painted with
 // gradients instead of a shader so it costs next to nothing on a phone.
@@ -19,15 +19,15 @@ enum OrbMood {
   /// At rest: a slow drift and a faint breath.
   idle,
 
-  /// Hearing the user: swells with [RemaOrb.level].
+  /// Hearing the user: swells with [RhemaOrb.level].
   listening,
 
   /// Working on something: the light turns faster.
   thinking,
 }
 
-class RemaOrb extends StatefulWidget {
-  const RemaOrb({
+class RhemaOrb extends StatefulWidget {
+  const RhemaOrb({
     super.key,
     this.size = 96,
     this.mood = OrbMood.idle,
@@ -46,10 +46,10 @@ class RemaOrb extends StatefulWidget {
   final bool halo;
 
   @override
-  State<RemaOrb> createState() => _RemaOrbState();
+  State<RhemaOrb> createState() => _RhemaOrbState();
 }
 
-class _RemaOrbState extends State<RemaOrb>
+class _RhemaOrbState extends State<RhemaOrb>
     with SingleTickerProviderStateMixin {
   late final _clock = AnimationController(
     vsync: this,
@@ -69,7 +69,7 @@ class _RemaOrbState extends State<RemaOrb>
   }
 
   @override
-  void didUpdateWidget(RemaOrb old) {
+  void didUpdateWidget(RhemaOrb old) {
     super.didUpdateWidget(old);
     _sync();
   }
@@ -113,7 +113,7 @@ class _RemaOrbState extends State<RemaOrb>
 
   @override
   Widget build(BuildContext context) {
-    final dark = context.rema.isDark;
+    final dark = context.rhema.isDark;
     // Without motion the listening orb still shows the voice, statically.
     final energy = _moving
         ? _energy

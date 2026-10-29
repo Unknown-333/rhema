@@ -240,9 +240,9 @@ fn build_headers(provider: &PostProcessProvider, api_key: &str) -> Result<Header
     );
     headers.insert(
         USER_AGENT,
-        HeaderValue::from_static("REMA/1.0 (+https://github.com/Unknown-333/rhema)"),
+        HeaderValue::from_static("RHEMA/1.0 (+https://github.com/Unknown-333/rhema)"),
     );
-    headers.insert("X-Title", HeaderValue::from_static("REMA"));
+    headers.insert("X-Title", HeaderValue::from_static("RHEMA"));
 
     // Provider-specific auth headers
     if !api_key.is_empty() {
@@ -387,7 +387,7 @@ fn effective_base_url(provider: &PostProcessProvider) -> String {
     raw.to_string()
 }
 
-/// REMA free's real address and the session token, put in at request time
+/// RHEMA free's real address and the session token, put in at request time
 /// so neither is ever stored with the provider (see `crate::free_credit`).
 fn free_route(provider: &PostProcessProvider, api_key: &str) -> (String, String) {
     crate::free_credit::route(
@@ -399,7 +399,7 @@ fn free_route(provider: &PostProcessProvider, api_key: &str) -> (String, String)
 }
 
 /// The key a request to `provider` authenticates with: the user's own, or
-/// the account session's for REMA free.
+/// the account session's for RHEMA free.
 fn credential(provider: &PostProcessProvider, api_key: &str) -> String {
     if provider.id == crate::free_credit::PROVIDER_ID {
         free_route(provider, api_key).1
@@ -762,7 +762,7 @@ pub(crate) async fn send_chat_completion_detailed(
                 .text()
                 .await
                 .unwrap_or_else(|_| "Failed to read error response".to_string());
-            // REMA free's own refusals (credit used up, switched off) end
+            // RHEMA free's own refusals (credit used up, switched off) end
             // here, in words the user can act on, and are never retried.
             if let Some(message) =
                 crate::free_credit::note_failure(&url, status.as_u16(), &error_text)

@@ -6,21 +6,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/app.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/design/components.dart';
+import 'package:rhema_mobile/src/app.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/design/components.dart';
 
-import 'package:rema_mobile/src/features/screen/live_controller.dart';
-import 'package:rema_mobile/src/shell/home_shell.dart';
+import 'package:rhema_mobile/src/features/screen/live_controller.dart';
+import 'package:rhema_mobile/src/shell/home_shell.dart';
 
 import 'features/screen/fakes.dart' show FakeLinks, offerFields, progressOf;
 import 'helpers.dart';
 
 /// The navigation bar (or the rail, on a wide window).
 Finder get navigation {
-  final bar = find.byType(RemaNavBar);
-  return bar.evaluate().isNotEmpty ? bar : find.byType(RemaNavRail);
+  final bar = find.byType(RhemaNavBar);
+  return bar.evaluate().isNotEmpty ? bar : find.byType(RhemaNavRail);
 }
 
 /// Shows [page] through the navigation bar (or the rail, on a wide window).
@@ -76,7 +76,7 @@ Future<(FakeServer, RelayClient)> pumpApp(
   // nothing (and has no microphone permission unless [recordEvents] is set).
   messenger.setMockMethodCallHandler(
     const MethodChannel('plugins.flutter.io/path_provider'),
-    (_) async => '/nonexistent-rema-test',
+    (_) async => '/nonexistent-rhema-test',
   );
   messenger.setMockMethodCallHandler(
     const MethodChannel('com.llfbandit.record/messages'),
@@ -105,7 +105,7 @@ Future<(FakeServer, RelayClient)> pumpApp(
   final server = FakeServer();
   final relay = RelayClient(session, connectChannel: server.connect);
   await tester.pumpWidget(
-    RemaApp(
+    RhemaApp(
       session: session,
       api: ApiClient(
         session,
@@ -127,7 +127,7 @@ Future<(FakeServer, RelayClient)> pumpApp(
     });
   await tester.pump();
   await tester.pump();
-  final bar = find.byType(RemaNavBar);
+  final bar = find.byType(RhemaNavBar);
   if (page != null &&
       find
           .descendant(of: bar, matching: find.text(page))
@@ -506,7 +506,7 @@ void main() {
 
     expect(find.text('Allow this phone on ALEX-PC'), findsOneWidget);
     expect(
-      find.text("Look at the computer's screen. REMA is asking there."),
+      find.text("Look at the computer's screen. RHEMA is asking there."),
       findsOneWidget,
     );
     final cancel = tester.widget<TextButton>(
@@ -620,7 +620,7 @@ void main() {
 
     expect(
       find.text(
-        "This phone isn't allowed on ALEX-PC. Allow it in REMA's "
+        "This phone isn't allowed on ALEX-PC. Allow it in RHEMA's "
         'Settings on that computer, under Account, then try again.',
       ),
       findsOneWidget,
@@ -684,7 +684,7 @@ void main() {
         pc['online'] == false ? findsNothing : findsOneWidget,
       );
       expect(find.text('Hello'), findsOneWidget);
-      expect(find.textContaining('Update REMA'), findsNothing);
+      expect(find.textContaining('Update RHEMA'), findsNothing);
     }
     await finish(tester, relay);
   });
@@ -695,9 +695,9 @@ void main() {
     final (_, relay) = await pumpApp(tester, [
       deviceJson(capabilities: ['text']),
     ], page: null);
-    expect(find.byType(RemaNavBar), findsNothing, reason: 'one page left');
+    expect(find.byType(RhemaNavBar), findsNothing, reason: 'one page left');
     expect(
-      find.text('Update REMA on ALEX-PC to see its screen from your phone.'),
+      find.text('Update RHEMA on ALEX-PC to see its screen from your phone.'),
       findsOneWidget,
     );
     await tester.tap(find.byTooltip('Account'));
@@ -746,7 +746,7 @@ void main() {
         'windows': [
           {
             'id': 'w1',
-            'title': 'Claude Code — rema',
+            'title': 'Claude Code — rhema',
             'app': 'Windows Terminal',
             'front': true,
           },
@@ -796,7 +796,7 @@ void main() {
 
       await openPicker(tester, server);
       expect(find.text('Windows Terminal'), findsOneWidget);
-      expect(find.text('Claude Code — rema'), findsOneWidget);
+      expect(find.text('Claude Code — rhema'), findsOneWidget);
       expect(find.text('In front'), findsOneWidget);
       await pick(tester, 'Notepad');
       expect(find.text('Notepad — notes.txt'), findsOneWidget, reason: 'row');
@@ -842,7 +842,7 @@ void main() {
 
     testWidgets('a dictation carries the chosen window too', (tester) async {
       final file = File(
-        '${Directory.systemTemp.createTempSync('rema-test').path}/d.wav',
+        '${Directory.systemTemp.createTempSync('rhema-test').path}/d.wav',
       )..writeAsBytesSync(List.filled(44, 0));
       final handle = tester.ensureSemantics();
       final (server, relay) = await pumpApp(
@@ -1311,14 +1311,14 @@ void main() {
       await finish(tester, relay);
     });
 
-    testWidgets('Screen with the computer offline says to open REMA', (
+    testWidgets('Screen with the computer offline says to open RHEMA', (
       tester,
     ) async {
       final (_, relay) = await pumpApp(tester, [
         deviceJson(online: false),
       ], page: 'Screen');
       expect(
-        find.text('Open REMA on ALEX-PC to see its screen.'),
+        find.text('Open RHEMA on ALEX-PC to see its screen.'),
         findsOneWidget,
       );
       await finish(tester, relay);
@@ -1328,8 +1328,8 @@ void main() {
       final (_, relay) = await pumpApp(tester, [deviceJson()], page: null);
       tester.view.physicalSize = const Size(800, 400);
       await tester.pump();
-      expect(find.byType(RemaNavRail), findsOneWidget);
-      expect(find.byType(RemaNavBar), findsNothing);
+      expect(find.byType(RhemaNavRail), findsOneWidget);
+      expect(find.byType(RhemaNavBar), findsNothing);
       expect(tester.takeException(), isNull);
       await goTo(tester, 'Screen');
       expect(find.text("See ALEX-PC's screen here"), findsOneWidget);

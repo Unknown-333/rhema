@@ -2,14 +2,14 @@
 #
 # Stage transcribe-cpp's dynamic backend libraries into a destination directory.
 #
-# On Linux/Windows, REMA builds transcribe-cpp in its `dynamic-backends`
+# On Linux/Windows, RHEMA builds transcribe-cpp in its `dynamic-backends`
 # posture: a shared `libtranscribe` plus loadable per-ISA ggml backend modules
 # (`libggml-cpu-*.so`, `libggml-vulkan.so`, ...). These are produced by the
 # transcribe-cpp-sys CMake install during the cargo build, but nothing ships
 # them. This script copies them, as a co-located set, next to where the
-# `rema` binary will find them at runtime:
+# `rhema` binary will find them at runtime:
 #   - the loader resolves `libtranscribe` via the $ORIGIN-relative rpath baked
-#     into `rema` (see src-tauri/build.rs);
+#     into `rhema` (see src-tauri/build.rs);
 #   - transcribe's init_backends_default() then loads the ggml modules from
 #     libtranscribe's own directory (a strictly package-local scan), so the
 #     modules MUST sit beside it.

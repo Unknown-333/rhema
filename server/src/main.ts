@@ -44,7 +44,7 @@ const app = startServer({
   publicUrl,
   google,
   trustProxy: env.TRUST_PROXY === "1",
-  secretsKey: env.REMA_SECRETS_KEY,
+  secretsKey: env.RHEMA_SECRETS_KEY,
   turn,
   adminToken,
   adminEmails,
@@ -52,7 +52,7 @@ const app = startServer({
   free,
 });
 console.log(
-  `REMA account server listening on ${app.url} (public URL ${publicUrl}, Google sign-in ${google ? "on" : "off"}, TURN ${turn ? turn.kind : "off"}, free credit ${describeFree(free)}, admin dashboard ${adminEmails.length ? `${adminEmails.length} account(s)` : "off"}, admin token ${adminToken ? "on" : "off"}, feedback issues ${feedbackGithub ? feedbackGithub.repo : "off"})`,
+  `RHEMA account server listening on ${app.url} (public URL ${publicUrl}, Google sign-in ${google ? "on" : "off"}, TURN ${turn ? turn.kind : "off"}, free credit ${describeFree(free)}, admin dashboard ${adminEmails.length ? `${adminEmails.length} account(s)` : "off"}, admin token ${adminToken ? "on" : "off"}, feedback issues ${feedbackGithub ? feedbackGithub.repo : "off"})`,
 );
 
 for (const signal of ["SIGINT", "SIGTERM"] as const) {

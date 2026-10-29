@@ -1,5 +1,5 @@
 {
-  "name": "rema-server",
+  "name": "rhema-server",
   "private": true,
   "type": "module",
   "scripts": {

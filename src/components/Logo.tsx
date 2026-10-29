@@ -6,7 +6,7 @@ interface LogoProps {
 }
 
 /**
- * The REMA mark: a dot-matrix waveform that settles into a line of text and
+ * The RHEMA mark: a dot-matrix waveform that settles into a line of text and
  * ends in a red cursor, white on the black tile. Same bitmap as
  * `brand/bitmaps.mjs` (`MARK`), on the 1024 grid of `brand/svg/mark.svg`.
  */

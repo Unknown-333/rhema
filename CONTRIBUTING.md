@@ -1,12 +1,12 @@
-# Contributing to REMA
+# Contributing to RHEMA
 
-Thank you for your interest in contributing to REMA! This guide will help you get started with contributing to this open source, local-first voice assistant.
+Thank you for your interest in contributing to RHEMA! This guide will help you get started with contributing to this open source, local-first voice assistant.
 
-Third-party code REMA includes, and its licenses, are listed in [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Third-party code RHEMA includes, and its licenses, are listed in [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## 📖 Philosophy
 
-REMA aims to be a forkable, well-patterned voice assistant. The goal is to create both a useful tool and a foundation for others to build upon—a simple codebase that serves the community. We prioritize:
+RHEMA aims to be a forkable, well-patterned voice assistant. The goal is to create both a useful tool and a foundation for others to build upon—a simple codebase that serves the community. We prioritize:
 
 - **Simplicity**: Clear, maintainable code over clever solutions
 - **Extensibility**: Make it easy for others to fork and customize
@@ -30,8 +30,8 @@ Before you begin, ensure you have the following installed:
 2. **Clone your fork**:
 
    ```bash
-   git clone git@github.com:YOUR_USERNAME/REMA.git
-   cd REMA
+   git clone git@github.com:YOUR_USERNAME/RHEMA.git
+   cd RHEMA
    ```
 
 3. **Add upstream remote**:
@@ -64,7 +64,7 @@ For detailed platform-specific setup instructions, see [BUILD.md](BUILD.md).
 
 ### Understanding the Codebase
 
-REMA follows a clean architecture pattern:
+RHEMA follows a clean architecture pattern:
 
 **Backend (Rust - `src-tauri/src/`):**
 
@@ -122,7 +122,7 @@ Use the [Bug Report template](.github/ISSUE_TEMPLATE/bug_report.md) when creatin
    - The problem you're trying to solve
    - Your proposed solution
    - Any alternatives you've considered
-   - How it fits with REMA's philosophy
+   - How it fits with RHEMA's philosophy
 
 ## 🔧 Making Code Contributions
 
@@ -191,7 +191,7 @@ Use the [Bug Report template](.github/ISSUE_TEMPLATE/bug_report.md) when creatin
    ```
 
 7. **Create a Pull Request**:
-   - Go to the [REMA repository](https://github.com/Unknown-333/rhema)
+   - Go to the [RHEMA repository](https://github.com/Unknown-333/rhema)
    - Click "New Pull Request"
    - Select your fork and branch
    - Fill out the PR template completely, including:
@@ -286,8 +286,8 @@ Look for issues labeled `good first issue` or `help wanted` if you're new to the
 
 ## 📜 License
 
-By contributing to REMA, you agree that your contributions will be licensed under the MIT License. See [LICENSE](LICENSE) for details. Third-party notices are kept in [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+By contributing to RHEMA, you agree that your contributions will be licensed under the MIT License. See [LICENSE](LICENSE) for details. Third-party notices are kept in [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ---
 
-**Thank you for contributing to REMA!** Your efforts help make private, local-first voice technology more accessible and extensible for everyone.
+**Thank you for contributing to RHEMA!** Your efforts help make private, local-first voice technology more accessible and extensible for everyone.

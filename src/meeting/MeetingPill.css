@@ -5,7 +5,7 @@
  * it, whereas the pill is a different object — a status indicator that expands —
  * and inheriting a stylesheet built around `.ask-card` would mean fighting its
  * layout on every rule. The tokens below are the assistant's own values
- * (`--as-*` in `AssistantPanel.css`, REMA's dark card and ink), copied so the
+ * (`--as-*` in `AssistantPanel.css`, RHEMA's dark card and ink), copied so the
  * two windows read as one application. They used to be a warm brown-black with
  * an amber waveform, which beside the call bar looked like a different product.
  *
@@ -51,7 +51,7 @@
       rgba(255, 255, 255, 0.016) 46%,
       rgba(255, 255, 255, 0) 100%
     );
-  /* The recording dot is REMA coral (dark-mode value), the pill's one spot of
+  /* The recording dot is RHEMA coral (dark-mode value), the pill's one spot of
      colour. Nothing else here may be coral, so the dot keeps meaning "live". */
   --mp-live: #ff6a52;
   --mp-warn: #f5c46b;

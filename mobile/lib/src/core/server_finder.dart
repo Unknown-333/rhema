@@ -158,7 +158,7 @@ class ServerFinder extends ChangeNotifier {
     } else if (!_failing) {
       _failing = true;
       debugPrint(
-        'REMA: no server address from $discoveryUrl; trying again later',
+        'RHEMA: no server address from $discoveryUrl; trying again later',
       );
     }
     notifyListeners();
@@ -212,7 +212,7 @@ class ServerFinder extends ChangeNotifier {
       try {
         final viaFallback = await _fetchWith(client);
         if (viaFallback != null) {
-          debugPrint('REMA: found the server through secure DNS ($ip)');
+          debugPrint('RHEMA: found the server through secure DNS ($ip)');
           return viaFallback;
         }
       } finally {

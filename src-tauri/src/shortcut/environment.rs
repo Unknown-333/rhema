@@ -1,4 +1,4 @@
-//! Whether global shortcuts can reach REMA on this Linux session, and
+//! Whether global shortcuts can reach RHEMA on this Linux session, and
 //! what to do when they cannot.
 //!
 //! Neither keyboard engine can hear a key pressed in another app on most Linux
@@ -9,14 +9,14 @@
 //!   Wayland session that reaches the XWayland server only, which sees a key
 //!   while an X11 window is in front and nothing otherwise. GNOME, KDE Plasma,
 //!   Hyprland, Sway and COSMIC all run Wayland by default.
-//! * **REMA keys** (handy-keys) read the keyboard devices directly, which
+//! * **RHEMA keys** (handy-keys) read the keyboard devices directly, which
 //!   works on any desktop, but reading them needs `/dev/input/event*`
 //!   (normally `root:input 0660`), and withholding a hotkey's key from the
 //!   focused app needs a mirror of each keyboard through `/dev/uinput`
 //!   (normally `root:root 0600`, so the `input` group alone is not enough).
 //!
 //! What always works is a shortcut the desktop itself owns, set to run
-//! `rema --toggle-transcription` and friends. [`shortcut_environment`]
+//! `rhema --toggle-transcription` and friends. [`shortcut_environment`]
 //! says which case this is and lists those commands, so the app can explain
 //! it next to the keys.
 
@@ -30,7 +30,7 @@ use tauri::AppHandle;
 
 use crate::settings::{self, AppSettings, KeyboardImplementation};
 
-/// Whether shortcuts pressed in other apps reach REMA.
+/// Whether shortcuts pressed in other apps reach RHEMA.
 #[derive(Serialize, Type, Debug, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum ShortcutReach {
@@ -39,7 +39,7 @@ pub enum ShortcutReach {
     /// Wayland with the Tauri engine: heard only while an X11 window is in
     /// front, so in practice not at all.
     WaylandX11Only,
-    /// The REMA keys engine cannot open the keyboard devices.
+    /// The RHEMA keys engine cannot open the keyboard devices.
     NoKeyboardAccess,
 }
 
@@ -52,7 +52,7 @@ pub enum LinuxDesktop {
     Other,
 }
 
-/// What the REMA keys engine is missing. Each needs its own fix.
+/// What the RHEMA keys engine is missing. Each needs its own fix.
 #[derive(Serialize, Type, Debug, Clone, Copy, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum KeyboardAccessGap {
@@ -182,7 +182,7 @@ pub fn program_name(appimage: Option<&str>, current_exe: Option<&str>) -> String
                 shell_word(path)
             }
         }
-        None => "rema".to_string(),
+        None => "rhema".to_string(),
     }
 }
 
@@ -201,7 +201,7 @@ pub fn access_command_for(missing: &[KeyboardAccessGap]) -> String {
     }
     if missing.contains(&KeyboardAccessGap::Uinput) {
         steps.push(
-            "echo 'KERNEL==\"uinput\", GROUP=\"input\", MODE=\"0660\"' | sudo tee /etc/udev/rules.d/70-rema-uinput.rules",
+            "echo 'KERNEL==\"uinput\", GROUP=\"input\", MODE=\"0660\"' | sudo tee /etc/udev/rules.d/70-rhema-uinput.rules",
         );
         steps.push("sudo udevadm control --reload");
         steps.push("sudo udevadm trigger /dev/uinput");
@@ -209,7 +209,7 @@ pub fn access_command_for(missing: &[KeyboardAccessGap]) -> String {
     steps.join(" && ")
 }
 
-/// What the REMA keys engine would be missing on this machine right now.
+/// What the RHEMA keys engine would be missing on this machine right now.
 #[cfg(target_os = "linux")]
 pub fn keyboard_access_gaps() -> Vec<KeyboardAccessGap> {
     use std::os::unix::fs::FileTypeExt;
@@ -298,7 +298,7 @@ pub fn log_startup_environment(app: &AppHandle) {
              the CLI flags work instead (see the Shortcuts card)."
         ),
         ShortcutReach::NoKeyboardAccess => log::warn!(
-            "Global shortcuts: the REMA keys engine cannot read the keyboard ({:?}); \
+            "Global shortcuts: the RHEMA keys engine cannot read the keyboard ({:?}); \
              no shortcut will fire",
             environment.missing
         ),
@@ -322,7 +322,7 @@ mod tests {
     }
 
     #[test]
-    fn rema_keys_work_anywhere_with_access_and_nowhere_without() {
+    fn rhema_keys_work_anywhere_with_access_and_nowhere_without() {
         for wayland in [true, false] {
             assert_eq!(
                 reach_for(KeyboardImplementation::HandyKeys, wayland, &[]),
@@ -353,25 +353,25 @@ mod tests {
     fn an_appimage_is_named_by_its_own_file() {
         assert_eq!(
             program_name(
-                Some("/home/me/Apps/REMA_1.5.0_amd64.AppImage"),
-                Some("/tmp/.mount_SpeakXYZ/usr/bin/rema"),
+                Some("/home/me/Apps/RHEMA_1.5.0_amd64.AppImage"),
+                Some("/tmp/.mount_SpeakXYZ/usr/bin/rhema"),
             ),
-            "/home/me/Apps/REMA_1.5.0_amd64.AppImage"
+            "/home/me/Apps/RHEMA_1.5.0_amd64.AppImage"
         );
         assert_eq!(
-            program_name(Some("/home/me/My Apps/REMA.AppImage"), None),
-            "'/home/me/My Apps/REMA.AppImage'"
+            program_name(Some("/home/me/My Apps/RHEMA.AppImage"), None),
+            "'/home/me/My Apps/RHEMA.AppImage'"
         );
     }
 
     #[test]
     fn an_installed_binary_is_named_bare() {
-        assert_eq!(program_name(None, Some("/usr/bin/rema")), "rema");
+        assert_eq!(program_name(None, Some("/usr/bin/rhema")), "rhema");
         assert_eq!(
-            program_name(None, Some("/opt/rema/rema")),
-            "/opt/rema/rema"
+            program_name(None, Some("/opt/rhema/rhema")),
+            "/opt/rhema/rhema"
         );
-        assert_eq!(program_name(None, None), "rema");
+        assert_eq!(program_name(None, None), "rhema");
     }
 
     #[test]
@@ -384,20 +384,20 @@ mod tests {
         let mut settings = settings::get_default_settings();
         settings.assistant_enabled = true;
         settings.post_process_enabled = false;
-        let ids: Vec<String> = desktop_commands(&settings, "rema")
+        let ids: Vec<String> = desktop_commands(&settings, "rhema")
             .into_iter()
             .map(|c| c.id)
             .collect();
         assert_eq!(ids, ["transcribe", "assistant", "assistant_call", "cancel"]);
 
         settings.assistant_enabled = false;
-        let commands = desktop_commands(&settings, "rema");
+        let commands = desktop_commands(&settings, "rhema");
         assert_eq!(
             commands
                 .iter()
                 .map(|c| c.command.as_str())
                 .collect::<Vec<_>>(),
-            ["rema --toggle-transcription", "rema --cancel"]
+            ["rhema --toggle-transcription", "rhema --cancel"]
         );
     }
 

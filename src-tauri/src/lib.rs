@@ -1441,11 +1441,11 @@ pub fn run(cli_args: CliArgs) {
                     Target::new(if let Some(data_dir) = portable::data_dir() {
                         TargetKind::Folder {
                             path: data_dir.join("logs"),
-                            file_name: Some("rema".into()),
+                            file_name: Some("rhema".into()),
                         }
                     } else {
                         TargetKind::LogDir {
-                            file_name: Some("rema".into()),
+                            file_name: Some("rhema".into()),
                         }
                     })
                     .filter(|metadata| {
@@ -1553,7 +1553,7 @@ pub fn run(cli_args: CliArgs) {
                     // names the window to the OS: the taskbar hover preview,
                     // Alt+Tab, Task Manager, Linux window lists and screen
                     // readers. An empty one left all of those blank.
-                    .title("REMA")
+                    .title("RHEMA")
                     // Open a bit wider/taller so content (max-w-3xl) breathes
                     // next to the sidebar instead of feeling cramped. Min stays
                     // smaller so users on small laptops can shrink it to fit
@@ -1723,7 +1723,7 @@ pub fn run(cli_args: CliArgs) {
             // But if permission onboarding is required, always show the window.
             // A cold-start `--run-command` also starts hidden: the command acts
             // on the window in front, and showing ours a moment later would put
-            // REMA there, so typed text and keys would land in Settings. The
+            // RHEMA there, so typed text and keys would land in Settings. The
             // window still loads hidden, which is what creates keyboard control.
             let should_hide =
                 settings.start_hidden || cli_args.start_hidden || cli_args.run_command.is_some();

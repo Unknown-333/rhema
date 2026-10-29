@@ -1,4 +1,4 @@
-// REMA's design tokens for the phone, aligned with the desktop's Studio
+// RHEMA's design tokens for the phone, aligned with the desktop's Studio
 // palette: colour, type, spacing, radii and
 // motion. Everything the screens draw comes from here or from the theme
 // built on it (theme.dart), so light and dark stay one system.
@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 
 /// The type families. Geist for everything read and operated, Geist Mono
 /// for figures that must line up, Plus Jakarta Sans for the wordmark only.
-abstract final class RemaFonts {
+abstract final class RhemaFonts {
   static const text = 'Geist';
   static const mono = 'GeistMono';
   static const display = 'PlusJakartaSans';
 }
 
 /// The one type scale. Line heights are absolute (height = line / size).
-abstract final class RemaType {
+abstract final class RhemaType {
   static TextStyle _geist(
     double size,
     double line,
     FontWeight weight,
     double tracking,
   ) => TextStyle(
-    fontFamily: RemaFonts.text,
+    fontFamily: RhemaFonts.text,
     fontSize: size,
     height: line / size,
     fontWeight: weight,
@@ -30,7 +30,7 @@ abstract final class RemaType {
   );
 
   static TextStyle _mono(double size, double line) => TextStyle(
-    fontFamily: RemaFonts.mono,
+    fontFamily: RhemaFonts.mono,
     fontSize: size,
     height: line / size,
     fontWeight: FontWeight.w400,
@@ -123,7 +123,7 @@ abstract final class Radii {
 /// edge of light does the same job. Nothing heavier than this anywhere.
 abstract final class Depth {
   /// Groups, cards, the composer.
-  static List<BoxShadow> card(RemaColors t) => t.isDark
+  static List<BoxShadow> card(RhemaColors t) => t.isDark
       ? const []
       : const [
           BoxShadow(
@@ -139,7 +139,7 @@ abstract final class Depth {
         ];
 
   /// Something that floats over the page: the live view, a raised card.
-  static List<BoxShadow> raised(RemaColors t) => t.isDark
+  static List<BoxShadow> raised(RhemaColors t) => t.isDark
       ? const [
           BoxShadow(
             color: Color(0x66000000),
@@ -161,7 +161,7 @@ abstract final class Depth {
         ];
 
   /// The faint top light a dark card gets instead of a shadow.
-  static Border? edge(RemaColors t) =>
+  static Border? edge(RhemaColors t) =>
       t.isDark ? Border.all(color: const Color(0x0DFFFFFF)) : null;
 }
 
@@ -181,10 +181,10 @@ abstract final class Motion {
 }
 
 /// The colours Material's scheme has no slot for, as a theme extension so
-/// widgets read them with `context.rema`.
+/// widgets read them with `context.rhema`.
 @immutable
-class RemaColors extends ThemeExtension<RemaColors> {
-  const RemaColors({
+class RhemaColors extends ThemeExtension<RhemaColors> {
+  const RhemaColors({
     required this.canvas,
     required this.card,
     required this.fill,
@@ -283,7 +283,7 @@ class RemaColors extends ThemeExtension<RemaColors> {
 
   bool get isDark => ink.computeLuminance() > 0.5;
 
-  static const light = RemaColors(
+  static const light = RhemaColors(
     canvas: Color(0xFFF2F0EC),
     card: Color(0xFFFFFFFF),
     fill: Color(0xFFEAE7E1),
@@ -312,7 +312,7 @@ class RemaColors extends ThemeExtension<RemaColors> {
     onInverse: Color(0xFFF4F3F6),
   );
 
-  static const dark = RemaColors(
+  static const dark = RhemaColors(
     canvas: Color(0xFF0C0C10),
     card: Color(0xFF16161C),
     fill: Color(0xFF212129),
@@ -342,13 +342,13 @@ class RemaColors extends ThemeExtension<RemaColors> {
   );
 
   @override
-  RemaColors copyWith() => this;
+  RhemaColors copyWith() => this;
 
   @override
-  RemaColors lerp(RemaColors? other, double t) {
+  RhemaColors lerp(RhemaColors? other, double t) {
     if (other == null) return this;
     Color c(Color a, Color b) => Color.lerp(a, b, t)!;
-    return RemaColors(
+    return RhemaColors(
       canvas: c(canvas, other.canvas),
       card: c(card, other.card),
       fill: c(fill, other.fill),
@@ -379,10 +379,10 @@ class RemaColors extends ThemeExtension<RemaColors> {
   }
 }
 
-extension RemaTheme on BuildContext {
-  /// REMA's colours for the current theme.
-  RemaColors get rema =>
-      Theme.of(this).extension<RemaColors>() ?? RemaColors.light;
+extension RhemaTheme on BuildContext {
+  /// RHEMA's colours for the current theme.
+  RhemaColors get rhema =>
+      Theme.of(this).extension<RhemaColors>() ?? RhemaColors.light;
 
   TextTheme get text => Theme.of(this).textTheme;
 }

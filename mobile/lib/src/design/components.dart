@@ -47,7 +47,7 @@ enum Tone { neutral, accent, success, warning, danger }
 
 extension ToneColors on Tone {
   /// The tone's glyph colour.
-  Color fg(RemaColors t) => switch (this) {
+  Color fg(RhemaColors t) => switch (this) {
     Tone.neutral => t.muted,
     Tone.accent => t.accent,
     Tone.success => t.success,
@@ -56,7 +56,7 @@ extension ToneColors on Tone {
   };
 
   /// The tone's soft fill (banners).
-  Color bg(RemaColors t) => switch (this) {
+  Color bg(RhemaColors t) => switch (this) {
     Tone.neutral => t.isDark ? t.fill : t.card,
     Tone.accent => t.accentSoft,
     Tone.success => t.successSoft,
@@ -131,7 +131,7 @@ class Surface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radius),
       side: borderColor == null
@@ -177,7 +177,7 @@ class Group extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: margin,
       child: Container(
@@ -264,7 +264,7 @@ class ListRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final trailing = this.trailing;
     // An icon button's glyph sits where a plain trailing glyph would.
     final endPad = trailing is IconBtn ? Space.s4 : Space.s16;
@@ -303,7 +303,7 @@ class ListRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style:
                               titleStyle ??
-                              RemaType.rowTitle.copyWith(color: t.ink),
+                              RhemaType.rowTitle.copyWith(color: t.ink),
                         ),
                       ),
                     ],
@@ -319,7 +319,7 @@ class ListRow extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style:
                           subtitleStyle ??
-                          RemaType.footnote.copyWith(color: t.muted),
+                          RhemaType.footnote.copyWith(color: t.muted),
                     ),
                   ],
                 ],
@@ -365,7 +365,7 @@ class RowGlyph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      Icon(icon, size: IconSize.regular, color: color ?? context.rema.muted);
+      Icon(icon, size: IconSize.regular, color: color ?? context.rhema.muted);
 }
 
 /// A status as a 32 circle: the glyph in the status colour on its soft
@@ -406,7 +406,7 @@ class RowTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final tile = Container(
       width: 32,
       height: 32,
@@ -450,7 +450,7 @@ class Monogram extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final letter = name.trim().isEmpty
         ? '?'
         : name.trim().characters.first.toUpperCase();
@@ -464,7 +464,7 @@ class Monogram extends StatelessWidget {
       ),
       child: Text(
         letter,
-        style: RemaType.label.copyWith(
+        style: RhemaType.label.copyWith(
           color: t.muted,
           fontWeight: FontWeight.w600,
         ),
@@ -501,7 +501,7 @@ class SectionLabel extends StatelessWidget {
       header: true,
       child: Text(
         title,
-        style: RemaType.label.copyWith(color: context.rema.muted),
+        style: RhemaType.label.copyWith(color: context.rhema.muted),
       ),
     );
     if (trailing == null) {
@@ -533,7 +533,7 @@ class GroupFooter extends StatelessWidget {
     padding: const EdgeInsetsDirectional.fromSTEB(32, Space.s8, 32, 0),
     child: Text(
       text,
-      style: RemaType.footnote.copyWith(color: context.rema.muted),
+      style: RhemaType.footnote.copyWith(color: context.rhema.muted),
     ),
   );
 }
@@ -575,7 +575,7 @@ class _IconBtnState extends State<IconBtn> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = widget.onPressed != null;
     final glyph = Icon(
       widget.icon,
@@ -685,7 +685,7 @@ class Btn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final height =
         this.height ??
         switch (kind) {
@@ -701,8 +701,8 @@ class Btn extends StatelessWidget {
       _ => compact ? 16.0 : 20.0,
     };
     final textStyle = compact
-        ? RemaType.label.copyWith(fontWeight: FontWeight.w600)
-        : RemaType.button;
+        ? RhemaType.label.copyWith(fontWeight: FontWeight.w600)
+        : RhemaType.button;
     final fg = foreground;
     final base = ButtonStyle(
       minimumSize: WidgetStatePropertyAll(
@@ -884,7 +884,7 @@ class StatusPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final (Color bg, Color fg) = switch (kind) {
       PillKind.neutral || PillKind.offline => (t.fill, t.muted),
       PillKind.live => (t.live, Colors.white),
@@ -912,7 +912,7 @@ class StatusPill extends StatelessWidget {
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: RemaType.caption.copyWith(color: fg),
+              style: RhemaType.caption.copyWith(color: fg),
             ),
           ),
         ],
@@ -957,7 +957,7 @@ class InlineBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final fg = tone.fg(t);
     return Padding(
       padding: margin,
@@ -989,7 +989,7 @@ class InlineBanner extends StatelessWidget {
               liveRegion: live,
               child: Text(
                 message,
-                style: RemaType.rowBody.copyWith(color: t.ink),
+                style: RhemaType.rowBody.copyWith(color: t.ink),
               ),
             );
             final close = onClose == null
@@ -1085,7 +1085,7 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -1106,7 +1106,7 @@ class EmptyState extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: RemaType.title1.copyWith(color: t.ink),
+                  style: RhemaType.title1.copyWith(color: t.ink),
                 ),
               ),
               if (body case final body?) ...[
@@ -1116,7 +1116,7 @@ class EmptyState extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
-                  style: RemaType.rowBody.copyWith(color: t.muted),
+                  style: RhemaType.rowBody.copyWith(color: t.muted),
                 ),
               ],
               ?child,
@@ -1148,7 +1148,7 @@ class Spinner extends StatelessWidget {
         value: 0.7,
         strokeWidth: 2,
         strokeCap: StrokeCap.round,
-        color: color ?? context.rema.accent,
+        color: color ?? context.rhema.accent,
         semanticsLabel: semanticLabel,
       ),
     ),
@@ -1239,7 +1239,7 @@ class _RequestCardState extends State<RequestCard> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: widget.margin,
       child: Container(
@@ -1264,7 +1264,7 @@ class _RequestCardState extends State<RequestCard> {
                       child: Icon(AppIcons.waiting, size: 16, color: t.warning),
                     )
                   : const Center(
-                      child: RemaOrb(size: 22, mood: OrbMood.thinking),
+                      child: RhemaOrb(size: 22, mood: OrbMood.thinking),
                     ),
             ),
             const SizedBox(width: Space.s12),
@@ -1280,7 +1280,7 @@ class _RequestCardState extends State<RequestCard> {
                       child: Text(
                         widget.title,
                         key: ValueKey(widget.title),
-                        style: RemaType.rowTitle.copyWith(color: t.ink),
+                        style: RhemaType.rowTitle.copyWith(color: t.ink),
                       ),
                     ),
                     if (widget.detail case final detail?) ...[
@@ -1289,7 +1289,7 @@ class _RequestCardState extends State<RequestCard> {
                         detail,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: RemaType.footnote.copyWith(color: t.muted),
+                        style: RhemaType.footnote.copyWith(color: t.muted),
                       ),
                     ],
                   ],
@@ -1330,7 +1330,7 @@ class SegmentedPill<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = onChanged != null;
     final index = options.indexWhere((o) => o.$1 == selected);
     final rtl = Directionality.of(context) == TextDirection.rtl;
@@ -1420,7 +1420,7 @@ class SegmentedPill<T> extends StatelessWidget {
                                           label,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: RemaType.label.copyWith(
+                                          style: RhemaType.label.copyWith(
                                             fontWeight: FontWeight.w600,
                                             color: value == selected
                                                 ? t.ink
@@ -1449,8 +1449,8 @@ class SegmentedPill<T> extends StatelessWidget {
 
 /// A chip (§3.6): Do's suggestions, a question's choices. 36 tall in a 44
 /// tap target.
-class RemaChip extends StatefulWidget {
-  const RemaChip({
+class RhemaChip extends StatefulWidget {
+  const RhemaChip({
     super.key,
     required this.label,
     required this.onPressed,
@@ -1464,15 +1464,15 @@ class RemaChip extends StatefulWidget {
   final bool selected;
 
   @override
-  State<RemaChip> createState() => _RemaChipState();
+  State<RhemaChip> createState() => _RhemaChipState();
 }
 
-class _RemaChipState extends State<RemaChip> {
+class _RhemaChipState extends State<RhemaChip> {
   var _down = false;
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = widget.onPressed != null;
     final selected = widget.selected;
     final bg = selected
@@ -1533,7 +1533,7 @@ class _RemaChipState extends State<RemaChip> {
                       widget.label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: RemaType.label.copyWith(color: fg),
+                      style: RhemaType.label.copyWith(color: fg),
                     ),
                   ),
                 ],
@@ -1584,10 +1584,10 @@ class ShimmerText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final label = Text(
       text,
-      style: (style ?? RemaType.rowBody).copyWith(color: t.muted),
+      style: (style ?? RhemaType.rowBody).copyWith(color: t.muted),
     );
     if (!loopsAllowed(context)) return label;
     return Looping(
@@ -1621,7 +1621,7 @@ class BlinkDot extends StatelessWidget {
       width: 6,
       height: 6,
       decoration: BoxDecoration(
-        color: context.rema.ink,
+        color: context.rhema.ink,
         shape: BoxShape.circle,
       ),
     );
@@ -1640,7 +1640,7 @@ class SkeletonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     Widget bar(double w) => Container(
       width: w,
       height: 10,
@@ -1766,7 +1766,7 @@ class _LoopingState extends State<Looping> with SingleTickerProviderStateMixin {
 
 /// A bottom sheet in the app's style (§3.15): a title, an optional
 /// subtitle, then [builder]'s rows, scrolling past 85% of the screen.
-Future<T?> showRemaSheet<T>(
+Future<T?> showRhemaSheet<T>(
   BuildContext context, {
   required String title,
   String? subtitle,
@@ -1803,7 +1803,7 @@ class SheetBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.paddingOf(context).bottom + Space.s8,
@@ -1829,14 +1829,14 @@ class SheetBody extends StatelessWidget {
                         header: true,
                         child: Text(
                           title,
-                          style: RemaType.title2.copyWith(color: t.ink),
+                          style: RhemaType.title2.copyWith(color: t.ink),
                         ),
                       ),
                       if (subtitle case final subtitle?) ...[
                         const SizedBox(height: Space.s4),
                         Text(
                           subtitle,
-                          style: RemaType.footnote.copyWith(color: t.muted),
+                          style: RhemaType.footnote.copyWith(color: t.muted),
                         ),
                       ],
                     ],
@@ -1869,7 +1869,7 @@ class SheetRows extends StatelessWidget {
         if (i > 0)
           Padding(
             padding: EdgeInsetsDirectional.only(start: dividerInset),
-            child: Divider(height: 1, color: context.rema.hairline),
+            child: Divider(height: 1, color: context.rhema.hairline),
           ),
         child,
       ],
@@ -1890,7 +1890,7 @@ Future<bool> confirmDialog(
   final confirmed = await showDialog<bool>(
     context: context,
     builder: (context) {
-      final t = context.rema;
+      final t = context.rhema;
       return Dialog(
         insetPadding: const EdgeInsets.all(24),
         child: ConstrainedBox(
@@ -1905,7 +1905,7 @@ Future<bool> confirmDialog(
                   padding: const EdgeInsetsDirectional.only(end: 8),
                   child: Text(
                     title,
-                    style: RemaType.title2.copyWith(color: t.ink),
+                    style: RhemaType.title2.copyWith(color: t.ink),
                   ),
                 ),
                 const SizedBox(height: Space.s8),
@@ -1913,7 +1913,7 @@ Future<bool> confirmDialog(
                   padding: const EdgeInsetsDirectional.only(end: 8),
                   child: Text(
                     body,
-                    style: RemaType.rowBody.copyWith(color: t.muted),
+                    style: RhemaType.rowBody.copyWith(color: t.muted),
                   ),
                 ),
                 const SizedBox(height: Space.s16),

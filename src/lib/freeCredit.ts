@@ -1,20 +1,20 @@
 import type { FreeCreditJob, FreeCreditStatus } from "@/bindings";
 
 /**
- * REMA free: the $1 of AI usage every signed-in REMA account gets,
+ * RHEMA free: the $1 of AI usage every signed-in RHEMA account gets,
  * served by the account server (`src-tauri/src/free_credit.rs`). Rust owns
  * the session, the balance and which jobs run on it; these are the pure
  * rules the UI draws from its `FreeCreditStatus`.
  */
 
 /** The provider id in every job's registry. */
-export const FREE_PROVIDER_ID = "rema_free";
+export const FREE_PROVIDER_ID = "rhema_free";
 /** Its name, a product name and so the same in every language. */
-export const FREE_PROVIDER_LABEL = "REMA free";
+export const FREE_PROVIDER_LABEL = "RHEMA free";
 /** The chat model the free API serves (`GET /v1/free/models`). */
-export const FREE_CHAT_MODEL = "rema-free-chat";
+export const FREE_CHAT_MODEL = "rhema-free-chat";
 
-/** Every job REMA free can do, in the order the UI lists them. */
+/** Every job RHEMA free can do, in the order the UI lists them. */
 export const FREE_CREDIT_JOBS: readonly FreeCreditJob[] = [
   "stt",
   "cleanup",
@@ -23,15 +23,15 @@ export const FREE_CREDIT_JOBS: readonly FreeCreditJob[] = [
   "voice",
 ];
 
-/** Whether a provider or voice engine id is REMA free. */
-export const isRemaFree = (id: string | null | undefined): boolean =>
+/** Whether a provider or voice engine id is RHEMA free. */
+export const isRhemaFree = (id: string | null | undefined): boolean =>
   id === FREE_PROVIDER_ID;
 
-/** Lists of providers the user picks from never show REMA free: it has
- *  its own "Use REMA free" button and needs no key or address. */
-export const withoutRemaFree = <T extends { id: string }>(
+/** Lists of providers the user picks from never show RHEMA free: it has
+ *  its own "Use RHEMA free" button and needs no key or address. */
+export const withoutRhemaFree = <T extends { id: string }>(
   providers: readonly T[],
-): T[] => providers.filter((provider) => !isRemaFree(provider.id));
+): T[] => providers.filter((provider) => !isRhemaFree(provider.id));
 
 /** What the UI shows about the free credit. */
 export type FreeCreditView =
@@ -104,7 +104,7 @@ export const remainingFraction = (view: FreeCreditView): number => {
 };
 
 /**
- * Whether to offer "Use REMA free" for `job`: someone is signed in, there is
+ * Whether to offer "Use RHEMA free" for `job`: someone is signed in, there is
  * credit left, and the job does not already run on it.
  */
 export const offersFreeCredit = (
@@ -113,7 +113,7 @@ export const offersFreeCredit = (
 ): boolean =>
   freeCreditView(status).kind === "available" && !status?.serving[job];
 
-/** Whether any job runs on REMA free right now. */
+/** Whether any job runs on RHEMA free right now. */
 export const servesAnyJob = (
   status: FreeCreditStatus | null | undefined,
 ): boolean =>

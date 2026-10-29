@@ -4,8 +4,8 @@ import { useFreeCredit } from "@/stores/freeCreditStore";
 import { formatUsdAmount, freeCreditView } from "@/lib/freeCredit";
 
 /**
- * REMA free as a choice in a model or voice picker: whether to offer it
- * (signed in, with credit left) and what to call it ("REMA free ($1
+ * RHEMA free as a choice in a model or voice picker: whether to offer it
+ * (signed in, with credit left) and what to call it ("RHEMA free ($1
  * included)").
  */
 export const useFreeOption = () => {

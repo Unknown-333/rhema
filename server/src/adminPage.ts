@@ -157,8 +157,8 @@ code { font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; back
 
 const SCRIPT = `
 "use strict";
-const KEY = "rema.admin.session";
-const VERIFIER = "rema.admin.verifier";
+const KEY = "rhema.admin.session";
+const VERIFIER = "rhema.admin.verifier";
 const SERVICE = {
   chat: "Chat (assistant, cleanup, commands)",
   transcribe: "Speech to text",
@@ -616,20 +616,20 @@ const BODY = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<title>REMA Admin</title>
+<title>RHEMA Admin</title>
 <style>${STYLE}</style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>REMA <span>admin</span></h1>
+    <h1>RHEMA <span>admin</span></h1>
     <span class="stamp" id="stamp"></span>
     <button class="btn hidden" id="signout" type="button">Sign out</button>
   </header>
 
   <section class="card login hidden" id="login">
     <h2>Sign in</h2>
-    <p class="sub">With your REMA account. Only accounts this server lists as admins can open the dashboard.</p>
+    <p class="sub">With your RHEMA account. Only accounts this server lists as admins can open the dashboard.</p>
     <form id="login-form">
       <label class="sub" for="email">Email</label>
       <input class="control" id="email" type="email" autocomplete="username" spellcheck="false" required>

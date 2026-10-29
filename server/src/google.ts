@@ -33,7 +33,7 @@ const ISSUERS = new Set<unknown>([
 const STATE_TTL_MS = 10 * 60 * 1000;
 const LOGIN_CODE_TTL_MS = 2 * 60 * 1000;
 /** The phone app's redirect. */
-const PHONE_REDIRECTS = new Set<string>(["rema://auth/callback"]);
+const PHONE_REDIRECTS = new Set<string>(["rhema://auth/callback"]);
 const LOOPBACK_REDIRECT = /^http:\/\/127\.0\.0\.1:([1-9]\d{3,4})\/callback$/;
 const S256_CHALLENGE = /^[A-Za-z0-9_-]{43}$/;
 
@@ -56,7 +56,7 @@ export function start(url: URL, ctx: Ctx): Response {
   ) {
     return htmlPage(
       400,
-      "This sign-in link is not valid. Start again from the REMA app.",
+      "This sign-in link is not valid. Start again from the RHEMA app.",
     );
   }
   return toGoogle(ctx, redirectUri, challenge);
@@ -106,7 +106,7 @@ export async function callback(url: URL, ctx: Ctx): Promise<Response> {
   if (!flow || flow.expires_at <= ctx.now()) {
     return htmlPage(
       400,
-      "This sign-in has expired. Start again from the REMA app.",
+      "This sign-in has expired. Start again from the RHEMA app.",
     );
   }
   const back = (query: string) => redirect(`${flow.redirect_uri}?${query}`);

@@ -180,7 +180,7 @@ function App() {
   }, []);
 
   // Listen for paste failures and show a toast.
-  // The technical error detail is logged to rema.log on the Rust side
+  // The technical error detail is logged to rhema.log on the Rust side
   // (see actions.rs `error!("Failed to paste transcription: ...")`),
   // so we show a localized, user-friendly message here instead of the raw error.
   useEffect(() => {

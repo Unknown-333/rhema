@@ -67,7 +67,7 @@ class DestinationRow extends StatelessWidget {
         DictateStrings.pastesOn(computerName),
       ),
     };
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: const EdgeInsets.only(top: Space.s8),
       child: Group(
@@ -116,7 +116,7 @@ class RecentDictationsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
-    final t = context.rema;
+    final t = context.rhema;
     final localizations = MaterialLocalizations.of(context);
     final now = DateTime.now();
     String when(DateTime at) =>
@@ -133,9 +133,9 @@ class RecentDictationsList extends StatelessWidget {
             for (final item in items)
               ListRow(
                 title: item.text,
-                titleStyle: RemaType.rowBody.copyWith(color: t.ink),
+                titleStyle: RhemaType.rowBody.copyWith(color: t.ink),
                 subtitle: when(item.at),
-                subtitleStyle: RemaType.footnote.copyWith(color: t.faint),
+                subtitleStyle: RhemaType.footnote.copyWith(color: t.faint),
                 trailing: IconBtn(
                   icon: AppIcons.copy,
                   tooltip: DictateStrings.copy,
@@ -167,7 +167,7 @@ Future<void> openText(
 ) {
   final relay = AppServices.of(context).relay;
   final messenger = ScaffoldMessenger.of(context);
-  return showRemaSheet<void>(
+  return showRhemaSheet<void>(
     context,
     title: DictateStrings.result,
     builder: (sheet) {
@@ -187,7 +187,7 @@ Future<void> openText(
               padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
               child: SelectableText(
                 text,
-                style: RemaType.body.copyWith(color: sheet.rema.ink),
+                style: RhemaType.body.copyWith(color: sheet.rhema.ink),
               ),
             ),
           ),
@@ -259,7 +259,7 @@ class ReturnedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Stack(
       children: [
         Container(
@@ -282,7 +282,7 @@ class ReturnedCard extends StatelessWidget {
                       outcome.text ?? '',
                       maxLines: 6,
                       overflow: TextOverflow.ellipsis,
-                      style: RemaType.body.copyWith(color: t.ink),
+                      style: RhemaType.body.copyWith(color: t.ink),
                     ),
                   ),
                 ),
@@ -291,7 +291,7 @@ class ReturnedCard extends StatelessWidget {
                 const SizedBox(height: Space.s8),
                 Text(
                   DictateStrings.pasteOffNote(computerName),
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
               ],
               const SizedBox(height: Space.s12),
@@ -387,7 +387,7 @@ class _WindowPickerState extends State<WindowPicker> {
     return ListenableBuilder(
       listenable: c,
       builder: (context, _) {
-        final t = context.rema;
+        final t = context.rhema;
         final name = c.computer?.name ?? '';
         final windows = _windows;
         final error = _error;
@@ -440,7 +440,7 @@ class _WindowPickerState extends State<WindowPicker> {
                     ListRow(
                       leading: const Spinner(size: 18),
                       title: DictateStrings.loadingWindows,
-                      titleStyle: RemaType.rowBody.copyWith(color: t.muted),
+                      titleStyle: RhemaType.rowBody.copyWith(color: t.muted),
                     ),
                   for (final window in windows ?? const <RemoteWindow>[])
                     _WindowRow(
@@ -463,7 +463,7 @@ class _WindowPickerState extends State<WindowPicker> {
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                   child: Text(
                     DictateStrings.noWindows(name),
-                    style: RemaType.footnote.copyWith(color: t.muted),
+                    style: RhemaType.footnote.copyWith(color: t.muted),
                   ),
                 ),
               if (onWatch != null && _screens.isNotEmpty && error == null) ...[
@@ -505,7 +505,7 @@ class _WindowPickerState extends State<WindowPicker> {
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                 child: Text(
                   DictateStrings.pickWindowBody(name),
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
               ),
             ],
@@ -516,7 +516,7 @@ class _WindowPickerState extends State<WindowPicker> {
                   paste
                       ? DictateStrings.hintPaste(name)
                       : DictateStrings.hintKeep,
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
               ),
           ],
@@ -535,7 +535,7 @@ class _WindowRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final (title, detail) = windowLabel(window);
     return ListRow(
       leading: Monogram(title),

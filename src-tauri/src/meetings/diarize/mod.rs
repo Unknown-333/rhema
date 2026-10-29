@@ -29,7 +29,7 @@
 //!                                                        │
 //!                            average-linkage clustering + four guards
 //!                                                        │
-//!                                    spans ──▶ one transaction ──▶ rema_meetings.db
+//!                                    spans ──▶ one transaction ──▶ rhema_meetings.db
 //! ```
 //!
 //! The clustering step and its guards live in [`cluster`], pure and unit-tested,

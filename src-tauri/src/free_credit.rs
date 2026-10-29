@@ -1,10 +1,10 @@
-//! **REMA free**: every signed-in REMA account gets a small AI allowance
+//! **RHEMA free**: every signed-in RHEMA account gets a small AI allowance
 //! (one US dollar) served by the account server, shared by every cloud job:
 //! cloud transcription, the assistant, AI cleanup, command mode and spoken
 //! answers. It exists so someone can try every cloud feature before they have
 //! an API key of their own.
 //!
-//! It is one more provider (`rema_free`) in each job's registry, speaking
+//! It is one more provider (`rhema_free`) in each job's registry, speaking
 //! the OpenAI-compatible shapes the app already has (`llm_client`, the
 //! `OpenAiCompatible` cloud STT kind, the OpenAI-compatible voice engine). What
 //! is different is where its address and credential come from:
@@ -21,9 +21,9 @@
 //! The server meters every call and answers `402 credit_exhausted` once the
 //! allowance is spent. That is mapped to one friendly sentence
 //! ([`EXHAUSTED_MESSAGE`]) and marks the credit exhausted, so the app stops
-//! choosing REMA free on its own; it never retries or falls back to another
+//! choosing RHEMA free on its own; it never retries or falls back to another
 //! route that would also cost the owner. Metered answers carry
-//! `X-REMA-Credit-Remaining`, which keeps the balance the UI shows current
+//! `X-RHEMA-Credit-Remaining`, which keeps the balance the UI shows current
 //! without asking `/balance` after every call.
 
 use std::sync::{Mutex, OnceLock};
@@ -38,34 +38,34 @@ use tauri::{AppHandle, Emitter};
 use crate::settings::AppSettings;
 
 /// The provider id in every job's registry.
-pub const PROVIDER_ID: &str = "rema_free";
+pub const PROVIDER_ID: &str = "rhema_free";
 /// What the provider is called wherever a provider name is shown.
-pub const LABEL: &str = "REMA free";
+pub const LABEL: &str = "RHEMA free";
 /// Model ids the server serves (`GET /v1/free/models`).
-pub const CHAT_MODEL: &str = "rema-free-chat";
-pub const TRANSCRIBE_MODEL: &str = "rema-free-transcribe";
-pub const SPEECH_MODEL: &str = "rema-free-speech";
+pub const CHAT_MODEL: &str = "rhema-free-chat";
+pub const TRANSCRIBE_MODEL: &str = "rhema-free-transcribe";
+pub const SPEECH_MODEL: &str = "rhema-free-speech";
 /// A voice every OpenAI-compatible speech route knows.
 pub const DEFAULT_VOICE: &str = "alloy";
 /// Where the OpenAI-compatible API lives on the account server.
 pub const API_PATH: &str = "/v1/free";
 /// What the registries store as the base URL. `.invalid` never resolves
 /// (RFC 2606), so a request that somehow skipped the swap goes nowhere.
-pub const PLACEHOLDER_BASE_URL: &str = "https://rema-free.invalid/v1/free";
+pub const PLACEHOLDER_BASE_URL: &str = "https://rhema-free.invalid/v1/free";
 /// The header a metered answer carries.
-pub const CREDIT_HEADER: &str = "x-rema-credit-remaining";
+pub const CREDIT_HEADER: &str = "x-rhema-credit-remaining";
 /// Sent to every window with the whole [`FreeCreditStatus`] when it changes.
 pub const EVENT: &str = "free-credit-changed";
 
 /// What the user is told when the allowance is spent. The frontend has its
 /// own translated copy; this one reaches error toasts and the assistant.
-pub const EXHAUSTED_MESSAGE: &str = "Your REMA free credit is used up. Add your own API key on the Models page to keep using this feature.";
+pub const EXHAUSTED_MESSAGE: &str = "Your RHEMA free credit is used up. Add your own API key on the Models page to keep using this feature.";
 /// What the user is told when the server has switched the free credit off.
 pub const DISABLED_MESSAGE: &str =
-    "REMA free is not available right now. Add your own API key on the Models page to keep using this feature.";
+    "RHEMA free is not available right now. Add your own API key on the Models page to keep using this feature.";
 /// What the user is told when the free credit is chosen but nobody is signed in.
 pub const SIGN_IN_MESSAGE: &str =
-    "REMA free needs a REMA account. Sign in under Settings → Account, or choose another provider.";
+    "RHEMA free needs a RHEMA account. Sign in under Settings → Account, or choose another provider.";
 
 /// The free allowance as the server reports it.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize, Type)]
@@ -76,7 +76,7 @@ pub struct FreeCreditBalance {
     pub enabled: bool,
 }
 
-/// Which jobs run on REMA free right now, chosen or as the fallback.
+/// Which jobs run on RHEMA free right now, chosen or as the fallback.
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Type)]
 pub struct FreeCreditJobs {
     pub assistant: bool,
@@ -97,7 +97,7 @@ pub struct FreeCreditStatus {
     pub serving: FreeCreditJobs,
 }
 
-/// A job the UI can point at REMA free.
+/// A job the UI can point at RHEMA free.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Deserialize, Type)]
 #[serde(rename_all = "snake_case")]
 pub enum FreeCreditJob {
@@ -113,7 +113,7 @@ pub enum FreeCreditJob {
 pub struct FreeAccess {
     pub base_url: String,
     pub token: String,
-    /// The app may choose REMA free on its own: the server says it is on and
+    /// The app may choose RHEMA free on its own: the server says it is on and
     /// there is credit left.
     pub usable: bool,
 }
@@ -192,13 +192,13 @@ pub fn signed_in() -> bool {
     access().is_some()
 }
 
-/// Whether the app may route a job to REMA free on its own.
+/// Whether the app may route a job to RHEMA free on its own.
 pub fn usable() -> bool {
     access().is_some_and(|access| access.usable)
 }
 
 /// Only a balance the server reported, switched on and with something left,
-/// lets the app pick REMA free by itself. Before the balance is known it
+/// lets the app pick RHEMA free by itself. Before the balance is known it
 /// does not: a request that would only come back `free_disabled` is worse
 /// than the setup notice the user would otherwise see.
 pub fn usable_from(balance: Option<&FreeCreditBalance>, exhausted: bool) -> bool {
@@ -215,7 +215,7 @@ pub fn is_free_url(url: &str) -> bool {
 }
 
 /// The base URL and key a request to `provider_id` really uses: the free
-/// API's own for REMA free (or the unreachable placeholder and no key while
+/// API's own for RHEMA free (or the unreachable placeholder and no key while
 /// nobody is signed in), the given ones for everything else.
 pub fn route(
     provider_id: &str,
@@ -249,7 +249,7 @@ impl FreeFailure {
             Self::Disabled => DISABLED_MESSAGE,
             Self::Unauthorized => SIGN_IN_MESSAGE,
             Self::RateLimited => {
-                "REMA free is busy right now. Wait a moment and try again, or add your own API key on the Models page."
+                "RHEMA free is busy right now. Wait a moment and try again, or add your own API key on the Models page."
             }
         }
     }
@@ -346,7 +346,7 @@ pub fn note_failure(url: &str, status: u16, body: &str) -> Option<String> {
     let failure = classify_failure(status, body)?;
     match failure {
         FreeFailure::Exhausted => {
-            info!("REMA free: the credit is used up");
+            info!("RHEMA free: the credit is used up");
             mark(|state| {
                 state.exhausted = true;
                 if let Some(balance) = state.balance.as_mut() {
@@ -356,7 +356,7 @@ pub fn note_failure(url: &str, status: u16, body: &str) -> Option<String> {
             });
         }
         FreeFailure::Disabled => {
-            info!("REMA free: switched off on the server");
+            info!("RHEMA free: switched off on the server");
             mark(|state| {
                 if let Some(balance) = state.balance.as_mut() {
                     balance.enabled = false;
@@ -418,7 +418,7 @@ pub async fn refresh() {
     let response = match answer {
         Ok(response) => response,
         Err(e) => {
-            debug!("REMA free: could not ask for the balance: {e}");
+            debug!("RHEMA free: could not ask for the balance: {e}");
             return;
         }
     };
@@ -430,12 +430,12 @@ pub async fn refresh() {
     }
     if !(200..300).contains(&status) {
         if note_failure(&url, status, &body).is_none() {
-            debug!("REMA free: the balance request answered {status}");
+            debug!("RHEMA free: the balance request answered {status}");
         }
         return;
     }
     let Some(balance) = parse_balance(&body) else {
-        warn!("REMA free: the balance answer was unreadable");
+        warn!("RHEMA free: the balance answer was unreadable");
         return;
     };
     mark(|state| {
@@ -469,7 +469,7 @@ pub fn status(settings: &AppSettings) -> FreeCreditStatus {
     }
 }
 
-/// Which jobs run on REMA free with these settings. `signed_in` decides a
+/// Which jobs run on RHEMA free with these settings. `signed_in` decides a
 /// job the user pointed at it; `usable` decides the fallbacks.
 pub fn serving(settings: &AppSettings, signed_in: bool, usable: bool) -> FreeCreditJobs {
     if !signed_in {
@@ -513,7 +513,7 @@ pub fn notify() {
     });
 }
 
-/// Point one job at REMA free. The user's own provider choices for the
+/// Point one job at RHEMA free. The user's own provider choices for the
 /// other jobs, and their keys, are left alone.
 pub fn choose(settings: &mut AppSettings, job: FreeCreditJob) {
     let id = PROVIDER_ID.to_string();
@@ -563,7 +563,7 @@ pub async fn refresh_free_credit(app: AppHandle) -> FreeCreditStatus {
     status(&crate::settings::get_settings(&app))
 }
 
-/// "Use REMA free" for one job.
+/// "Use RHEMA free" for one job.
 #[tauri::command]
 #[specta::specta]
 pub fn choose_free_credit(app: AppHandle, job: FreeCreditJob) -> Result<FreeCreditStatus, String> {
@@ -603,7 +603,7 @@ mod tests {
     }
 
     #[test]
-    fn only_rema_free_gets_the_session_token() {
+    fn only_rhema_free_gets_the_session_token() {
         let free = access(true);
         assert_eq!(
             route(PROVIDER_ID, PLACEHOLDER_BASE_URL, "", Some(&free)),
@@ -761,7 +761,7 @@ mod tests {
 
     #[test]
     fn the_assistant_falls_back_only_when_its_choice_cannot_run() {
-        // The default selection has no model: REMA free stands in.
+        // The default selection has no model: RHEMA free stands in.
         let settings = crate::settings::get_default_settings();
         assert_eq!(
             settings

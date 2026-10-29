@@ -213,7 +213,7 @@ async function transcribe(
 ) {
   const form = new FormData();
   form.append("file", new Blob([audio]), name);
-  form.append("model", "rema-free-transcribe");
+  form.append("model", "rhema-free-transcribe");
   for (const [k, v] of Object.entries(extra)) form.append(k, v);
   return fetch(`${h!.base}/v1/free/audio/transcriptions`, {
     method: "POST",
@@ -274,8 +274,8 @@ describe("auth and configuration", () => {
     const reply = await h!.request("GET", "/v1/free/models", { token });
     expect(reply.body.object).toBe("list");
     expect(reply.body.data.map((m: Json) => m.id)).toEqual([
-      "rema-free-chat",
-      "rema-free-transcribe",
+      "rhema-free-chat",
+      "rhema-free-transcribe",
     ]);
     const res = await speech(token, { input: "hi" });
     expect(res.status).toBe(503);
@@ -449,7 +449,7 @@ describe("credit", () => {
     expect(reply.body.error).toEqual({
       code: "credit_exhausted",
       message:
-        "Your free $0.001 is used up. Add your own API key in REMA to keep going.",
+        "Your free $0.001 is used up. Add your own API key in RHEMA to keep going.",
     });
     expect(reply.headers.get(CREDIT_HEADER)).toBe("0.000200");
     expect(up!.seen.length).toBe(before);
@@ -462,7 +462,7 @@ describe("credit", () => {
     const reply = await chat(token);
     expect(reply.status).toBe(402);
     expect(reply.body.error.message).toBe(
-      "Your free $1 is used up. Add your own API key in REMA to keep going.",
+      "Your free $1 is used up. Add your own API key in RHEMA to keep going.",
     );
     expect((await balance(token)).remainingUsd).toBe(0);
   });
@@ -526,7 +526,7 @@ describe("transcription", () => {
     up!.behaviour.duration = null;
     const res = await transcribe(token, wav(30), "a.wav", {
       language: "en",
-      prompt: "REMA",
+      prompt: "RHEMA",
     });
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ text: "transcribed words" });
@@ -539,7 +539,7 @@ describe("transcription", () => {
     expect(sent.headers.get("authorization")).toBe(`Bearer ${STT_KEY}`);
     expect(sent.form!.get("model")).toBe("whisper-large-v3-turbo");
     expect(sent.form!.get("language")).toBe("en");
-    expect(sent.form!.get("prompt")).toBe("REMA");
+    expect(sent.form!.get("prompt")).toBe("RHEMA");
     expect(sent.form!.get("response_format")).toBe("verbose_json");
   });
 

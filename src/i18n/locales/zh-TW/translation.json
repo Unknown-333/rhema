@@ -35,10 +35,10 @@
     "downloading": "下載中… {{progress}}%",
     "downloadingUnknown": "下載中…",
     "installing": "安裝中…",
-    "reopening": "REMA 將關閉以安裝更新，幾秒後會重新開啟。",
+    "reopening": "RHEMA 將關閉以安裝更新，幾秒後會重新開啟。",
     "updatedTo": "已更新至版本 {{version}}",
     "restart": "立即重新啟動",
-    "readyToRestart": "更新已安裝。重新啟動 REMA 即可開始使用。",
+    "readyToRestart": "更新已安裝。重新啟動 RHEMA 即可開始使用。",
     "installFailed": "更新未能安裝。您可以再試一次，或下載安裝程式自行執行。",
     "downloadFailed": "下載未完成。請確認網路連線後再試一次。",
     "downloadInstaller": "下載安裝程式",
@@ -49,13 +49,13 @@
     "showInFolder": "在資料夾中顯示",
     "viewRelease": "在 GitHub 上查看",
     "hint": {
-      "windows": "REMA 會關閉、安裝更新，然後重新開啟。您不需要再點任何按鈕。",
-      "macos": "REMA 會以新版本重新啟動。之後 macOS 可能會再次要求您允許麥克風與輔助使用權限。",
-      "linux": "REMA 會以新版本重新啟動。若是以 .deb 安裝，會先要求輸入您的密碼。"
+      "windows": "RHEMA 會關閉、安裝更新，然後重新開啟。您不需要再點任何按鈕。",
+      "macos": "RHEMA 會以新版本重新啟動。之後 macOS 可能會再次要求您允許麥克風與輔助使用權限。",
+      "linux": "RHEMA 會以新版本重新啟動。若是以 .deb 安裝，會先要求輸入您的密碼。"
     },
     "modes": {
       "portable": "這是免安裝版，無法自行更新。請下載新版本，再將您的 Data 資料夾複製過去。",
-      "packageManager": "REMA 是由您的套件管理工具安裝的，請透過它更新，例如執行 yay -Syu rema-bin。",
+      "packageManager": "RHEMA 是由您的套件管理工具安裝的，請透過它更新，例如執行 yay -Syu rhema-bin。",
       "download": "這個版本無法直接自行更新。請下載安裝程式並執行，以取得新版本。"
     },
     "pill": {
@@ -70,7 +70,7 @@
   "feedback": {
     "button": "傳送意見回饋",
     "title": "傳送意見回饋",
-    "description": "每則訊息我都會親自閱讀，想到什麼就說什麼吧。感謝您協助讓 REMA 變得更好。",
+    "description": "每則訊息我都會親自閱讀，想到什麼就說什麼吧。感謝您協助讓 RHEMA 變得更好。",
     "kind": {
       "label": "回饋類型",
       "bug": "錯誤",
@@ -79,7 +79,7 @@
     },
     "placeholder": {
       "bug": "發生了什麼事？您原本預期會怎樣？",
-      "idea": "怎樣能讓 REMA 更符合您的需要？",
+      "idea": "怎樣能讓 RHEMA 更符合您的需要？",
       "question": "您想了解什麼？"
     },
     "messageLabel": "訊息",
@@ -114,7 +114,7 @@
       "too_many_screenshots": "最多可以附加 3 張螢幕截圖。",
       "too_large": "螢幕截圖太大，無法傳送。請移除一張後再試一次。",
       "invalid_screenshot": "其中一張螢幕截圖不是 PNG、JPEG 或 WebP 圖片。請移除後再試一次。",
-      "no_server": "REMA 暫時找不到意見回饋伺服器。訊息已保留在這裡，請稍後再試。",
+      "no_server": "RHEMA 暫時找不到意見回饋伺服器。訊息已保留在這裡，請稍後再試。",
       "network": "無法連線到意見回饋伺服器。請檢查網路連線；訊息已保留在這裡。",
       "rate_limited": "您在短時間內傳送了太多意見回饋。請過一會兒再試。",
       "rejected": "意見回饋未被接受。請嘗試縮短內容後再傳送。",
@@ -168,10 +168,10 @@
       "retry": "再試一次"
     },
     "tour": {
-      "features": "REMA 能做什麼",
+      "features": "RHEMA 能做什麼",
       "count": "{{current}} / {{total}}",
       "next": "下一步",
-      "finish": "開啟 REMA",
+      "finish": "開啟 RHEMA",
       "tabs": {
         "dictate": "語音輸入",
         "ask": "助理",
@@ -249,7 +249,7 @@
       "ready": "準備完成"
     },
     "speechToText": {
-      "title": "REMA 該怎麼聽您說話？",
+      "title": "RHEMA 該怎麼聽您說話？",
       "subtitle": "這會直接在您的裝置上把語音變成文字。先選一個，隨時可以更換。",
       "cards": {
         "fast": {
@@ -314,7 +314,7 @@
       "downloadingVoice": "您的語音模型即將就緒，已完成 {{percentage}}%。",
       "downloadingGeneric": "仍在下載，已完成 {{percentage}}%。",
       "signOff": "就是這樣。去說點什麼吧。",
-      "openApp": "開啟 REMA"
+      "openApp": "開啟 RHEMA"
     },
     "errors": {
       "selectModel": "無法選擇該模型，請重試。",
@@ -446,7 +446,7 @@
     },
     "permissions": {
       "title": "需要權限",
-      "description": "REMA 需要一些權限才能正常運作",
+      "description": "RHEMA 需要一些權限才能正常運作",
       "microphone": {
         "title": "麥克風存取權",
         "description": "需要聽取您的語音進行轉錄"
@@ -456,7 +456,7 @@
         "description": "需要將轉錄文字輸入到您的應用程式中",
         "stuckHint": "已在「系統設定」中開啟？更新後，macOS 可能會保留一個與此版本不再相符的權限。",
         "reset": "重設權限",
-        "resetDone": "現在請在「系統設定」中重新開啟 REMA。"
+        "resetDone": "現在請在「系統設定」中重新開啟 RHEMA。"
       },
       "grant": "授予權限",
       "granted": "已授予",
@@ -465,7 +465,7 @@
       "errors": {
         "checkFailed": "無法檢查權限，請再試一次。",
         "requestFailed": "無法請求權限，請再試一次。",
-        "resetFailed": "無法重設權限。請從「輔助使用」列表中移除 REMA，再重新加入。"
+        "resetFailed": "無法重設權限。請從「輔助使用」列表中移除 RHEMA，再重新加入。"
       }
     },
     "frame": {
@@ -654,7 +654,7 @@
           },
           "command": {
             "name": "語音指令",
-            "description": "說出您想做的事，例如「打開 YouTube」，REMA 就會替您完成。"
+            "description": "說出您想做的事，例如「打開 YouTube」，RHEMA 就會替您完成。"
           },
           "hands_free": {
             "name": "免持",
@@ -698,7 +698,7 @@
       },
       "handsFree": {
         "unavailableKeys": "僅在聽寫快捷鍵只由輔助鍵組成時可用，例如 Ctrl + Win。使用 {{keys}} 時，請改為關閉「按住說話」：每次聽寫都會持續到你再次按下按鍵。",
-        "unavailableEngine": "需要 REMA Keys 鍵盤引擎（{{where}}）。或關閉「按住說話」：每次聽寫都會持續到你再次按下按鍵。",
+        "unavailableEngine": "需要 RHEMA Keys 鍵盤引擎（{{where}}）。或關閉「按住說話」：每次聽寫都會持續到你再次按下按鍵。",
         "taken": "{{name}} 已在使用 {{keys}}，在其中之一變更前，這個鍵不會有作用。",
         "needsKey": "請選擇一個鍵，例如空白鍵或 Enter。單獨的輔助鍵不能當作免持鍵。",
         "pressKey": "請按下一個鍵…",
@@ -755,9 +755,9 @@
       "clearSearch": "清除搜尋",
       "noSearchResults": "找不到名稱為「{{query}}」的模型。",
       "olderHint": "舊格式。{{model}}（{{size}}）是這個模型的新版本。",
-      "retiredHint": "使用的是 REMA 已不再內含的舊引擎。請改為下載 {{model}}（{{size}}）。",
+      "retiredHint": "使用的是 RHEMA 已不再內含的舊引擎。請改為下載 {{model}}（{{size}}）。",
       "retired": {
-        "notice": "這些模型使用的是 REMA 已不再內含的舊引擎。",
+        "notice": "這些模型使用的是 RHEMA 已不再內含的舊引擎。",
         "newVersion": "新版本：{{model}} · {{size}}",
         "getNewVersion": "取得新版本",
         "useNewVersion": "使用新版本",
@@ -812,7 +812,7 @@
         "rescan": "重新掃描",
         "rescanning": "正在重新掃描…",
         "rescanDone_other": "找到 {{count}} 個本機模型。",
-        "footnote": "REMA 啟動時會重新掃描已連結的資料夾，因此你之後放進去的模型會自動出現。取消連結資料夾或移除模型，只會從這份清單中移除——你的檔案會留在原處。",
+        "footnote": "RHEMA 啟動時會重新掃描已連結的資料夾，因此你之後放進去的模型會自動出現。取消連結資料夾或移除模型，只會從這份清單中移除——你的檔案會留在原處。",
         "removeTitle": "要從清單中移除嗎？",
         "removeConfirm": "要從模型清單中移除「{{modelName}}」嗎？\n\n檔案本身會留在原處：\n{{path}}",
         "missingBadge": "檔案遺失",
@@ -902,7 +902,7 @@
         "label": "將滑鼠按鈕當作快捷鍵",
         "description": "將滑鼠中鍵、上一頁鍵或下一頁鍵當作快捷鍵：點按快捷鍵的按鍵，然後按下該滑鼠按鈕。作為快捷鍵期間，該按鈕不會執行其他動作。",
         "linux": "在 Linux 上只有滑鼠中鍵可用。",
-        "needsEngine": "需要使用 REMA Keys 鍵盤實作方式。"
+        "needsEngine": "需要使用 RHEMA Keys 鍵盤實作方式。"
       },
       "longFormChunking": {
         "title": "分割長錄音",
@@ -920,11 +920,11 @@
       },
       "autostart": {
         "label": "開機時啟動",
-        "description": "登入時自動開啟 REMA。"
+        "description": "登入時自動開啟 RHEMA。"
       },
       "showTrayIcon": {
         "label": "顯示系統匣圖示",
-        "description": "將 REMA 保留在系統匣中。"
+        "description": "將 RHEMA 保留在系統匣中。"
       },
       "trayIconColor": {
         "label": "彩色系統匣圖示",
@@ -932,7 +932,7 @@
       },
       "closeBehavior": {
         "label": "關閉視窗時結束程式",
-        "description": "關閉此選項時，關閉視窗後 REMA 會繼續在系統匣中執行，快捷鍵仍可使用。開啟時，關閉視窗會完全結束應用程式。"
+        "description": "關閉此選項時，關閉視窗後 RHEMA 會繼續在系統匣中執行，快捷鍵仍可使用。開啟時，關閉視窗會完全結束應用程式。"
       },
       "overlayStyle": {
         "title": "懸浮窗",
@@ -1026,8 +1026,8 @@
       },
       "customWords": {
         "title": "自訂詞彙",
-        "description": "希望 REMA 依照您的寫法拼寫的名稱、產品與詞句。",
-        "info": "範例：如果 REMA 寫成「Coco row」，請新增「Kokoro」。",
+        "description": "希望 RHEMA 依照您的寫法拼寫的名稱、產品與詞句。",
+        "info": "範例：如果 RHEMA 寫成「Coco row」，請新增「Kokoro」。",
         "placeholder": "新增名稱、術語或短句",
         "add": "新增",
         "empty": "還沒有自訂詞彙。",
@@ -1036,7 +1036,7 @@
       },
       "autoLearn": {
         "label": "學習我修正的字詞",
-        "description": "當您修正 REMA 聽錯的字詞時，記住您的寫法。",
+        "description": "當您修正 RHEMA 聽錯的字詞時，記住您的寫法。",
         "info": "它只會讀取剛輸入文字的那個欄位，時間約一分鐘。不會上傳任何內容，學到的每個字詞都會列在這裡。",
         "unsupported": "目前只有 Windows 支援從修正中學習。您仍可在上方手動新增字詞。",
         "learnedTitle": "從您的修正中學到的字詞",
@@ -1050,7 +1050,7 @@
         "title": "文字替換",
         "description": "將轉錄結果中的某段語句替換成您常用的文字。範例：「我的信箱」會變成「alex@example.com」。",
         "rulesTitle": "替換規則",
-        "rulesHint": "設定 REMA 聽到什麼，以及應該插入什麼。",
+        "rulesHint": "設定 RHEMA 聽到什麼，以及應該插入什麼。",
         "empty": "為您常說的語句建立一條規則。",
         "addFirst": "建立第一條規則",
         "addRule": "新增替換",
@@ -1427,7 +1427,7 @@
       },
       "updateChecks": {
         "label": "自動檢查更新",
-        "description": "在 REMA 啟動時及每 12 小時檢查一次新版本。您隨時都可以手動檢查。"
+        "description": "在 RHEMA 啟動時及每 12 小時檢查一次新版本。您隨時都可以手動檢查。"
       },
       "soundTheme": {
         "label": "音效主題",
@@ -1483,7 +1483,7 @@
       "smartSpacing": {
         "label": "智慧空格",
         "description": "讓每次聽寫與輸入框中已有的文字銜接，停下再繼續時，單字不會黏在一起。",
-        "info": "貼上前，REMA 會查看游標附近的幾個字元，只在需要的地方加空格。如果應用程式隱藏了文字，則改用自己上一次的聽寫來判斷。不會儲存或傳送任何內容。在 macOS 上使用 REMA 已取得的輔助使用權限。在 Linux 上，Chrome、Electron 和 Qt 應用程式只有在開啟桌面輔助功能設定時才會提供文字。中文和日文之間不會加空格。"
+        "info": "貼上前，RHEMA 會查看游標附近的幾個字元，只在需要的地方加空格。如果應用程式隱藏了文字，則改用自己上一次的聽寫來判斷。不會儲存或傳送任何內容。在 macOS 上使用 RHEMA 已取得的輔助使用權限。在 Linux 上，Chrome、Electron 和 Qt 應用程式只有在開啟桌面輔助功能設定時才會提供文字。中文和日文之間不會加空格。"
       },
       "smartSpacingFixCase": {
         "label": "調整大小寫",
@@ -1491,7 +1491,7 @@
       },
       "smartSpacingJoin": {
         "label": "連接中途停下的句子",
-        "description": "在句子中途停下時，刪除 REMA 加上的句點，例如「I went to the.」"
+        "description": "在句子中途停下時，刪除 RHEMA 加上的句點，例如「I went to the.」"
       },
       "keyboardImplementation": {
         "title": "鍵盤實作方式",
@@ -1623,7 +1623,7 @@
       },
       "appDataDirectory": {
         "title": "應用程式資料資料夾",
-        "description": "REMA 存放模型、歷史紀錄與設定的位置。"
+        "description": "RHEMA 存放模型、歷史紀錄與設定的位置。"
       },
       "sourceCode": {
         "title": "原始碼",
@@ -1632,12 +1632,12 @@
       },
       "license": {
         "title": "授權",
-        "description": "REMA 採用 MIT 授權條款開源。第三方聲明請見授權條款。",
+        "description": "RHEMA 採用 MIT 授權條款開源。第三方聲明請見授權條款。",
         "button": "檢視授權"
       },
       "supportDevelopment": {
         "title": "支持開發",
-        "description": "幫助我們持續打造 REMA",
+        "description": "幫助我們持續打造 RHEMA",
         "button": "捐贈"
       }
     },
@@ -1645,7 +1645,7 @@
       "enable": {
         "title": "助理",
         "label": "啟用助理",
-        "description": "關閉後，REMA 只做語音輸入。浮動面板會關閉且不再載入，它的快捷鍵會釋放，佔用的記憶體也會歸還。使用 Flow 生成 與 AI 整理仍可正常使用。"
+        "description": "關閉後，RHEMA 只做語音輸入。浮動面板會關閉且不再載入，它的快捷鍵會釋放，佔用的記憶體也會歸還。使用 Flow 生成 與 AI 整理仍可正常使用。"
       },
       "shortcuts": {
         "title": "快捷鍵"
@@ -1684,7 +1684,7 @@
         "deleteModelFailed": "無法刪除模型。",
         "finderSectionTitle": "更多裝置端模型",
         "finderTitle": "瀏覽 Hugging Face",
-        "finderDescription": "搜尋數千個 GGUF 模型，直接下載到 REMA。",
+        "finderDescription": "搜尋數千個 GGUF 模型，直接下載到 RHEMA。",
         "finderAction": "尋找模型",
         "huggingFaceTitle": "我的模型",
         "catalogEmpty": "目前沒有可用的推薦本機模型。"
@@ -1807,7 +1807,7 @@
           "label": "擷取時機"
         },
         "screenRecording": {
-          "description": "螢幕視覺需要 macOS 的「螢幕錄製」權限。請在「系統設定」中授予權限，然後重新啟動 REMA 才會生效。",
+          "description": "螢幕視覺需要 macOS 的「螢幕錄製」權限。請在「系統設定」中授予權限，然後重新啟動 RHEMA 才會生效。",
           "grant": "開啟系統設定"
         }
       },
@@ -1984,7 +1984,7 @@
         "testGpuMoved": "您的顯示卡讓試聽音訊出現雜音，因此已將其靜音。Kokoro 現在改用處理器，請再測試一次來試聽。",
         "testGpuForced": "您的顯示卡讓試聽音訊出現雜音，因此已將其靜音。請將「執行於」設為「自動」或「處理器」。",
         "testGpuSuspect": "試聽音訊出現雜音，因此已將其靜音。請再測試一次，以檢查您的顯示卡。",
-        "testPhrase": "您好！這是 REMA 語音輸出的測試。",
+        "testPhrase": "您好！這是 RHEMA 語音輸出的測試。",
         "downloadStart": "正在下載 Kokoro 語音…",
         "downloadProgress": "正在下載 Kokoro 語音… {{progress}}%",
         "downloadReady": "Kokoro 語音已就緒 ✓",
@@ -2086,7 +2086,7 @@
     "account": {
       "signedOut": {
         "title": "連接您的手機",
-        "body": "在這台電腦和手機上的 REMA App 登入同一個帳戶。之後就能用手機在這台電腦上語音輸入和打字。",
+        "body": "在這台電腦和手機上的 RHEMA App 登入同一個帳戶。之後就能用手機在這台電腦上語音輸入和打字。",
         "modeLabel": "登入或建立帳戶",
         "signIn": "登入",
         "createAccount": "建立帳戶",
@@ -2107,7 +2107,7 @@
         "online": "已連線",
         "connecting": "正在連線…",
         "offline": "離線",
-        "offlineHint": "REMA 暫時無法連上伺服器，正在持續重試。恢復之前，您的手機無法使用這台電腦。"
+        "offlineHint": "RHEMA 暫時無法連上伺服器，正在持續重試。恢復之前，您的手機無法使用這台電腦。"
       },
       "phone": {
         "title": "手機",
@@ -2115,12 +2115,12 @@
         "remoteInputHint": "讓您的手機能在這台電腦上語音輸入和打字。",
         "remoteWindows": "允許手機檢視和使用視窗",
         "remoteWindowsHint": "您的手機可以列出已開啟的視窗，即時檢視其中一個，並在其中打字、按鍵或點擊。手機正在檢視時，這裡會顯示一張卡片，可以停止。",
-        "install": "在手機上安裝 REMA App，並以 {{email}} 登入。"
+        "install": "在手機上安裝 RHEMA App，並以 {{email}} 登入。"
       },
       "keys": {
         "title": "API 金鑰",
         "sync": "同步 API 金鑰",
-        "syncHint": "您在這台電腦上新增的金鑰會加密保存在您的 REMA 帳戶中，並出現在您的其他電腦上。"
+        "syncHint": "您在這台電腦上新增的金鑰會加密保存在您的 RHEMA 帳戶中，並出現在您的其他電腦上。"
       },
       "devices": {
         "title": "裝置",
@@ -2148,7 +2148,7 @@
       "server": {
         "title": "帳戶伺服器",
         "using": "正在使用 {{host}}",
-        "notFound": "暫時找不到伺服器，REMA 正在持續重試。"
+        "notFound": "暫時找不到伺服器，RHEMA 正在持續重試。"
       },
       "errors": {
         "generic": "發生問題。請再試一次。",
@@ -2269,7 +2269,7 @@
     "list": {
       "title": "已錄製的會議",
       "emptyTitle": "還沒有會議",
-      "emptyHint": "在通話前開始錄製，REMA 就會保留依說話者分段的逐字稿。",
+      "emptyHint": "在通話前開始錄製，RHEMA 就會保留依說話者分段的逐字稿。",
       "loadMore": "載入更多",
       "speakers_other": "{{count}} 位說話者",
       "hasNotes": "已產生筆記"
@@ -2430,7 +2430,7 @@
   },
   "accessibility": {
     "permissionsRequired": "需要輔助使用權限",
-    "permissionsDescription": "REMA 需要輔助使用權限才能輸入轉錄的文字",
+    "permissionsDescription": "RHEMA 需要輔助使用權限才能輸入轉錄的文字",
     "openSettings": "開啟系統設定",
     "dismiss": "關閉"
   },
@@ -2459,7 +2459,7 @@
   },
   "appLanguage": {
     "title": "應用程式語言",
-    "description": "變更 REMA 介面的語言"
+    "description": "變更 RHEMA 介面的語言"
   },
   "overlay": {
     "preparing": "正在準備麥克風…",
@@ -2846,7 +2846,7 @@
       "performance": "效能"
     },
     "about": {
-      "appName": "REMA",
+      "appName": "RHEMA",
       "version": "版本 {{version}}",
       "project": "專案",
       "docs": "說明文件",
@@ -2864,7 +2864,7 @@
     "subtitleTap": "在任何應用程式中按一下快捷鍵、說話，再按一下。您說的話會出現在游標所在位置。",
     "needsModel": {
       "title": "選擇語音模型，開始語音輸入。",
-      "description": "REMA 需要一個語音轉文字模型，才能輸入您說的話。",
+      "description": "RHEMA 需要一個語音轉文字模型，才能輸入您說的話。",
       "action": "選擇模型"
     },
     "stats": {
@@ -2937,8 +2937,8 @@
         "open": "鍵盤設定"
       },
       "linux": {
-        "wayland": "在 Wayland 下，只有 REMA 的視窗在最前面時，桌面才會把這些按鍵交給 REMA。若要在任何應用程式中使用，請在系統設定中將它們新增為快捷鍵。",
-        "noAccess": "REMA Keys 無法在這台電腦上讀取鍵盤，因此這些快捷鍵暫時沒有作用。",
+        "wayland": "在 Wayland 下，只有 RHEMA 的視窗在最前面時，桌面才會把這些按鍵交給 RHEMA。若要在任何應用程式中使用，請在系統設定中將它們新增為快捷鍵。",
+        "noAccess": "RHEMA Keys 無法在這台電腦上讀取鍵盤，因此這些快捷鍵暫時沒有作用。",
         "setUp": "設定",
         "where": {
           "gnome": "開啟「設定 → 鍵盤 → 檢視及自訂快捷鍵 → 自訂快捷鍵」，為下方每個指令各新增一個，然後按下想用的按鍵。",
@@ -2946,7 +2946,7 @@
           "other": "請為下方每個指令，在桌面的鍵盤設定中新增自訂快捷鍵，或在合成器設定中加入一行 bind。"
         },
         "tapOnly": "以這種方式新增的快捷鍵和「按一下切換」一樣：按一次開始，再按一次停止。",
-        "access": "或者允許 REMA Keys 讀取鍵盤。在終端機中執行以下指令，然後登出再重新登入：",
+        "access": "或者允許 RHEMA Keys 讀取鍵盤。在終端機中執行以下指令，然後登出再重新登入：",
         "copy": "複製",
         "copied": "已複製"
       }
@@ -2974,7 +2974,7 @@
     }
   },
   "speechUpdate": {
-    "title": "{{model}} 使用的是 REMA 已不再內含的舊引擎。",
+    "title": "{{model}} 使用的是 RHEMA 已不再內含的舊引擎。",
     "newVersion": "它的新版本是 {{model}}。",
     "ready": "{{model}} 已下載，可以使用。",
     "noVersion": "請選擇其他模型以繼續聽寫。",
@@ -2983,12 +2983,12 @@
     "retry": "再試一次",
     "chooseAnother": "選擇其他模型",
     "progressLabel": "正在下載新版本",
-    "dialogTitle": "REMA 換上了新的語音引擎",
+    "dialogTitle": "RHEMA 換上了新的語音引擎",
     "dialogBody": "它更快、更穩定，遇到的問題會更少。{{model}} 執行於舊引擎，需要下載新版本才能繼續使用。",
     "later": "稍後"
   },
   "modelsHub": {
-    "description": "REMA 的每項工作都由您選擇的模型完成。在這台電腦上執行可保護隱私，在雲端執行則速度更快。",
+    "description": "RHEMA 的每項工作都由您選擇的模型完成。在這台電腦上執行可保護隱私，在雲端執行則速度更快。",
     "addLocal": "新增模型檔案",
     "privacyNote": "在這台電腦上執行的模型，絕不會將您的語音或文字傳送到任何地方。雲端模型則會使用您的 API 金鑰，將內容傳送給您選擇的供應商。",
     "inUse": "使用中",
@@ -3147,12 +3147,12 @@
     "shortcutRow": "快捷鍵"
   },
   "dictionary": {
-    "description": "教 REMA 認識您常用的名稱與術語，並設定可展開成較長文字的縮寫。",
+    "description": "教 RHEMA 認識您常用的名稱與術語，並設定可展開成較長文字的縮寫。",
     "words": {
       "title": "您的詞彙",
-      "description": "REMA 應該永遠寫對的名稱、專業術語與拼寫。",
+      "description": "RHEMA 應該永遠寫對的名稱、專業術語與拼寫。",
       "placeholder": "新增名稱、術語或拼寫…",
-      "empty": "這裡還沒有內容。請新增 REMA 老是寫錯的詞彙。"
+      "empty": "這裡還沒有內容。請新增 RHEMA 老是寫錯的詞彙。"
     },
     "replacements": {
       "title": "文字替換",
@@ -3161,7 +3161,7 @@
     "addWord": "新增詞彙"
   },
   "commandsPage": {
-    "description": "說出您想做的事，REMA 會在這台電腦上完成：開啟網站、播放歌曲、切換應用程式、撰寫郵件。",
+    "description": "說出您想做的事，RHEMA 會在這台電腦上完成：開啟網站、播放歌曲、切換應用程式、撰寫郵件。",
     "enable": "語音指令",
     "offNotice": "語音指令已關閉。開啟後其快捷鍵才會生效；您說的內容會傳送給執行指令的模型。",
     "shortcut": {
@@ -3540,16 +3540,16 @@
   },
   "freeCredit": {
     "title": "免費額度",
-    "explain": "每個 REMA 帳號都含 {{amount}} 的 AI 用量，由語音轉文字、AI 整理、助理、語音指令和朗讀回答共用。不需要 API 金鑰。",
+    "explain": "每個 RHEMA 帳號都含 {{amount}} 的 AI 用量，由語音轉文字、AI 整理、助理、語音指令和朗讀回答共用。不需要 API 金鑰。",
     "balance": "免費額度：剩餘 {{remaining}}，共 {{limit}}",
     "checking": "正在查詢免費額度…",
-    "option": "使用 REMA free（含 {{amount}}）",
-    "use": "使用 REMA free",
+    "option": "使用 RHEMA free（含 {{amount}}）",
+    "use": "使用 RHEMA free",
     "inUse": "使用中",
     "exhausted": "免費額度已用完。加入你自己的 API 金鑰即可繼續使用雲端功能。",
-    "disabled": "REMA free 目前無法使用。加入你自己的 API 金鑰即可繼續使用雲端功能。",
+    "disabled": "RHEMA free 目前無法使用。加入你自己的 API 金鑰即可繼續使用雲端功能。",
     "addKey": "加入自己的金鑰",
-    "failed": "無法切換到 REMA free。",
+    "failed": "無法切換到 RHEMA free。",
     "setupHint": "你已登入，可以用免費額度在雲端轉寫，不需要下載任何內容。",
     "jobs": {
       "stt": "語音轉文字",
@@ -3610,7 +3610,7 @@
     "or": "或",
     "changeOther": "變更「{{name}}」快捷鍵的另一組按鍵",
     "pressKeysOrButton": "請按下按鍵或滑鼠按鈕…",
-    "mouseNeedsKeysEngine": "滑鼠按鈕需要使用 REMA Keys 鍵盤實作方式（設定 → 進階 → 實驗性）。",
+    "mouseNeedsKeysEngine": "滑鼠按鈕需要使用 RHEMA Keys 鍵盤實作方式（設定 → 進階 → 實驗性）。",
     "mouse": {
       "middle": "滑鼠中鍵",
       "back": "滑鼠上一頁鍵",
@@ -3689,7 +3689,7 @@
     }
   },
   "insights": {
-    "about": "您使用 REMA 的情形，在這台電腦上統計。",
+    "about": "您使用 RHEMA 的情形，在這台電腦上統計。",
     "nothingYet": "只要使用語音輸入、詢問助理或錄製會議，就會顯示您的使用分析。",
     "goHome": "查看快捷鍵",
     "figures": {
@@ -3741,7 +3741,7 @@
     },
     "share": {
       "button": "分享",
-      "nothingYet": "開始使用 REMA 後，就有東西可以分享了。",
+      "nothingYet": "開始使用 RHEMA 後，就有東西可以分享了。",
       "title": "分享您的使用分析",
       "private": "在這台電腦上製作，不會上傳任何內容。",
       "size": "尺寸",
@@ -3772,13 +3772,13 @@
       "openSite": "開啟 {{site}}",
       "openFailed": "無法開啟 {{site}}",
       "more": "更多應用程式",
-      "sheetTitle": "我的 REMA 使用分析",
+      "sheetTitle": "我的 RHEMA 使用分析",
       "shareFailed": "無法開啟分享",
       "drawFailed": "無法繪製卡片。請關閉後再試一次。",
       "tagline": "免費 · 開放原始碼 · 離線也能用",
       "cards": {
         "highlights": {
-          "title": "我的 REMA 精彩紀錄",
+          "title": "我的 RHEMA 精彩紀錄",
           "words_other": "說出的字",
           "streak_other": "連續天數",
           "wpm": "字/分鐘",
@@ -3827,9 +3827,9 @@
         }
       },
       "post": {
-        "dictation_other": "我用 REMA 對著電腦說了 {{formatted}} 個字，一個字都不用打。",
-        "asks_other": "我問了 REMA 的助理 {{formatted}} 個問題，完全不用切換分頁。",
-        "meetings_other": "REMA 已經幫我錄了 {{formatted}} 場會議，還幫我寫好筆記。"
+        "dictation_other": "我用 RHEMA 對著電腦說了 {{formatted}} 個字，一個字都不用打。",
+        "asks_other": "我問了 RHEMA 的助理 {{formatted}} 個問題，完全不用切換分頁。",
+        "meetings_other": "RHEMA 已經幫我錄了 {{formatted}} 場會議，還幫我寫好筆記。"
       }
     }
   },
@@ -3837,11 +3837,11 @@
     "restored": "你的設定已損毀，已從備份還原。",
     "restoredDescription": "最近的變更可能遺失。",
     "unrecoverableTitle": "無法還原你的設定",
-    "unrecoverableDescription": "REMA 已使用預設設定啟動。損毀的檔案已保留為 {{file}}。",
+    "unrecoverableDescription": "RHEMA 已使用預設設定啟動。損毀的檔案已保留為 {{file}}。",
     "notSavingTitle": "設定變更將不會儲存",
-    "notSavingDescription": "無法讀取設定檔，因此未做任何變動。請重新啟動 REMA 再試一次。",
+    "notSavingDescription": "無法讀取設定檔，因此未做任何變動。請重新啟動 RHEMA 再試一次。",
     "saveFailingTitle": "設定未能儲存",
-    "saveFailingDescription": "最近的變更尚未儲存。REMA 會繼續嘗試。",
+    "saveFailingDescription": "最近的變更尚未儲存。RHEMA 會繼續嘗試。",
     "dismiss": "關閉"
   },
   "commandMode": {

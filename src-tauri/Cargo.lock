@@ -7549,7 +7549,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rema"
+name = "rhema"
 version = "0.1.0"
 dependencies = [
  "anyhow",

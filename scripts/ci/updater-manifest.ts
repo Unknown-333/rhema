@@ -1,5 +1,5 @@
 /**
- * Builds `latest.json`, the file every installed REMA polls to learn
+ * Builds `latest.json`, the file every installed RHEMA polls to learn
  * that a new version exists, and uploads it to the GitHub release.
  *
  * Why this exists instead of tauri-action's own `latest.json`:
@@ -16,7 +16,7 @@
  *     rejected at install time fails here, in CI, instead of on a user's
  *     machine as "update failed".
  *
- * The manifest also carries a `rema` block the updater ignores: direct
+ * The manifest also carries a `rhema` block the updater ignores: direct
  * installer links per platform, which the app offers as "Download installer"
  * when an in-app install is not possible (portable build, a package manager
  * owns the install, or the install itself failed).
@@ -71,17 +71,17 @@ export function normalizeArch(raw: string): UpdaterArch | null {
 }
 
 const UPDATER_PATTERNS: Array<[RegExp, UpdaterOs, UpdaterBundle]> = [
-  // REMA_1.5.0_x64-setup.exe
+  // RHEMA_1.5.0_x64-setup.exe
   [/_([a-z0-9]+)-setup\.exe$/i, "windows", "nsis"],
-  // REMA_1.5.0_x64_en-US.msi
+  // RHEMA_1.5.0_x64_en-US.msi
   [/_([a-z0-9]+)_[a-z]{2,3}(?:-[a-z0-9]+)*\.msi$/i, "windows", "msi"],
-  // REMA_aarch64.app.tar.gz (tauri-action appends the arch)
+  // RHEMA_aarch64.app.tar.gz (tauri-action appends the arch)
   [/_([a-z0-9]+)\.app\.tar\.gz$/i, "darwin", "app"],
-  // REMA_1.5.0_amd64.AppImage
+  // RHEMA_1.5.0_amd64.AppImage
   [/_([a-z0-9]+)\.AppImage$/, "linux", "appimage"],
-  // REMA_1.5.0_amd64.deb
+  // RHEMA_1.5.0_amd64.deb
   [/_([a-z0-9]+)\.deb$/, "linux", "deb"],
-  // REMA-1.5.0-1.x86_64.rpm
+  // RHEMA-1.5.0-1.x86_64.rpm
   [/\.([a-z0-9_]+)\.rpm$/, "linux", "rpm"],
 ];
 
@@ -129,7 +129,7 @@ export interface UpdaterManifest {
   notes: string;
   pub_date: string;
   platforms: Record<string, ManifestPlatform>;
-  rema: ManifestExtras;
+  rhema: ManifestExtras;
 }
 
 export interface ManifestExtras {
@@ -286,7 +286,7 @@ export function buildManifest(input: BuildManifestInput): UpdaterManifest {
     notes,
     pub_date: input.pubDate,
     platforms: sortKeys(platforms),
-    rema: extras,
+    rhema: extras,
   };
 }
 
@@ -520,7 +520,7 @@ async function github(
       Authorization: `Bearer ${requireEnv("GITHUB_TOKEN")}`,
       Accept: init.accept ?? "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "rema-updater-manifest",
+      "User-Agent": "rhema-updater-manifest",
       ...(init.headers ?? {}),
     },
   });
@@ -696,7 +696,7 @@ async function main(): Promise<void> {
   console.log(`\nWrote ${outPath} for ${manifest.version}:`);
   for (const key of Object.keys(manifest.platforms))
     console.log(`  update   ${key}`);
-  for (const key of Object.keys(manifest.rema.downloads))
+  for (const key of Object.keys(manifest.rhema.downloads))
     console.log(`  download ${key}`);
 
   if (upload) {

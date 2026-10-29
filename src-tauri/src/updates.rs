@@ -10,7 +10,7 @@
 //! in-place install is the right thing, and "Download installer" everywhere
 //! else.
 //!
-//! The download fallback reads the `rema.downloads` block that
+//! The download fallback reads the `rhema.downloads` block that
 //! `scripts/ci/updater-manifest.ts` writes into `latest.json` (the updater
 //! ignores fields it does not know), so the app never has to guess an asset
 //! name from a version number.
@@ -180,13 +180,13 @@ struct ManifestExtras {
 #[derive(Deserialize)]
 struct Manifest {
     version: String,
-    rema: Option<ManifestExtras>,
+    rhema: Option<ManifestExtras>,
 }
 
 impl Manifest {
     /// The installer downloads listed in the manifest.
     fn downloads(&self) -> HashMap<String, String> {
-        self.rema
+        self.rhema
             .as_ref()
             .map(|x| x.downloads.clone())
             .unwrap_or_default()
@@ -194,7 +194,7 @@ impl Manifest {
 }
 
 /// Names the published installers start with.
-const INSTALLER_NAME_PREFIXES: [&str; 1] = ["REMA"];
+const INSTALLER_NAME_PREFIXES: [&str; 1] = ["RHEMA"];
 
 fn bundle_download_suffix(bundle: Option<BundleType>) -> Option<&'static str> {
     Some(match bundle? {
@@ -287,7 +287,7 @@ pub struct DownloadedInstaller {
 
 fn http_client(timeout: Option<Duration>) -> Result<reqwest::Client, String> {
     let mut builder = reqwest::Client::builder()
-        .user_agent(concat!("REMA/", env!("CARGO_PKG_VERSION")))
+        .user_agent(concat!("RHEMA/", env!("CARGO_PKG_VERSION")))
         .connect_timeout(Duration::from_secs(20));
     if let Some(timeout) = timeout {
         builder = builder.timeout(timeout);
@@ -1144,7 +1144,7 @@ mod tests {
         assert!(!content_range_is("", 0, 0));
     }
 
-    // Made with `tauri signer sign` and a throwaway REMA test key over the
+    // Made with `tauri signer sign` and a throwaway RHEMA test key over the
     // 10 bytes "hello rema"; the same vector `updater-manifest.test.ts`
     // checks the CI verifier with.
     const SIGNED_PAYLOAD: &[u8] = b"hello rema";
@@ -1401,7 +1401,7 @@ mod tests {
             .unwrap();
         runtime.block_on(async {
             let client = crate::managers::model::download_client().unwrap();
-            let url = "https://github.com/Unknown-333/rhema/releases/download/v2.0.1/REMA_2.0.1_x64-setup.exe";
+            let url = "https://github.com/Unknown-333/rhema/releases/download/v2.0.1/RHEMA_2.0.1_x64-setup.exe";
             let mib = 1024 * 1024;
             let settings: [(usize, u64); 4] = [(8, mib), (8, 5 * mib), (16, 2 * mib), (16, 3 * mib)];
             for round in 1..=2 {
@@ -1524,13 +1524,13 @@ mod tests {
     fn downloads() -> HashMap<String, String> {
         let url = |name: &str| format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/{name}");
         [
-            ("windows-x86_64", url("REMA_1.5.0_x64-setup.exe")),
-            ("windows-x86_64-nsis", url("REMA_1.5.0_x64-setup.exe")),
-            ("windows-x86_64-msi", url("REMA_1.5.0_x64_en-US.msi")),
-            ("darwin-aarch64", url("REMA_1.5.0_aarch64.dmg")),
-            ("darwin-aarch64-dmg", url("REMA_1.5.0_aarch64.dmg")),
-            ("linux-x86_64", url("REMA_1.5.0_amd64.AppImage")),
-            ("linux-x86_64-deb", url("REMA_1.5.0_amd64.deb")),
+            ("windows-x86_64", url("RHEMA_1.5.0_x64-setup.exe")),
+            ("windows-x86_64-nsis", url("RHEMA_1.5.0_x64-setup.exe")),
+            ("windows-x86_64-msi", url("RHEMA_1.5.0_x64_en-US.msi")),
+            ("darwin-aarch64", url("RHEMA_1.5.0_aarch64.dmg")),
+            ("darwin-aarch64-dmg", url("RHEMA_1.5.0_aarch64.dmg")),
+            ("linux-x86_64", url("RHEMA_1.5.0_amd64.AppImage")),
+            ("linux-x86_64-deb", url("RHEMA_1.5.0_amd64.deb")),
         ]
         .into_iter()
         .map(|(k, v)| (k.to_string(), v))
@@ -1552,16 +1552,16 @@ mod tests {
 
     #[test]
     fn downloads_are_confined_to_this_repositorys_releases() {
-        let ok = format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/REMA_1.5.0_x64-setup.exe");
+        let ok = format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/RHEMA_1.5.0_x64-setup.exe");
         assert!(is_trusted_download(&ok));
         for bad in [
-            "https://example.com/REMA_1.5.0_x64-setup.exe",
-            "https://github.com/someone/REMA/releases/download/v1.5.0/REMA_1.5.0_x64-setup.exe",
+            "https://example.com/RHEMA_1.5.0_x64-setup.exe",
+            "https://github.com/someone/RHEMA/releases/download/v1.5.0/RHEMA_1.5.0_x64-setup.exe",
             &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/evil.exe"),
-            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/REMA_1.5.0.zip"),
-            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/a/REMA_1.5.0_x64-setup.exe"),
-            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/REMA%2F..%2F..%2Fx.exe"),
-            &format!("{RELEASE_DOWNLOAD_PREFIX}/REMA_1.5.0_x64-setup.exe"),
+            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/RHEMA_1.5.0.zip"),
+            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/a/RHEMA_1.5.0_x64-setup.exe"),
+            &format!("{RELEASE_DOWNLOAD_PREFIX}v1.5.0/RHEMA%2F..%2F..%2Fx.exe"),
+            &format!("{RELEASE_DOWNLOAD_PREFIX}/RHEMA_1.5.0_x64-setup.exe"),
         ] {
             assert!(!is_trusted_download(bad), "{bad}");
         }
@@ -1601,20 +1601,20 @@ mod tests {
     #[test]
     fn saved_file_names_are_plain_and_known() {
         assert_eq!(
-            installer_file_name("REMA_1.5.0_x64-setup.exe").as_deref(),
-            Some("REMA_1.5.0_x64-setup.exe")
+            installer_file_name("RHEMA_1.5.0_x64-setup.exe").as_deref(),
+            Some("RHEMA_1.5.0_x64-setup.exe")
         );
         assert_eq!(installer_file_name("Other_1.5.0_x64-setup.exe"), None);
-        assert_eq!(installer_file_name("REMA..exe"), None);
-        assert_eq!(installer_file_name("REMA_1.5.0.exe.part"), None);
-        assert_eq!(installer_file_name("REMA%20x.exe"), None);
-        assert_eq!(installer_file_name("Rema_%zz.exe"), None);
+        assert_eq!(installer_file_name("RHEMA..exe"), None);
+        assert_eq!(installer_file_name("RHEMA_1.5.0.exe.part"), None);
+        assert_eq!(installer_file_name("RHEMA%20x.exe"), None);
+        assert_eq!(installer_file_name("Rhema_%zz.exe"), None);
     }
 
     #[test]
     fn the_manifest_downloads_are_read_from_the_app_block() {
         let parse = |json: &str| serde_json::from_str::<Manifest>(json).unwrap().downloads();
-        let listed = parse(r#"{"version":"3.0.0","rema":{"downloads":{"windows-x86_64":"a"}}}"#);
+        let listed = parse(r#"{"version":"3.0.0","rhema":{"downloads":{"windows-x86_64":"a"}}}"#);
         assert_eq!(listed.get("windows-x86_64").map(String::as_str), Some("a"));
         assert!(parse(r#"{"version":"3.0.0"}"#).is_empty());
     }

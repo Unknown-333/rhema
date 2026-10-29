@@ -49,7 +49,7 @@ try {
   });
   const { token } = (await signup.json()) as { token: string };
   const auth = { authorization: `Bearer ${token}` };
-  const remaining = (r: Response) => r.headers.get("x-rema-credit-remaining");
+  const remaining = (r: Response) => r.headers.get("x-rhema-credit-remaining");
 
   let mp3: ArrayBuffer | null = null;
   if (config.tts) {
@@ -57,8 +57,8 @@ try {
       method: "POST",
       headers: { ...auth, "content-type": "application/json" },
       body: JSON.stringify({
-        model: "rema-free-speech",
-        input: "Testing REMA free credit.",
+        model: "rhema-free-speech",
+        input: "Testing RHEMA free credit.",
         voice: "alloy",
       }),
     });
@@ -72,7 +72,7 @@ try {
   if (config.stt && mp3) {
     const form = new FormData();
     form.append("file", new Blob([mp3], { type: "audio/mpeg" }), "check.mp3");
-    form.append("model", "rema-free-transcribe");
+    form.append("model", "rhema-free-transcribe");
     form.append("language", "en");
     const r = await fetch(`${base}/v1/free/audio/transcriptions`, {
       method: "POST",
@@ -92,7 +92,7 @@ try {
         method: "POST",
         headers: { ...auth, "content-type": "application/json" },
         body: JSON.stringify({
-          model: "rema-free-chat",
+          model: "rhema-free-chat",
           stream,
           messages: [
             { role: "user", content: "Reply with the single word: ok" },

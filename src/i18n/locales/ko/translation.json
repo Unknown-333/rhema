@@ -35,10 +35,10 @@
     "downloading": "다운로드 중… {{progress}}%",
     "downloadingUnknown": "다운로드 중…",
     "installing": "설치 중…",
-    "reopening": "REMA가 업데이트를 설치하기 위해 종료되며 몇 초 후 다시 열립니다.",
+    "reopening": "RHEMA가 업데이트를 설치하기 위해 종료되며 몇 초 후 다시 열립니다.",
     "updatedTo": "버전 {{version}}(으)로 업데이트되었습니다",
     "restart": "지금 다시 시작",
-    "readyToRestart": "업데이트가 설치되었습니다. REMA를 다시 시작하면 새 버전을 사용할 수 있습니다.",
+    "readyToRestart": "업데이트가 설치되었습니다. RHEMA를 다시 시작하면 새 버전을 사용할 수 있습니다.",
     "installFailed": "업데이트를 설치하지 못했습니다. 다시 시도하거나, 설치 프로그램을 다운로드해 직접 실행하세요.",
     "downloadFailed": "다운로드가 끝나지 않았습니다. 인터넷 연결을 확인한 뒤 다시 시도하세요.",
     "downloadInstaller": "설치 프로그램 다운로드",
@@ -49,13 +49,13 @@
     "showInFolder": "폴더에서 보기",
     "viewRelease": "GitHub에서 보기",
     "hint": {
-      "windows": "REMA가 닫히고 업데이트를 설치한 뒤 다시 열립니다. 따로 누를 것은 없습니다.",
-      "macos": "REMA가 새 버전으로 다시 시작됩니다. 이후 macOS에서 마이크와 손쉬운 사용 권한을 다시 요청할 수 있습니다.",
-      "linux": "REMA가 새 버전으로 다시 시작됩니다. .deb로 설치한 경우 먼저 비밀번호를 묻습니다."
+      "windows": "RHEMA가 닫히고 업데이트를 설치한 뒤 다시 열립니다. 따로 누를 것은 없습니다.",
+      "macos": "RHEMA가 새 버전으로 다시 시작됩니다. 이후 macOS에서 마이크와 손쉬운 사용 권한을 다시 요청할 수 있습니다.",
+      "linux": "RHEMA가 새 버전으로 다시 시작됩니다. .deb로 설치한 경우 먼저 비밀번호를 묻습니다."
     },
     "modes": {
       "portable": "포터블 버전은 스스로 교체할 수 없습니다. 새 버전을 다운로드한 뒤 기존 Data 폴더를 그 안으로 복사하세요.",
-      "packageManager": "REMA를 패키지 관리자로 설치했으므로 그곳에서 업데이트하세요. 예: yay -Syu rema-bin",
+      "packageManager": "RHEMA를 패키지 관리자로 설치했으므로 그곳에서 업데이트하세요. 예: yay -Syu rhema-bin",
       "download": "이 버전은 제자리에서 업데이트할 수 없습니다. 설치 프로그램을 다운로드해 실행하면 새 버전을 받을 수 있습니다."
     },
     "pill": {
@@ -70,7 +70,7 @@
   "feedback": {
     "button": "피드백 보내기",
     "title": "피드백 보내기",
-    "description": "모든 메시지를 제가 직접 읽으니 편하게 적어 주세요. REMA를 더 좋게 만드는 데 도움을 주셔서 감사합니다.",
+    "description": "모든 메시지를 제가 직접 읽으니 편하게 적어 주세요. RHEMA를 더 좋게 만드는 데 도움을 주셔서 감사합니다.",
     "kind": {
       "label": "피드백 종류",
       "bug": "버그",
@@ -79,7 +79,7 @@
     },
     "placeholder": {
       "bug": "어떤 일이 있었고, 원래는 어떻게 되길 기대하셨나요?",
-      "idea": "REMA가 어떻게 바뀌면 더 좋을까요?",
+      "idea": "RHEMA가 어떻게 바뀌면 더 좋을까요?",
       "question": "무엇이 궁금하신가요?"
     },
     "messageLabel": "메시지",
@@ -114,7 +114,7 @@
       "too_many_screenshots": "스크린샷은 최대 3개까지 첨부할 수 있습니다.",
       "too_large": "스크린샷이 너무 커서 보낼 수 없습니다. 하나를 빼고 다시 시도하세요.",
       "invalid_screenshot": "스크린샷 중 하나가 PNG, JPEG 또는 WebP 이미지가 아닙니다. 빼고 다시 시도하세요.",
-      "no_server": "REMA가 지금 피드백 서버를 찾지 못했습니다. 메시지는 여기에 그대로 남아 있으니 나중에 다시 시도하세요.",
+      "no_server": "RHEMA가 지금 피드백 서버를 찾지 못했습니다. 메시지는 여기에 그대로 남아 있으니 나중에 다시 시도하세요.",
       "network": "피드백 서버에 연결할 수 없습니다. 연결을 확인하세요. 메시지는 여기에 그대로 남아 있습니다.",
       "rate_limited": "짧은 시간에 피드백을 많이 보냈습니다. 잠시 후 다시 시도하세요.",
       "rejected": "피드백을 받을 수 없었습니다. 내용을 줄여서 다시 보내 주세요.",
@@ -168,10 +168,10 @@
       "retry": "다시 시도"
     },
     "tour": {
-      "features": "REMA로 할 수 있는 일",
+      "features": "RHEMA로 할 수 있는 일",
       "count": "{{total}}개 중 {{current}}번째",
       "next": "다음",
-      "finish": "REMA 열기",
+      "finish": "RHEMA 열기",
       "tabs": {
         "dictate": "받아쓰기",
         "ask": "어시스턴트",
@@ -249,7 +249,7 @@
       "ready": "준비 완료"
     },
     "speechToText": {
-      "title": "REMA가 어떻게 들으면 좋을까요?",
+      "title": "RHEMA가 어떻게 들으면 좋을까요?",
       "subtitle": "이 기능은 기기에서 바로 음성을 텍스트로 바꿉니다. 하나를 고르세요. 언제든 바꿀 수 있습니다.",
       "cards": {
         "fast": {
@@ -314,7 +314,7 @@
       "downloadingVoice": "음성 모델이 도착하는 중입니다. {{percentage}}% 진행됐습니다.",
       "downloadingGeneric": "아직 다운로드 중입니다. {{percentage}}% 진행됐습니다.",
       "signOff": "이제 끝입니다. 무언가 말해 보세요.",
-      "openApp": "REMA 열기"
+      "openApp": "RHEMA 열기"
     },
     "errors": {
       "selectModel": "그 모델을 선택할 수 없습니다. 다시 시도해주세요.",
@@ -446,7 +446,7 @@
     },
     "permissions": {
       "title": "권한 필요",
-      "description": "REMA가 제대로 작동하려면 몇 가지 권한이 필요합니다.",
+      "description": "RHEMA가 제대로 작동하려면 몇 가지 권한이 필요합니다.",
       "microphone": {
         "title": "마이크 접근",
         "description": "음성 인식을 위해 마이크 접근 권한이 필요합니다."
@@ -456,7 +456,7 @@
         "description": "녹음된 텍스트를 애플리케이션에 입력하기 위해 필요합니다.",
         "stuckHint": "시스템 설정에서 이미 켜져 있나요? 업데이트 후 macOS가 이 버전과 더 이상 맞지 않는 권한을 유지할 수 있습니다.",
         "reset": "권한 재설정",
-        "resetDone": "이제 시스템 설정에서 REMA를 다시 켜세요."
+        "resetDone": "이제 시스템 설정에서 RHEMA를 다시 켜세요."
       },
       "grant": "권한 부여",
       "granted": "승인됨",
@@ -465,7 +465,7 @@
       "errors": {
         "checkFailed": "권한을 확인할 수 없습니다. 다시 시도해 주세요.",
         "requestFailed": "권한을 요청할 수 없습니다. 다시 시도해 주세요.",
-        "resetFailed": "권한을 재설정하지 못했습니다. 손쉬운 사용 목록에서 REMA를 제거한 후 다시 추가하세요."
+        "resetFailed": "권한을 재설정하지 못했습니다. 손쉬운 사용 목록에서 RHEMA를 제거한 후 다시 추가하세요."
       }
     },
     "frame": {
@@ -654,7 +654,7 @@
           },
           "command": {
             "name": "음성 명령",
-            "description": "“YouTube 열어줘”처럼 원하는 일을 말하면 REMA가 해 줍니다."
+            "description": "“YouTube 열어줘”처럼 원하는 일을 말하면 RHEMA가 해 줍니다."
           },
           "hands_free": {
             "name": "핸즈프리",
@@ -698,7 +698,7 @@
       },
       "handsFree": {
         "unavailableKeys": "받아쓰기가 Ctrl + Win처럼 보조 키로만 되어 있을 때 작동합니다. {{keys}}에서는 대신 '누르고 있는 동안 받아쓰기'를 끄세요. 키를 다시 누를 때까지 받아쓰기가 계속됩니다.",
-        "unavailableEngine": "REMA Keys 키보드 엔진이 필요합니다({{where}}). 또는 '누르고 있는 동안 받아쓰기'를 끄세요. 키를 다시 누를 때까지 받아쓰기가 계속됩니다.",
+        "unavailableEngine": "RHEMA Keys 키보드 엔진이 필요합니다({{where}}). 또는 '누르고 있는 동안 받아쓰기'를 끄세요. 키를 다시 누를 때까지 받아쓰기가 계속됩니다.",
         "taken": "{{name}}이(가) 이미 {{keys}}을(를) 사용하고 있어, 둘 중 하나를 바꿀 때까지 이 키는 아무 동작도 하지 않습니다.",
         "needsKey": "스페이스나 Enter 같은 키 하나를 고르세요. 보조 키 하나만으로는 핸즈프리 키가 될 수 없습니다.",
         "pressKey": "키를 누르세요…",
@@ -755,9 +755,9 @@
       "clearSearch": "검색 지우기",
       "noSearchResults": "“{{query}}”라는 이름의 모델이 없습니다.",
       "olderHint": "이전 형식입니다. {{model}}({{size}})이 이 모델의 새 버전입니다.",
-      "retiredHint": "REMA에 더 이상 포함되지 않는 이전 엔진을 사용합니다. 대신 {{model}}({{size}})을 다운로드하세요.",
+      "retiredHint": "RHEMA에 더 이상 포함되지 않는 이전 엔진을 사용합니다. 대신 {{model}}({{size}})을 다운로드하세요.",
       "retired": {
-        "notice": "이 모델들은 REMA에 더 이상 포함되지 않는 이전 엔진을 사용했습니다.",
+        "notice": "이 모델들은 RHEMA에 더 이상 포함되지 않는 이전 엔진을 사용했습니다.",
         "newVersion": "새 버전: {{model}} · {{size}}",
         "getNewVersion": "새 버전 받기",
         "useNewVersion": "새 버전 사용",
@@ -812,7 +812,7 @@
         "rescan": "다시 검사",
         "rescanning": "다시 검사 중…",
         "rescanDone_other": "로컬 모델 {{count}}개를 찾았습니다.",
-        "footnote": "연결된 폴더는 REMA가 시작될 때 다시 검사되므로, 나중에 폴더에 넣은 모델도 저절로 나타납니다. 폴더 연결을 해제하거나 모델을 제거해도 이 목록에서만 사라지며 — 파일은 원래 자리에 그대로 남습니다.",
+        "footnote": "연결된 폴더는 RHEMA가 시작될 때 다시 검사되므로, 나중에 폴더에 넣은 모델도 저절로 나타납니다. 폴더 연결을 해제하거나 모델을 제거해도 이 목록에서만 사라지며 — 파일은 원래 자리에 그대로 남습니다.",
         "removeTitle": "목록에서 제거할까요?",
         "removeConfirm": "모델 목록에서 “{{modelName}}”을(를) 제거할까요?\n\n파일 자체는 원래 자리에 그대로 있습니다:\n{{path}}",
         "missingBadge": "파일 없음",
@@ -902,7 +902,7 @@
         "label": "마우스 버튼을 단축키로 사용",
         "description": "마우스의 가운데, 뒤로, 앞으로 버튼을 단축키로 쓸 수 있습니다. 단축키의 키를 클릭한 다음 버튼을 누르세요. 단축키로 지정된 동안 그 버튼은 다른 동작을 하지 않습니다.",
         "linux": "Linux에서는 가운데 버튼만 쓸 수 있습니다.",
-        "needsEngine": "REMA Keys 키보드 구현이 필요합니다."
+        "needsEngine": "RHEMA Keys 키보드 구현이 필요합니다."
       },
       "longFormChunking": {
         "title": "긴 녹음 나누기",
@@ -920,11 +920,11 @@
       },
       "autostart": {
         "label": "시작 시 실행",
-        "description": "로그인하면 REMA를 자동으로 엽니다."
+        "description": "로그인하면 RHEMA를 자동으로 엽니다."
       },
       "showTrayIcon": {
         "label": "트레이 아이콘 표시",
-        "description": "REMA를 시스템 트레이에 표시합니다."
+        "description": "RHEMA를 시스템 트레이에 표시합니다."
       },
       "trayIconColor": {
         "label": "컬러 트레이 아이콘",
@@ -932,7 +932,7 @@
       },
       "closeBehavior": {
         "label": "창을 닫으면 종료",
-        "description": "꺼져 있으면 창을 닫아도 REMA가 트레이에서 계속 실행되어 단축키가 그대로 작동합니다. 켜져 있으면 창을 닫을 때 앱이 완전히 종료됩니다."
+        "description": "꺼져 있으면 창을 닫아도 RHEMA가 트레이에서 계속 실행되어 단축키가 그대로 작동합니다. 켜져 있으면 창을 닫을 때 앱이 완전히 종료됩니다."
       },
       "overlayStyle": {
         "title": "오버레이",
@@ -1026,8 +1026,8 @@
       },
       "customWords": {
         "title": "사용자 정의 단어",
-        "description": "REMA가 원하는 표기대로 적어야 할 이름, 제품, 문구입니다.",
-        "info": "예: REMA가 “Coco row”라고 적는다면 “Kokoro”를 추가하세요.",
+        "description": "RHEMA가 원하는 표기대로 적어야 할 이름, 제품, 문구입니다.",
+        "info": "예: RHEMA가 “Coco row”라고 적는다면 “Kokoro”를 추가하세요.",
         "placeholder": "이름, 용어 또는 짧은 문구 추가",
         "add": "추가",
         "empty": "아직 사용자 정의 단어가 없습니다.",
@@ -1036,7 +1036,7 @@
       },
       "autoLearn": {
         "label": "내가 고친 단어 학습",
-        "description": "REMA가 잘못 적은 단어를 고치면, 고친 표기를 기억합니다.",
+        "description": "RHEMA가 잘못 적은 단어를 고치면, 고친 표기를 기억합니다.",
         "info": "방금 입력한 입력란만 1분 정도 읽습니다. 아무것도 업로드되지 않으며, 학습한 단어는 모두 여기에 표시됩니다.",
         "unsupported": "수정 내용 학습은 아직 Windows에서만 사용할 수 있습니다. 위에서 단어를 직접 추가할 수는 있습니다.",
         "learnedTitle": "수정 내용에서 학습한 단어",
@@ -1050,7 +1050,7 @@
         "title": "텍스트 치환",
         "description": "전사 결과의 특정 표현을 자주 쓰는 텍스트로 바꿉니다. 예: “내 이메일”이 “alex@example.com”이 됩니다.",
         "rulesTitle": "치환 규칙",
-        "rulesHint": "REMA가 무엇을 들었을 때 무엇을 넣을지 정하세요.",
+        "rulesHint": "RHEMA가 무엇을 들었을 때 무엇을 넣을지 정하세요.",
         "empty": "자주 말하는 표현에 대한 규칙을 만들어 보세요.",
         "addFirst": "첫 규칙 만들기",
         "addRule": "치환 추가",
@@ -1427,7 +1427,7 @@
       },
       "updateChecks": {
         "label": "자동으로 업데이트 확인",
-        "description": "REMA를 시작할 때와 12시간마다 새 버전을 확인합니다. 언제든 직접 확인할 수도 있습니다."
+        "description": "RHEMA를 시작할 때와 12시간마다 새 버전을 확인합니다. 언제든 직접 확인할 수도 있습니다."
       },
       "soundTheme": {
         "label": "사운드 테마",
@@ -1483,7 +1483,7 @@
       "smartSpacing": {
         "label": "스마트 띄어쓰기",
         "description": "입력란에 이미 있는 글에 맞춰 받아쓰기를 넣어, 멈췄다가 이어서 말해도 단어가 붙지 않게 합니다.",
-        "info": "붙여넣기 전에 REMA는 커서 주변의 몇 글자를 확인하고 필요한 곳에만 공백을 넣습니다. 앱이 텍스트를 숨기면 대신 직전 받아쓰기를 참고합니다. 아무것도 저장하거나 전송하지 않습니다. macOS에서는 REMA에 이미 허용된 손쉬운 사용 권한을 사용합니다. Linux에서는 Chrome, Electron, Qt 앱이 데스크톱 접근성 설정이 켜져 있을 때만 텍스트를 공유합니다."
+        "info": "붙여넣기 전에 RHEMA는 커서 주변의 몇 글자를 확인하고 필요한 곳에만 공백을 넣습니다. 앱이 텍스트를 숨기면 대신 직전 받아쓰기를 참고합니다. 아무것도 저장하거나 전송하지 않습니다. macOS에서는 RHEMA에 이미 허용된 손쉬운 사용 권한을 사용합니다. Linux에서는 Chrome, Electron, Qt 앱이 데스크톱 접근성 설정이 켜져 있을 때만 텍스트를 공유합니다."
       },
       "smartSpacingFixCase": {
         "label": "대소문자 맞추기",
@@ -1491,7 +1491,7 @@
       },
       "smartSpacingJoin": {
         "label": "멈춘 문장 이어 붙이기",
-        "description": "문장 중간에 멈췄을 때 REMA가 붙인 마침표를 지웁니다. 예: \"I went to the.\""
+        "description": "문장 중간에 멈췄을 때 RHEMA가 붙인 마침표를 지웁니다. 예: \"I went to the.\""
       },
       "keyboardImplementation": {
         "title": "키보드 구현",
@@ -1623,7 +1623,7 @@
       },
       "appDataDirectory": {
         "title": "앱 데이터 폴더",
-        "description": "REMA가 모델, 히스토리, 설정을 보관하는 위치입니다."
+        "description": "RHEMA가 모델, 히스토리, 설정을 보관하는 위치입니다."
       },
       "sourceCode": {
         "title": "소스 코드",
@@ -1632,12 +1632,12 @@
       },
       "license": {
         "title": "라이선스",
-        "description": "REMA는 MIT 라이선스의 오픈 소스입니다. 서드파티 고지는 라이선스에 있습니다.",
+        "description": "RHEMA는 MIT 라이선스의 오픈 소스입니다. 서드파티 고지는 라이선스에 있습니다.",
         "button": "라이선스 보기"
       },
       "supportDevelopment": {
         "title": "개발 후원",
-        "description": "REMA를 계속 만들 수 있도록 도와주세요",
+        "description": "RHEMA를 계속 만들 수 있도록 도와주세요",
         "button": "후원하기"
       }
     },
@@ -1645,7 +1645,7 @@
       "enable": {
         "title": "어시스턴트",
         "label": "어시스턴트 사용",
-        "description": "이 기능을 끄면 REMA는 받아쓰기 전용이 됩니다. 떠 있는 패널은 닫히고 아예 불러오지 않으며, 단축키는 풀리고 쓰던 메모리도 돌려줍니다. Flow로 생성하기와 AI 정리는 계속 작동합니다."
+        "description": "이 기능을 끄면 RHEMA는 받아쓰기 전용이 됩니다. 떠 있는 패널은 닫히고 아예 불러오지 않으며, 단축키는 풀리고 쓰던 메모리도 돌려줍니다. Flow로 생성하기와 AI 정리는 계속 작동합니다."
       },
       "shortcuts": {
         "title": "단축키"
@@ -1684,7 +1684,7 @@
         "deleteModelFailed": "모델을 삭제할 수 없습니다.",
         "finderSectionTitle": "더 많은 기기 내 모델",
         "finderTitle": "Hugging Face 살펴보기",
-        "finderDescription": "수천 개의 GGUF 모델을 검색해 REMA로 바로 다운로드하세요.",
+        "finderDescription": "수천 개의 GGUF 모델을 검색해 RHEMA로 바로 다운로드하세요.",
         "finderAction": "모델 찾기",
         "huggingFaceTitle": "내 모델",
         "catalogEmpty": "지금은 사용할 수 있는 추천 로컬 모델이 없습니다."
@@ -1807,7 +1807,7 @@
           "label": "캡처 시점"
         },
         "screenRecording": {
-          "description": "화면 인식에는 macOS 화면 기록 권한이 필요합니다. 시스템 설정에서 허용한 뒤 REMA를 다시 시작하면 적용됩니다.",
+          "description": "화면 인식에는 macOS 화면 기록 권한이 필요합니다. 시스템 설정에서 허용한 뒤 RHEMA를 다시 시작하면 적용됩니다.",
           "grant": "시스템 설정 열기"
         }
       },
@@ -1984,7 +1984,7 @@
         "testGpuMoved": "그래픽 카드가 샘플을 깨뜨려서 음소거했습니다. 이제 Kokoro가 프로세서를 사용하니 다시 테스트해서 들어 보세요.",
         "testGpuForced": "그래픽 카드가 샘플을 깨뜨려서 음소거했습니다. 실행 장치를 자동 또는 프로세서로 바꾸세요.",
         "testGpuSuspect": "샘플 소리가 깨져서 음소거했습니다. 그래픽 카드를 확인하려면 다시 테스트하세요.",
-        "testPhrase": "안녕하세요! REMA 음성 출력 테스트입니다.",
+        "testPhrase": "안녕하세요! RHEMA 음성 출력 테스트입니다.",
         "downloadStart": "Kokoro 음성 다운로드 중…",
         "downloadProgress": "Kokoro 음성 다운로드 중… {{progress}}%",
         "downloadReady": "Kokoro 음성 준비 완료 ✓",
@@ -2086,7 +2086,7 @@
     "account": {
       "signedOut": {
         "title": "휴대폰 연결",
-        "body": "이 컴퓨터와 휴대폰의 REMA 앱에서 같은 계정으로 로그인하세요. 그러면 휴대폰으로 이 컴퓨터에 받아쓰기하고 입력할 수 있습니다.",
+        "body": "이 컴퓨터와 휴대폰의 RHEMA 앱에서 같은 계정으로 로그인하세요. 그러면 휴대폰으로 이 컴퓨터에 받아쓰기하고 입력할 수 있습니다.",
         "modeLabel": "로그인 또는 계정 만들기",
         "signIn": "로그인",
         "createAccount": "계정 만들기",
@@ -2107,7 +2107,7 @@
         "online": "연결됨",
         "connecting": "연결하는 중…",
         "offline": "오프라인",
-        "offlineHint": "REMA가 지금 서버에 연결할 수 없어 계속 다시 시도하고 있습니다. 연결될 때까지 휴대폰에서 이 컴퓨터를 사용할 수 없습니다."
+        "offlineHint": "RHEMA가 지금 서버에 연결할 수 없어 계속 다시 시도하고 있습니다. 연결될 때까지 휴대폰에서 이 컴퓨터를 사용할 수 없습니다."
       },
       "phone": {
         "title": "휴대폰",
@@ -2115,12 +2115,12 @@
         "remoteInputHint": "휴대폰으로 이 컴퓨터에 받아쓰기하고 입력할 수 있게 합니다.",
         "remoteWindows": "휴대폰에서 창 보기 및 사용 허용",
         "remoteWindowsHint": "휴대폰에서 열려 있는 창 목록을 보고, 한 창을 실시간으로 보면서 그 창에 입력하거나 키를 누르거나 클릭할 수 있습니다. 휴대폰이 보고 있을 때는 여기에 중지 버튼이 있는 카드가 표시됩니다.",
-        "install": "휴대폰에 REMA 앱을 설치하고 {{email}}(으)로 로그인하세요."
+        "install": "휴대폰에 RHEMA 앱을 설치하고 {{email}}(으)로 로그인하세요."
       },
       "keys": {
         "title": "API 키",
         "sync": "API 키 동기화",
-        "syncHint": "이 컴퓨터에서 추가한 키는 암호화되어 REMA 계정에 저장되며 다른 컴퓨터에도 표시됩니다."
+        "syncHint": "이 컴퓨터에서 추가한 키는 암호화되어 RHEMA 계정에 저장되며 다른 컴퓨터에도 표시됩니다."
       },
       "devices": {
         "title": "기기",
@@ -2148,7 +2148,7 @@
       "server": {
         "title": "계정 서버",
         "using": "사용 중: {{host}}",
-        "notFound": "지금은 서버를 찾을 수 없습니다. REMA가 계속 다시 시도합니다."
+        "notFound": "지금은 서버를 찾을 수 없습니다. RHEMA가 계속 다시 시도합니다."
       },
       "errors": {
         "generic": "문제가 발생했습니다. 다시 시도하세요.",
@@ -2269,7 +2269,7 @@
     "list": {
       "title": "녹음된 회의",
       "emptyTitle": "아직 회의가 없습니다",
-      "emptyHint": "통화 전에 녹음을 시작하면 REMA가 누가 말했는지 나눠서 전사 내용을 보관합니다.",
+      "emptyHint": "통화 전에 녹음을 시작하면 RHEMA가 누가 말했는지 나눠서 전사 내용을 보관합니다.",
       "loadMore": "더 불러오기",
       "speakers_other": "화자 {{count}}명",
       "hasNotes": "노트 생성됨"
@@ -2430,7 +2430,7 @@
   },
   "accessibility": {
     "permissionsRequired": "접근성 권한 필요",
-    "permissionsDescription": "REMA는 녹음된 텍스트를 입력하기 위해 접근성 권한이 필요합니다.",
+    "permissionsDescription": "RHEMA는 녹음된 텍스트를 입력하기 위해 접근성 권한이 필요합니다.",
     "openSettings": "시스템 설정 열기",
     "dismiss": "닫기"
   },
@@ -2459,7 +2459,7 @@
   },
   "appLanguage": {
     "title": "앱 언어",
-    "description": "REMA 인터페이스의 언어를 변경하세요"
+    "description": "RHEMA 인터페이스의 언어를 변경하세요"
   },
   "overlay": {
     "preparing": "마이크 준비 중…",
@@ -2846,7 +2846,7 @@
       "performance": "성능"
     },
     "about": {
-      "appName": "REMA",
+      "appName": "RHEMA",
       "version": "버전 {{version}}",
       "project": "프로젝트",
       "docs": "문서",
@@ -2864,7 +2864,7 @@
     "subtitleTap": "어느 앱에서나 단축키를 한 번 누르고 말한 뒤 다시 누르세요. 커서가 있는 곳에 말한 내용이 입력됩니다.",
     "needsModel": {
       "title": "받아쓰기를 시작하려면 음성 모델을 고르세요.",
-      "description": "REMA가 말한 내용을 입력하려면 음성 인식 모델이 필요합니다.",
+      "description": "RHEMA가 말한 내용을 입력하려면 음성 인식 모델이 필요합니다.",
       "action": "모델 선택"
     },
     "stats": {
@@ -2937,8 +2937,8 @@
         "open": "키보드 설정"
       },
       "linux": {
-        "wayland": "Wayland에서는 REMA 창이 앞에 있을 때만 데스크톱이 이 키를 REMA에 전달합니다. 모든 앱에서 쓰려면 시스템 설정에서 단축키로 추가하세요.",
-        "noAccess": "이 컴퓨터에서는 REMA Keys가 키보드를 읽을 수 없어서 이 단축키가 아직 작동하지 않습니다.",
+        "wayland": "Wayland에서는 RHEMA 창이 앞에 있을 때만 데스크톱이 이 키를 RHEMA에 전달합니다. 모든 앱에서 쓰려면 시스템 설정에서 단축키로 추가하세요.",
+        "noAccess": "이 컴퓨터에서는 RHEMA Keys가 키보드를 읽을 수 없어서 이 단축키가 아직 작동하지 않습니다.",
         "setUp": "설정",
         "where": {
           "gnome": "설정 → 키보드 → 바로 가기 키 보기 및 사용자 지정 → 사용자 지정 바로 가기 키를 열고, 아래 명령마다 하나씩 추가한 뒤 원하는 키를 누르세요.",
@@ -2946,7 +2946,7 @@
           "other": "아래 명령마다 데스크톱 키보드 설정에 사용자 지정 단축키를 추가하거나, 컴포지터 설정에 bind 줄을 추가하세요."
         },
         "tapOnly": "이렇게 추가한 단축키는 '눌러서 켜고 끄기'처럼 작동합니다. 한 번 누르면 시작하고 다시 누르면 멈춥니다.",
-        "access": "또는 REMA Keys가 키보드를 읽도록 허용하세요. 터미널에서 이 명령을 실행한 다음 로그아웃했다가 다시 로그인하세요:",
+        "access": "또는 RHEMA Keys가 키보드를 읽도록 허용하세요. 터미널에서 이 명령을 실행한 다음 로그아웃했다가 다시 로그인하세요:",
         "copy": "복사",
         "copied": "복사됨"
       }
@@ -2974,7 +2974,7 @@
     }
   },
   "speechUpdate": {
-    "title": "{{model}}은(는) REMA에 더 이상 포함되지 않는 이전 엔진을 사용했습니다.",
+    "title": "{{model}}은(는) RHEMA에 더 이상 포함되지 않는 이전 엔진을 사용했습니다.",
     "newVersion": "새 버전은 {{model}}입니다.",
     "ready": "{{model}}이(가) 다운로드되어 바로 쓸 수 있습니다.",
     "noVersion": "받아쓰기를 계속하려면 다른 모델을 고르세요.",
@@ -2983,12 +2983,12 @@
     "retry": "다시 시도",
     "chooseAnother": "다른 모델 고르기",
     "progressLabel": "새 버전 다운로드 중",
-    "dialogTitle": "REMA에 새 음성 엔진이 들어왔습니다",
+    "dialogTitle": "RHEMA에 새 음성 엔진이 들어왔습니다",
     "dialogBody": "더 빠르고 안정적이라 문제가 줄어듭니다. {{model}}은(는) 이전 엔진에서 실행되었으므로 계속 사용하려면 새 버전이 필요합니다.",
     "later": "나중에"
   },
   "modelsHub": {
-    "description": "REMA의 각 작업은 직접 고른 모델이 처리합니다. 개인 정보 보호를 원하면 이 컴퓨터에서, 속도를 원하면 클라우드에서 실행하세요.",
+    "description": "RHEMA의 각 작업은 직접 고른 모델이 처리합니다. 개인 정보 보호를 원하면 이 컴퓨터에서, 속도를 원하면 클라우드에서 실행하세요.",
     "addLocal": "모델 파일 추가",
     "privacyNote": "이 컴퓨터의 모델은 음성이나 텍스트를 어디에도 보내지 않습니다. 클라우드 모델은 사용자의 API 키로 선택한 제공자에게 데이터를 보냅니다.",
     "inUse": "사용 중",
@@ -3147,12 +3147,12 @@
     "shortcutRow": "단축키"
   },
   "dictionary": {
-    "description": "자주 쓰는 이름과 용어를 REMA에 알려 주고, 긴 텍스트로 펼쳐지는 줄임말을 설정하세요.",
+    "description": "자주 쓰는 이름과 용어를 RHEMA에 알려 주고, 긴 텍스트로 펼쳐지는 줄임말을 설정하세요.",
     "words": {
       "title": "내 단어",
-      "description": "REMA가 항상 정확하게 적어야 할 이름, 전문 용어, 표기입니다.",
+      "description": "RHEMA가 항상 정확하게 적어야 할 이름, 전문 용어, 표기입니다.",
       "placeholder": "이름, 용어 또는 표기 추가…",
-      "empty": "아직 아무것도 없습니다. REMA가 자꾸 틀리는 단어를 추가하세요."
+      "empty": "아직 아무것도 없습니다. RHEMA가 자꾸 틀리는 단어를 추가하세요."
     },
     "replacements": {
       "title": "치환",
@@ -3161,7 +3161,7 @@
     "addWord": "단어 추가"
   },
   "commandsPage": {
-    "description": "원하는 일을 말하면 REMA가 이 컴퓨터에서 해 줍니다: 사이트 열기, 노래 재생, 앱 전환, 이메일 작성.",
+    "description": "원하는 일을 말하면 RHEMA가 이 컴퓨터에서 해 줍니다: 사이트 열기, 노래 재생, 앱 전환, 이메일 작성.",
     "enable": "음성 명령",
     "offNotice": "음성 명령이 꺼져 있습니다. 켜면 단축키가 작동하며, 말한 내용은 명령을 실행하는 모델로 전송됩니다.",
     "shortcut": {
@@ -3540,16 +3540,16 @@
   },
   "freeCredit": {
     "title": "무료 크레딧",
-    "explain": "모든 REMA 계정에는 {{amount}} 상당의 AI 사용량이 포함되며, 음성 텍스트 변환, AI 정리, 어시스턴트, 음성 명령, 음성 답변이 함께 사용합니다. API 키가 필요 없습니다.",
+    "explain": "모든 RHEMA 계정에는 {{amount}} 상당의 AI 사용량이 포함되며, 음성 텍스트 변환, AI 정리, 어시스턴트, 음성 명령, 음성 답변이 함께 사용합니다. API 키가 필요 없습니다.",
     "balance": "무료 크레딧: {{limit}} 중 {{remaining}} 남음",
     "checking": "무료 크레딧을 확인하는 중…",
-    "option": "REMA free 사용 ({{amount}} 포함)",
-    "use": "REMA free 사용",
+    "option": "RHEMA free 사용 ({{amount}} 포함)",
+    "use": "RHEMA free 사용",
     "inUse": "사용 중",
     "exhausted": "무료 크레딧을 모두 사용했습니다. 클라우드 기능을 계속 쓰려면 직접 API 키를 추가하세요.",
-    "disabled": "지금은 REMA free를 사용할 수 없습니다. 클라우드 기능을 계속 쓰려면 직접 API 키를 추가하세요.",
+    "disabled": "지금은 RHEMA free를 사용할 수 없습니다. 클라우드 기능을 계속 쓰려면 직접 API 키를 추가하세요.",
     "addKey": "내 키 추가",
-    "failed": "REMA free로 전환하지 못했습니다.",
+    "failed": "RHEMA free로 전환하지 못했습니다.",
     "setupHint": "로그인되어 있으므로 다운로드 없이 무료 크레딧으로 클라우드에서 받아쓰기를 할 수 있습니다.",
     "jobs": {
       "stt": "음성 텍스트 변환",
@@ -3610,7 +3610,7 @@
     "or": "또는",
     "changeOther": "{{name}}의 다른 키 변경",
     "pressKeysOrButton": "키나 마우스 버튼을 누르세요…",
-    "mouseNeedsKeysEngine": "마우스 버튼은 REMA Keys 키보드 구현에서만 쓸 수 있습니다(설정 → 고급 → 실험적).",
+    "mouseNeedsKeysEngine": "마우스 버튼은 RHEMA Keys 키보드 구현에서만 쓸 수 있습니다(설정 → 고급 → 실험적).",
     "mouse": {
       "middle": "마우스 가운데 버튼",
       "back": "마우스 뒤로 버튼",
@@ -3689,7 +3689,7 @@
     }
   },
   "insights": {
-    "about": "REMA 사용 현황으로, 이 컴퓨터에서 집계합니다.",
+    "about": "RHEMA 사용 현황으로, 이 컴퓨터에서 집계합니다.",
     "nothingYet": "받아쓰기를 하거나, 어시스턴트에게 묻거나, 회의를 녹음하면 인사이트가 표시됩니다.",
     "goHome": "단축키 보기",
     "figures": {
@@ -3741,7 +3741,7 @@
     },
     "share": {
       "button": "공유",
-      "nothingYet": "REMA를 사용하고 나면 공유할 내용이 생깁니다.",
+      "nothingYet": "RHEMA를 사용하고 나면 공유할 내용이 생깁니다.",
       "title": "인사이트 공유",
       "private": "이 컴퓨터에서 만듭니다. 아무것도 업로드되지 않습니다.",
       "size": "크기",
@@ -3772,13 +3772,13 @@
       "openSite": "{{site}} 열기",
       "openFailed": "{{site}} 페이지를 열지 못했습니다",
       "more": "다른 앱",
-      "sheetTitle": "나의 REMA 인사이트",
+      "sheetTitle": "나의 RHEMA 인사이트",
       "shareFailed": "공유를 열지 못했습니다",
       "drawFailed": "카드를 그리지 못했습니다. 닫고 다시 시도하세요.",
       "tagline": "무료 · 오픈 소스 · 오프라인 작동",
       "cards": {
         "highlights": {
-          "title": "나의 REMA 하이라이트",
+          "title": "나의 RHEMA 하이라이트",
           "words_other": "말한 단어",
           "streak_other": "일 연속",
           "wpm": "분당 단어",
@@ -3827,9 +3827,9 @@
         }
       },
       "post": {
-        "dictation_other": "REMA로 지금까지 {{formatted}}단어를 타이핑하는 대신 컴퓨터에 말로 입력했어요.",
-        "asks_other": "탭을 전환하지 않고 REMA 어시스턴트에게 {{formatted}}번 질문했어요.",
-        "meetings_other": "REMA가 회의 {{formatted}}건을 녹음하고 노트까지 써 줬어요."
+        "dictation_other": "RHEMA로 지금까지 {{formatted}}단어를 타이핑하는 대신 컴퓨터에 말로 입력했어요.",
+        "asks_other": "탭을 전환하지 않고 RHEMA 어시스턴트에게 {{formatted}}번 질문했어요.",
+        "meetings_other": "RHEMA가 회의 {{formatted}}건을 녹음하고 노트까지 써 줬어요."
       }
     }
   },
@@ -3837,11 +3837,11 @@
     "restored": "설정이 손상되어 백업에서 복원했습니다.",
     "restoredDescription": "최근 변경 사항이 누락되었을 수 있습니다.",
     "unrecoverableTitle": "설정을 복구할 수 없습니다",
-    "unrecoverableDescription": "REMA가 기본 설정으로 시작되었습니다. 손상된 파일은 {{file}}(으)로 보관되어 있습니다.",
+    "unrecoverableDescription": "RHEMA가 기본 설정으로 시작되었습니다. 손상된 파일은 {{file}}(으)로 보관되어 있습니다.",
     "notSavingTitle": "설정 변경 사항이 저장되지 않습니다",
-    "notSavingDescription": "설정 파일을 읽을 수 없어 그대로 두었습니다. 다시 시도하려면 REMA를 다시 시작하세요.",
+    "notSavingDescription": "설정 파일을 읽을 수 없어 그대로 두었습니다. 다시 시도하려면 RHEMA를 다시 시작하세요.",
     "saveFailingTitle": "설정이 저장되지 않고 있습니다",
-    "saveFailingDescription": "최근 변경 사항이 아직 저장되지 않았습니다. REMA가 계속 시도합니다.",
+    "saveFailingDescription": "최근 변경 사항이 아직 저장되지 않았습니다. RHEMA가 계속 시도합니다.",
     "dismiss": "닫기"
   },
   "commandMode": {

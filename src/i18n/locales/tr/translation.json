@@ -35,10 +35,10 @@
     "downloading": "İndiriliyor… %{{progress}}",
     "downloadingUnknown": "İndiriliyor…",
     "installing": "Yükleniyor…",
-    "reopening": "REMA güncellemeyi yüklemek için kapanacak ve birkaç saniye içinde yeniden açılacak.",
+    "reopening": "RHEMA güncellemeyi yüklemek için kapanacak ve birkaç saniye içinde yeniden açılacak.",
     "updatedTo": "{{version}} sürümüne güncellendi",
     "restart": "Şimdi yeniden başlat",
-    "readyToRestart": "Güncelleme yüklendi. Kullanmaya başlamak için REMA'yu yeniden başlatın.",
+    "readyToRestart": "Güncelleme yüklendi. Kullanmaya başlamak için RHEMA'yu yeniden başlatın.",
     "installFailed": "Güncelleme yüklenemedi. Tekrar deneyebilir ya da yükleyiciyi indirip kendiniz çalıştırabilirsiniz.",
     "downloadFailed": "İndirme tamamlanmadı. Bağlantınızı kontrol edip tekrar deneyin.",
     "downloadInstaller": "Yükleyiciyi indir",
@@ -49,13 +49,13 @@
     "showInFolder": "Klasörde göster",
     "viewRelease": "GitHub'da görüntüle",
     "hint": {
-      "windows": "REMA kapanır, güncellemeyi yükler ve yeniden açılır. Başka bir şeye tıklamanız gerekmez.",
-      "macos": "REMA yeni sürümle yeniden başlar. macOS ardından Mikrofon ve Erişilebilirlik izinlerini yeniden vermenizi isteyebilir.",
-      "linux": "REMA yeni sürümle yeniden başlar. .deb kurulumu önce parolanızı sorar."
+      "windows": "RHEMA kapanır, güncellemeyi yükler ve yeniden açılır. Başka bir şeye tıklamanız gerekmez.",
+      "macos": "RHEMA yeni sürümle yeniden başlar. macOS ardından Mikrofon ve Erişilebilirlik izinlerini yeniden vermenizi isteyebilir.",
+      "linux": "RHEMA yeni sürümle yeniden başlar. .deb kurulumu önce parolanızı sorar."
     },
     "modes": {
       "portable": "Bu, kendini değiştiremeyen taşınabilir sürümdür. Yeni sürümü indirin ve Data klasörünüzü içine kopyalayın.",
-      "packageManager": "REMA'yu paket yöneticiniz yükledi, bu yüzden oradan güncelleyin; örneğin yay -Syu rema-bin ile.",
+      "packageManager": "RHEMA'yu paket yöneticiniz yükledi, bu yüzden oradan güncelleyin; örneğin yay -Syu rhema-bin ile.",
       "download": "Bu kopya kendini yerinde güncelleyemez. Yeni sürümü almak için yükleyiciyi indirip çalıştırın."
     },
     "pill": {
@@ -70,7 +70,7 @@
   "feedback": {
     "button": "Geri bildirim gönder",
     "title": "Geri bildirim gönder",
-    "description": "Her mesajı kendim okuyorum, o yüzden aklınıza nasıl geliyorsa öyle yazın. REMA'yu daha iyi hâle getirmeye yardım ettiğiniz için teşekkürler.",
+    "description": "Her mesajı kendim okuyorum, o yüzden aklınıza nasıl geliyorsa öyle yazın. RHEMA'yu daha iyi hâle getirmeye yardım ettiğiniz için teşekkürler.",
     "kind": {
       "label": "Geri bildirim türü",
       "bug": "Hata",
@@ -79,7 +79,7 @@
     },
     "placeholder": {
       "bug": "Ne oldu ve bunun yerine ne bekliyordunuz?",
-      "idea": "REMA'yu sizin için ne daha iyi yapardı?",
+      "idea": "RHEMA'yu sizin için ne daha iyi yapardı?",
       "question": "Ne öğrenmek istersiniz?"
     },
     "messageLabel": "Mesaj",
@@ -114,7 +114,7 @@
       "too_many_screenshots": "En fazla 3 ekran görüntüsü ekleyebilirsiniz.",
       "too_large": "Ekran görüntüleri göndermek için çok büyük. Birini kaldırıp tekrar deneyin.",
       "invalid_screenshot": "Ekran görüntülerinden biri PNG, JPEG veya WebP görüntüsü değil. Kaldırıp tekrar deneyin.",
-      "no_server": "REMA şu anda geri bildirim sunucusunu bulamıyor. Mesajınız burada kayıtlı, daha sonra tekrar deneyin.",
+      "no_server": "RHEMA şu anda geri bildirim sunucusunu bulamıyor. Mesajınız burada kayıtlı, daha sonra tekrar deneyin.",
       "network": "Geri bildirim sunucusuna ulaşılamadı. Bağlantınızı kontrol edin; mesajınız burada kayıtlı.",
       "rate_limited": "Kısa sürede çok fazla geri bildirim gönderdiniz. Bir süre sonra tekrar deneyin.",
       "rejected": "Geri bildirim kabul edilmedi. Kısaltmayı deneyip yeniden gönderin.",
@@ -168,10 +168,10 @@
       "retry": "Tekrar dene"
     },
     "tour": {
-      "features": "REMA neler yapar",
+      "features": "RHEMA neler yapar",
       "count": "{{current}}/{{total}}",
       "next": "İleri",
-      "finish": "REMA'yu aç",
+      "finish": "RHEMA'yu aç",
       "tabs": {
         "dictate": "Dikte",
         "ask": "Asistan",
@@ -249,7 +249,7 @@
       "ready": "Hazırsınız"
     },
     "speechToText": {
-      "title": "REMA sizi nasıl duysun?",
+      "title": "RHEMA sizi nasıl duysun?",
       "subtitle": "Bu, sesinizi doğrudan makinenizde metne dönüştürür. Birini seçin, istediğiniz zaman değiştirin.",
       "cards": {
         "fast": {
@@ -314,7 +314,7 @@
       "downloadingVoice": "Ses modeliniz iniyor. %{{percentage}} tamamlandı.",
       "downloadingGeneric": "İndirme sürüyor. %{{percentage}} tamamlandı.",
       "signOff": "Hepsi bu. Hadi bir şeyler söyleyin.",
-      "openApp": "REMA'yu aç"
+      "openApp": "RHEMA'yu aç"
     },
     "errors": {
       "selectModel": "Bu model seçilemedi. Lütfen tekrar deneyin.",
@@ -446,7 +446,7 @@
     },
     "permissions": {
       "title": "İzinler gerekli",
-      "description": "REMA'nun düzgün çalışabilmesi için birkaç izne ihtiyacı var.",
+      "description": "RHEMA'nun düzgün çalışabilmesi için birkaç izne ihtiyacı var.",
       "microphone": {
         "title": "Mikrofon erişimi",
         "description": "Sesinizi transkripsiyon için alabilmek için gereklidir."
@@ -456,7 +456,7 @@
         "description": "Transkribe edilen metni uygulamalarınıza yazabilmek için gereklidir.",
         "stuckHint": "Sistem Ayarları'nda zaten açık mı? Bir güncellemeden sonra macOS, bu sürümle artık eşleşmeyen bir izni tutabilir.",
         "reset": "İzni sıfırla",
-        "resetDone": "Şimdi Sistem Ayarları'nda REMA'yu yeniden açın."
+        "resetDone": "Şimdi Sistem Ayarları'nda RHEMA'yu yeniden açın."
       },
       "grant": "İzin ver",
       "granted": "Verildi",
@@ -465,7 +465,7 @@
       "errors": {
         "checkFailed": "İzinler kontrol edilemedi. Lütfen tekrar deneyin.",
         "requestFailed": "İzin istenemedi. Lütfen tekrar deneyin.",
-        "resetFailed": "İzin sıfırlanamadı. REMA'yu Erişilebilirlik listesinden kaldırıp yeniden ekleyin."
+        "resetFailed": "İzin sıfırlanamadı. RHEMA'yu Erişilebilirlik listesinden kaldırıp yeniden ekleyin."
       }
     },
     "frame": {
@@ -655,7 +655,7 @@
           },
           "command": {
             "name": "Sesli komut",
-            "description": "Ne yapılmasını istediğinizi söyleyin, örneğin “YouTube'u aç”, REMA yapar."
+            "description": "Ne yapılmasını istediğinizi söyleyin, örneğin “YouTube'u aç”, RHEMA yapar."
           },
           "hands_free": {
             "name": "Eller serbest",
@@ -699,7 +699,7 @@
       },
       "handsFree": {
         "unavailableKeys": "Dikte yalnızca Ctrl + Win gibi değiştirici tuşlardan oluştuğunda çalışır. {{keys}} ile bunun yerine “Konuşmak için basılı tut” seçeneğini kapatın: her dikte, tuşlara yeniden basana kadar sürer.",
-        "unavailableEngine": "REMA Keys klavye motoru gerekir ({{where}}). Ya da “Konuşmak için basılı tut” seçeneğini kapatın: her dikte, tuşlara yeniden basana kadar sürer.",
+        "unavailableEngine": "RHEMA Keys klavye motoru gerekir ({{where}}). Ya da “Konuşmak için basılı tut” seçeneğini kapatın: her dikte, tuşlara yeniden basana kadar sürer.",
         "taken": "{{name}} zaten {{keys}} kullanıyor; biri değişene kadar bu tuş bir şey yapmaz.",
         "needsKey": "Boşluk ya da Enter gibi tek bir tuş seçin. Tek başına bir değiştirici tuş eller serbest tuşu olamaz.",
         "pressKey": "Bir tuşa basın…",
@@ -756,9 +756,9 @@
       "clearSearch": "Aramayı temizle",
       "noSearchResults": "“{{query}}” adlı model yok.",
       "olderHint": "Eski biçim. {{model}} ({{size}}) bu modelin yeni sürümü.",
-      "retiredHint": "REMA'nun artık içermediği eski bir motor kullanıyor. Bunun yerine {{model}} ({{size}}) indirin.",
+      "retiredHint": "RHEMA'nun artık içermediği eski bir motor kullanıyor. Bunun yerine {{model}} ({{size}}) indirin.",
       "retired": {
-        "notice": "Bu modeller, REMA'nun artık içermediği eski bir motor kullanıyordu.",
+        "notice": "Bu modeller, RHEMA'nun artık içermediği eski bir motor kullanıyordu.",
         "newVersion": "Yeni sürüm: {{model}} · {{size}}",
         "getNewVersion": "Yeni sürümü indir",
         "useNewVersion": "Yeni sürümü kullan",
@@ -817,7 +817,7 @@
         "rescanning": "Yeniden taranıyor…",
         "rescanDone_one": "{{count}} yerel model bulundu.",
         "rescanDone_other": "{{count}} yerel model bulundu.",
-        "footnote": "Bağlı klasörler REMA her açıldığında yeniden taranır; bu yüzden sonradan eklediğiniz modeller kendiliğinden görünür. Bir klasörün bağlantısını kaldırmak veya bir modeli kaldırmak onu yalnızca bu listeden siler — dosyalarınız olduğu yerde kalır.",
+        "footnote": "Bağlı klasörler RHEMA her açıldığında yeniden taranır; bu yüzden sonradan eklediğiniz modeller kendiliğinden görünür. Bir klasörün bağlantısını kaldırmak veya bir modeli kaldırmak onu yalnızca bu listeden siler — dosyalarınız olduğu yerde kalır.",
         "removeTitle": "Listeden kaldırılsın mı?",
         "removeConfirm": "“{{modelName}}” model listenizden kaldırılsın mı?\n\nDosyanın kendisi olduğu yerde kalır:\n{{path}}",
         "missingBadge": "Dosya yok",
@@ -907,7 +907,7 @@
         "label": "Kısayol olarak fare düğmeleri",
         "description": "Farenizin orta, Geri veya İleri düğmesini kısayol olarak kullanın: bir kısayolun tuşlarına tıklayın, ardından düğmeye basın. Kısayol olduğu sürece düğme başka bir şey yapmaz.",
         "linux": "Linux'ta yalnızca orta düğme çalışır.",
-        "needsEngine": "REMA Keys klavye altyapısını gerektirir."
+        "needsEngine": "RHEMA Keys klavye altyapısını gerektirir."
       },
       "longFormChunking": {
         "title": "Uzun kayıtları böl",
@@ -925,11 +925,11 @@
       },
       "autostart": {
         "label": "Başlangıçta çalıştır",
-        "description": "Oturum açtığınızda REMA'yu otomatik olarak açar."
+        "description": "Oturum açtığınızda RHEMA'yu otomatik olarak açar."
       },
       "showTrayIcon": {
         "label": "Tepsi simgesini göster",
-        "description": "REMA'yu sistem tepsisinde tutar."
+        "description": "RHEMA'yu sistem tepsisinde tutar."
       },
       "trayIconColor": {
         "label": "Renkli tepsi simgesi",
@@ -937,7 +937,7 @@
       },
       "closeBehavior": {
         "label": "Pencereyi kapattığımda uygulamadan çık",
-        "description": "Kapalıyken pencereyi kapatmak REMA'yu tepside çalışır durumda tutar, böylece kısayollarınız çalışmaya devam eder. Açıkken pencereyi kapatmak uygulamayı tamamen kapatır."
+        "description": "Kapalıyken pencereyi kapatmak RHEMA'yu tepside çalışır durumda tutar, böylece kısayollarınız çalışmaya devam eder. Açıkken pencereyi kapatmak uygulamayı tamamen kapatır."
       },
       "overlayStyle": {
         "title": "Kaplama",
@@ -1031,8 +1031,8 @@
       },
       "customWords": {
         "title": "Özel kelimeler",
-        "description": "REMA'nun sizin istediğiniz gibi yazması gereken adlar, ürünler ve ifadeler.",
-        "info": "Örnek: REMA “Coco row” yazıyorsa “Kokoro” ekleyin.",
+        "description": "RHEMA'nun sizin istediğiniz gibi yazması gereken adlar, ürünler ve ifadeler.",
+        "info": "Örnek: RHEMA “Coco row” yazıyorsa “Kokoro” ekleyin.",
         "placeholder": "Bir ad, terim veya kısa ifade ekleyin",
         "add": "Ekle",
         "empty": "Henüz özel kelime yok.",
@@ -1041,7 +1041,7 @@
       },
       "autoLearn": {
         "label": "Düzelttiğim kelimeleri öğren",
-        "description": "REMA'nun yanlış yazdığı bir kelimeyi düzelttiğinizde yazılışınızı hatırlar.",
+        "description": "RHEMA'nun yanlış yazdığı bir kelimeyi düzelttiğinizde yazılışınızı hatırlar.",
         "info": "Yalnızca az önce yazdığı alanı, yaklaşık bir dakika boyunca okur. Hiçbir şey yüklenmez ve öğrendiği her kelime burada listelenir.",
         "unsupported": "Düzeltmelerden öğrenme şimdilik yalnızca Windows'ta kullanılabilir. Yine de yukarıdan kelimeleri elle ekleyebilirsiniz.",
         "learnedTitle": "Düzeltmelerinizden öğrenilenler",
@@ -1055,7 +1055,7 @@
         "title": "Metin değiştirmeleri",
         "description": "Transkriptinizdeki bir ifadeyi, sık kullandığınız bir metinle değiştirin. Örnek: “e-postam” ifadesi “alex@example.com” olur.",
         "rulesTitle": "Değiştirme kuralları",
-        "rulesHint": "REMA'nun ne duyacağını ve ne ekleyeceğini seçin.",
+        "rulesHint": "RHEMA'nun ne duyacağını ve ne ekleyeceğini seçin.",
         "empty": "Sık söylediğiniz bir ifade için kural oluşturun.",
         "addFirst": "İlk kuralı oluştur",
         "addRule": "Değiştirme ekle",
@@ -1433,7 +1433,7 @@
       },
       "updateChecks": {
         "label": "Güncellemeleri otomatik kontrol et",
-        "description": "REMA açıldığında ve her 12 saatte bir yeni sürüm arar. İstediğiniz zaman elle de kontrol edebilirsiniz."
+        "description": "RHEMA açıldığında ve her 12 saatte bir yeni sürüm arar. İstediğiniz zaman elle de kontrol edebilirsiniz."
       },
       "soundTheme": {
         "label": "Ses teması",
@@ -1491,7 +1491,7 @@
       "smartSpacing": {
         "label": "Akıllı boşluk",
         "description": "Her dikteyi alanda zaten bulunan metne uydurur; böylece durup devam ettiğinizde kelimeler birbirine yapışmaz.",
-        "info": "Yapıştırmadan önce REMA imlecin çevresindeki birkaç karaktere bakar ve yalnızca gereken yerde boşluk ekler. Bir uygulama metnini gizliyorsa, bunun yerine kendi son diktesini kullanır. Hiçbir şey kaydedilmez veya bir yere gönderilmez. macOS'ta REMA'nun zaten sahip olduğu Erişilebilirlik iznini kullanır. Linux'ta Chrome, Electron ve Qt uygulamaları metinlerini yalnızca masaüstünün erişilebilirlik ayarı açıkken paylaşır."
+        "info": "Yapıştırmadan önce RHEMA imlecin çevresindeki birkaç karaktere bakar ve yalnızca gereken yerde boşluk ekler. Bir uygulama metnini gizliyorsa, bunun yerine kendi son diktesini kullanır. Hiçbir şey kaydedilmez veya bir yere gönderilmez. macOS'ta RHEMA'nun zaten sahip olduğu Erişilebilirlik iznini kullanır. Linux'ta Chrome, Electron ve Qt uygulamaları metinlerini yalnızca masaüstünün erişilebilirlik ayarı açıkken paylaşır."
       },
       "smartSpacingFixCase": {
         "label": "Büyük harfleri düzelt",
@@ -1499,7 +1499,7 @@
       },
       "smartSpacingJoin": {
         "label": "Yarım kalan cümleleri birleştir",
-        "description": "Cümlenin ortasında durduğunuzda REMA'nun eklediği noktayı kaldırır, örneğin \"I went to the.\""
+        "description": "Cümlenin ortasında durduğunuzda RHEMA'nun eklediği noktayı kaldırır, örneğin \"I went to the.\""
       },
       "keyboardImplementation": {
         "title": "Klavye altyapısı",
@@ -1631,7 +1631,7 @@
       },
       "appDataDirectory": {
         "title": "Uygulama veri klasörü",
-        "description": "REMA'nun modellerinizi, geçmişinizi ve ayarlarınızı sakladığı yer."
+        "description": "RHEMA'nun modellerinizi, geçmişinizi ve ayarlarınızı sakladığı yer."
       },
       "sourceCode": {
         "title": "Kaynak kodu",
@@ -1640,12 +1640,12 @@
       },
       "license": {
         "title": "Lisans",
-        "description": "REMA, MIT Lisansı altında açık kaynaktır. Üçüncü taraf bildirimleri lisanstadır.",
+        "description": "RHEMA, MIT Lisansı altında açık kaynaktır. Üçüncü taraf bildirimleri lisanstadır.",
         "button": "Lisansı görüntüle"
       },
       "supportDevelopment": {
         "title": "Geliştirmeyi destekleyin",
-        "description": "REMA'yu geliştirmeye devam etmemize yardımcı olun",
+        "description": "RHEMA'yu geliştirmeye devam etmemize yardımcı olun",
         "button": "Bağış Yap"
       }
     },
@@ -1653,7 +1653,7 @@
       "enable": {
         "title": "Asistan",
         "label": "Asistanı etkinleştir",
-        "description": "REMA'yu yalnızca dikte için kullanmak istiyorsanız bunu kapatın. Yüzen panel kapatılır ve hiç yüklenmez, kısayolları serbest bırakılır ve kullandığı bellek geri verilir. Flow ile oluştur ve yapay zekâ temizleme çalışmayı sürdürür."
+        "description": "RHEMA'yu yalnızca dikte için kullanmak istiyorsanız bunu kapatın. Yüzen panel kapatılır ve hiç yüklenmez, kısayolları serbest bırakılır ve kullandığı bellek geri verilir. Flow ile oluştur ve yapay zekâ temizleme çalışmayı sürdürür."
       },
       "shortcuts": {
         "title": "Kısayollar"
@@ -1692,7 +1692,7 @@
         "deleteModelFailed": "Model silinemedi.",
         "finderSectionTitle": "Daha fazla cihaz içi model",
         "finderTitle": "Hugging Face'e göz at",
-        "finderDescription": "Binlerce GGUF modeli arasında arama yapın ve birini doğrudan REMA'ya indirin.",
+        "finderDescription": "Binlerce GGUF modeli arasında arama yapın ve birini doğrudan RHEMA'ya indirin.",
         "finderAction": "Model bul",
         "huggingFaceTitle": "Modelleriniz",
         "catalogEmpty": "Şu anda önerilen bir yerel model yok."
@@ -1815,7 +1815,7 @@
           "label": "Yakalama zamanı"
         },
         "screenRecording": {
-          "description": "Ekran görüşü, macOS Ekran Kaydı iznine ihtiyaç duyar. İzni Sistem Ayarları'ndan verin, ardından etkili olması için REMA'yu yeniden başlatın.",
+          "description": "Ekran görüşü, macOS Ekran Kaydı iznine ihtiyaç duyar. İzni Sistem Ayarları'ndan verin, ardından etkili olması için RHEMA'yu yeniden başlatın.",
           "grant": "Sistem Ayarları'nı aç"
         }
       },
@@ -1992,7 +1992,7 @@
         "testGpuMoved": "Ekran kartınız örneği bozdu, bu yüzden sessize alındı. Kokoro artık işlemciyi kullanıyor; duymak için yeniden test edin.",
         "testGpuForced": "Ekran kartınız örneği bozdu, bu yüzden sessize alındı. Çalıştığı yer ayarını Otomatik veya İşlemci yapın.",
         "testGpuSuspect": "Örnek bozuk çıktı, bu yüzden sessize alındı. Ekran kartınızı kontrol etmek için yeniden test edin.",
-        "testPhrase": "Merhaba! Bu, REMA'nun ses çıkışı testidir.",
+        "testPhrase": "Merhaba! Bu, RHEMA'nun ses çıkışı testidir.",
         "downloadStart": "Kokoro sesi indiriliyor…",
         "downloadProgress": "Kokoro sesi indiriliyor… %{{progress}}",
         "downloadReady": "Kokoro sesi hazır ✓",
@@ -2094,7 +2094,7 @@
     "account": {
       "signedOut": {
         "title": "Telefonunuzu bağlayın",
-        "body": "Burada ve telefonunuzdaki REMA uygulamasında aynı hesapla oturum açın. Ardından telefonunuzdan bu bilgisayarda dikte edip yazabilirsiniz.",
+        "body": "Burada ve telefonunuzdaki RHEMA uygulamasında aynı hesapla oturum açın. Ardından telefonunuzdan bu bilgisayarda dikte edip yazabilirsiniz.",
         "modeLabel": "Oturum açın veya hesap oluşturun",
         "signIn": "Oturum aç",
         "createAccount": "Hesap oluştur",
@@ -2115,7 +2115,7 @@
         "online": "Bağlı",
         "connecting": "Bağlanıyor…",
         "offline": "Bağlı değil",
-        "offlineHint": "REMA şu anda sunucuya ulaşamıyor ve denemeye devam ediyor. O zamana kadar telefonunuz bu bilgisayarı kullanamaz."
+        "offlineHint": "RHEMA şu anda sunucuya ulaşamıyor ve denemeye devam ediyor. O zamana kadar telefonunuz bu bilgisayarı kullanamaz."
       },
       "phone": {
         "title": "Telefon",
@@ -2123,12 +2123,12 @@
         "remoteInputHint": "Telefonunuzun bu bilgisayarda dikte etmesine ve yazmasına izin verir.",
         "remoteWindows": "Telefonların pencereleri görmesine ve kullanmasına izin ver",
         "remoteWindowsHint": "Telefonunuz açık pencereleri listeleyebilir, birini canlı izleyebilir ve içinde yazabilir, tuşlara basabilir veya tıklayabilir. Bir telefon izlerken burada Durdur düğmesiyle bir kart görünür.",
-        "install": "Telefonunuza REMA uygulamasını yükleyin ve {{email}} ile oturum açın."
+        "install": "Telefonunuza RHEMA uygulamasını yükleyin ve {{email}} ile oturum açın."
       },
       "keys": {
         "title": "API anahtarları",
         "sync": "API anahtarlarını eşitle",
-        "syncHint": "Bu bilgisayara eklediğiniz anahtarlar REMA hesabınızda şifrelenmiş olarak saklanır ve diğer bilgisayarlarınızda da görünür."
+        "syncHint": "Bu bilgisayara eklediğiniz anahtarlar RHEMA hesabınızda şifrelenmiş olarak saklanır ve diğer bilgisayarlarınızda da görünür."
       },
       "devices": {
         "title": "Cihazlar",
@@ -2156,7 +2156,7 @@
       "server": {
         "title": "Hesap sunucusu",
         "using": "Kullanılan: {{host}}",
-        "notFound": "Sunucu şu anda bulunamıyor. REMA denemeye devam ediyor."
+        "notFound": "Sunucu şu anda bulunamıyor. RHEMA denemeye devam ediyor."
       },
       "errors": {
         "generic": "Bir şeyler ters gitti. Tekrar deneyin.",
@@ -2277,7 +2277,7 @@
     "list": {
       "title": "Kaydedilen toplantılar",
       "emptyTitle": "Henüz toplantı yok",
-      "emptyHint": "Bir görüşmeden önce kaydı başlatın; REMA transkripti kimin konuştuğuna göre ayrılmış olarak saklar.",
+      "emptyHint": "Bir görüşmeden önce kaydı başlatın; RHEMA transkripti kimin konuştuğuna göre ayrılmış olarak saklar.",
       "loadMore": "Daha fazla yükle",
       "speakers_one": "{{count}} konuşmacı",
       "speakers_other": "{{count}} konuşmacı",
@@ -2441,7 +2441,7 @@
   },
   "accessibility": {
     "permissionsRequired": "Erişilebilirlik izinleri gerekli",
-    "permissionsDescription": "REMA, transkribe edilen metni yazabilmek için erişilebilirlik izinlerine ihtiyaç duyar.",
+    "permissionsDescription": "RHEMA, transkribe edilen metni yazabilmek için erişilebilirlik izinlerine ihtiyaç duyar.",
     "openSettings": "Sistem Ayarlarını Aç",
     "dismiss": "Yoksay"
   },
@@ -2470,7 +2470,7 @@
   },
   "appLanguage": {
     "title": "Uygulama dili",
-    "description": "REMA arayüzünün dilini değiştirin"
+    "description": "RHEMA arayüzünün dilini değiştirin"
   },
   "overlay": {
     "preparing": "Mikrofon hazırlanıyor…",
@@ -2863,7 +2863,7 @@
       "performance": "Performans"
     },
     "about": {
-      "appName": "REMA",
+      "appName": "RHEMA",
       "version": "Sürüm {{version}}",
       "project": "Proje",
       "docs": "Belgeler",
@@ -2881,7 +2881,7 @@
     "subtitleTap": "Herhangi bir uygulamada kısayolunuza dokunun, konuşun ve yeniden dokunun. Sözleriniz imlecinizin olduğu yerde görünür.",
     "needsModel": {
       "title": "Dikte etmeye başlamak için bir konuşma modeli seçin.",
-      "description": "REMA'nun söylediklerinizi yazabilmesi için bir konuşmadan metne modeline ihtiyacı var.",
+      "description": "RHEMA'nun söylediklerinizi yazabilmesi için bir konuşmadan metne modeline ihtiyacı var.",
       "action": "Bir model seçin"
     },
     "stats": {
@@ -2957,8 +2957,8 @@
         "open": "Klavye ayarları"
       },
       "linux": {
-        "wayland": "Wayland'de masaüstünüz bu tuşları REMA'ya yalnızca pencerelerinden biri öndeyken iletir. Bunları her uygulamada kullanmak için sistem ayarlarında kısayol olarak ekleyin.",
-        "noAccess": "REMA Keys bu bilgisayarda klavyeyi okuyamıyor, bu yüzden bu kısayollar henüz bir şey yapmıyor.",
+        "wayland": "Wayland'de masaüstünüz bu tuşları RHEMA'ya yalnızca pencerelerinden biri öndeyken iletir. Bunları her uygulamada kullanmak için sistem ayarlarında kısayol olarak ekleyin.",
+        "noAccess": "RHEMA Keys bu bilgisayarda klavyeyi okuyamıyor, bu yüzden bu kısayollar henüz bir şey yapmıyor.",
         "setUp": "Kur",
         "where": {
           "gnome": "Ayarlar → Klavye → Kısayolları Görüntüle ve Özelleştir → Özel Kısayollar'ı açın, aşağıdaki her komut için bir tane ekleyin ve istediğiniz tuşlara basın.",
@@ -2966,7 +2966,7 @@
           "other": "Aşağıdaki her komut için masaüstünüzün klavye ayarlarına özel bir kısayol ya da compositor yapılandırmanıza bir bind satırı ekleyin."
         },
         "tapOnly": "Bu şekilde eklenen bir kısayol “Açıp kapatmak için dokun” gibi çalışır: başlatmak için bir kez, durdurmak için tekrar basın.",
-        "access": "Ya da REMA Keys'in klavyeyi okumasına izin verin. Bunu bir terminalde çalıştırın, ardından oturumu kapatıp yeniden açın:",
+        "access": "Ya da RHEMA Keys'in klavyeyi okumasına izin verin. Bunu bir terminalde çalıştırın, ardından oturumu kapatıp yeniden açın:",
         "copy": "Kopyala",
         "copied": "Kopyalandı"
       }
@@ -2996,7 +2996,7 @@
     }
   },
   "speechUpdate": {
-    "title": "{{model}}, REMA'nun artık içermediği eski bir motor kullanıyordu.",
+    "title": "{{model}}, RHEMA'nun artık içermediği eski bir motor kullanıyordu.",
     "newVersion": "Yeni sürümü {{model}}.",
     "ready": "{{model}} indirildi ve hazır.",
     "noVersion": "Dikte etmeye devam etmek için başka bir model seçin.",
@@ -3005,12 +3005,12 @@
     "retry": "Tekrar dene",
     "chooseAnother": "Başka bir model seç",
     "progressLabel": "Yeni sürüm indiriliyor",
-    "dialogTitle": "REMA'nun yeni bir konuşma motoru var",
+    "dialogTitle": "RHEMA'nun yeni bir konuşma motoru var",
     "dialogBody": "Daha hızlı ve daha kararlı, bu yüzden daha az sorunla karşılaşacaksınız. {{model}} eski motorda çalışıyordu ve çalışmaya devam etmesi için yeni sürümüne ihtiyacı var.",
     "later": "Daha sonra"
   },
   "modelsHub": {
-    "description": "REMA'daki her işi sizin seçtiğiniz bir model yapar. Gizlilik için bu bilgisayarda, hız için bulutta çalıştırın.",
+    "description": "RHEMA'daki her işi sizin seçtiğiniz bir model yapar. Gizlilik için bu bilgisayarda, hız için bulutta çalıştırın.",
     "addLocal": "Model dosyası ekle",
     "privacyNote": "Bu bilgisayardaki modeller sesinizi veya metninizi hiçbir yere göndermez. Bulut modelleri, API anahtarınızı kullanarak bunları seçtiğiniz sağlayıcıya gönderir.",
     "inUse": "Kullanımda",
@@ -3170,12 +3170,12 @@
     "shortcutRow": "Kısayol"
   },
   "dictionary": {
-    "description": "REMA'ya kullandığınız adları ve terimleri öğretin, daha uzun metne dönüşen kısaltmalar tanımlayın.",
+    "description": "RHEMA'ya kullandığınız adları ve terimleri öğretin, daha uzun metne dönüşen kısaltmalar tanımlayın.",
     "words": {
       "title": "Kelimeleriniz",
-      "description": "REMA'nun her zaman doğru yazması gereken adlar, jargon ve yazımlar.",
+      "description": "RHEMA'nun her zaman doğru yazması gereken adlar, jargon ve yazımlar.",
       "placeholder": "Bir ad, terim veya yazım ekleyin…",
-      "empty": "Burada henüz bir şey yok. REMA'nun sürekli yanlış yazdığı kelimeleri ekleyin."
+      "empty": "Burada henüz bir şey yok. RHEMA'nun sürekli yanlış yazdığı kelimeleri ekleyin."
     },
     "replacements": {
       "title": "Değiştirmeler",
@@ -3184,7 +3184,7 @@
     "addWord": "Kelime ekle"
   },
   "commandsPage": {
-    "description": "Ne yapılmasını istediğinizi söyleyin, REMA bu bilgisayarda yapsın: bir site açmak, şarkı çalmak, uygulama değiştirmek, e-posta yazmak.",
+    "description": "Ne yapılmasını istediğinizi söyleyin, RHEMA bu bilgisayarda yapsın: bir site açmak, şarkı çalmak, uygulama değiştirmek, e-posta yazmak.",
     "enable": "Sesli komutlar",
     "offNotice": "Sesli komutlar kapalı. Kısayollarının bir işe yaraması için açın; söyledikleriniz o zaman komutları çalıştıran modele gider.",
     "shortcut": {
@@ -3568,16 +3568,16 @@
   },
   "freeCredit": {
     "title": "Ücretsiz kredi",
-    "explain": "Her REMA hesabı, konuşmayı metne dönüştürme, yapay zekâ düzeltmesi, asistan, sesli komutlar ve sesli yanıtlar arasında paylaşılan {{amount}} yapay zekâ kullanımı içerir. API anahtarı gerekmez.",
+    "explain": "Her RHEMA hesabı, konuşmayı metne dönüştürme, yapay zekâ düzeltmesi, asistan, sesli komutlar ve sesli yanıtlar arasında paylaşılan {{amount}} yapay zekâ kullanımı içerir. API anahtarı gerekmez.",
     "balance": "Ücretsiz kredi: {{limit}} kredinin {{remaining}} kadarı kaldı",
     "checking": "Ücretsiz krediniz kontrol ediliyor…",
-    "option": "REMA free kullan ({{amount}} dahil)",
-    "use": "REMA free kullan",
+    "option": "RHEMA free kullan ({{amount}} dahil)",
+    "use": "RHEMA free kullan",
     "inUse": "Kullanımda",
     "exhausted": "Ücretsiz krediniz bitti. Bulut özelliklerini kullanmaya devam etmek için kendi API anahtarınızı ekleyin.",
-    "disabled": "REMA free şu anda kullanılamıyor. Bulut özelliklerini kullanmaya devam etmek için kendi API anahtarınızı ekleyin.",
+    "disabled": "RHEMA free şu anda kullanılamıyor. Bulut özelliklerini kullanmaya devam etmek için kendi API anahtarınızı ekleyin.",
     "addKey": "Kendi anahtarını ekle",
-    "failed": "REMA free'ye geçilemedi.",
+    "failed": "RHEMA free'ye geçilemedi.",
     "setupHint": "Oturum açtınız; hiçbir şey indirmeden ücretsiz kredinizle bulutta yazıya dökebilirsiniz.",
     "jobs": {
       "stt": "Konuşmadan metne",
@@ -3638,7 +3638,7 @@
     "or": "veya",
     "changeOther": "{{name}} kısayolunun diğer tuşlarını değiştir",
     "pressKeysOrButton": "Tuşlara veya bir fare düğmesine basın…",
-    "mouseNeedsKeysEngine": "Fare düğmeleri REMA Keys klavye altyapısını gerektirir (Ayarlar → Gelişmiş → Deneysel).",
+    "mouseNeedsKeysEngine": "Fare düğmeleri RHEMA Keys klavye altyapısını gerektirir (Ayarlar → Gelişmiş → Deneysel).",
     "mouse": {
       "middle": "Orta fare düğmesi",
       "back": "Fare Geri düğmesi",
@@ -3717,7 +3717,7 @@
     }
   },
   "insights": {
-    "about": "REMA'yu nasıl kullandığınız, bu bilgisayarda sayılır.",
+    "about": "RHEMA'yu nasıl kullandığınız, bu bilgisayarda sayılır.",
     "nothingYet": "Dikte ettiğinizde, asistana sorduğunuzda ya da bir toplantı kaydettiğinizde istatistikleriniz görünür.",
     "goHome": "Kısayolları göster",
     "figures": {
@@ -3777,7 +3777,7 @@
     },
     "share": {
       "button": "Paylaş",
-      "nothingYet": "REMA'yu kullanmaya başladığınızda paylaşacak bir şeyiniz olur.",
+      "nothingYet": "RHEMA'yu kullanmaya başladığınızda paylaşacak bir şeyiniz olur.",
       "title": "İstatistiklerinizi paylaşın",
       "private": "Bu bilgisayarda oluşturulur. Hiçbir şey yüklenmez.",
       "size": "Boyut",
@@ -3808,13 +3808,13 @@
       "openSite": "{{site}}’ı aç",
       "openFailed": "{{site}} açılamadı",
       "more": "Diğer uygulamalar",
-      "sheetTitle": "REMA istatistiklerim",
+      "sheetTitle": "RHEMA istatistiklerim",
       "shareFailed": "Paylaşım penceresi açılamadı",
       "drawFailed": "Kartlar çizilemedi. Bunu kapatıp tekrar deneyin.",
       "tagline": "Ücretsiz · Açık kaynak · Çevrimdışı çalışır",
       "cards": {
         "highlights": {
-          "title": "REMA özetim",
+          "title": "RHEMA özetim",
           "words_one": "konuşulan kelime",
           "words_other": "konuşulan kelime",
           "streak_one": "günlük seri",
@@ -3877,12 +3877,12 @@
         }
       },
       "post": {
-        "dictation_one": "REMA sayesinde {{formatted}} kelimeyi bilgisayarıma yazmak yerine söyledim.",
-        "dictation_other": "REMA sayesinde {{formatted}} kelimeyi bilgisayarıma yazmak yerine söyledim.",
-        "asks_one": "Sekme değiştirmeden REMA'nun asistanına {{formatted}} soru sordum.",
-        "asks_other": "Sekme değiştirmeden REMA'nun asistanına {{formatted}} soru sordum.",
-        "meetings_one": "REMA {{formatted}} toplantımı kaydetti ve notlarını benim yerime yazdı.",
-        "meetings_other": "REMA {{formatted}} toplantımı kaydetti ve notlarını benim yerime yazdı."
+        "dictation_one": "RHEMA sayesinde {{formatted}} kelimeyi bilgisayarıma yazmak yerine söyledim.",
+        "dictation_other": "RHEMA sayesinde {{formatted}} kelimeyi bilgisayarıma yazmak yerine söyledim.",
+        "asks_one": "Sekme değiştirmeden RHEMA'nun asistanına {{formatted}} soru sordum.",
+        "asks_other": "Sekme değiştirmeden RHEMA'nun asistanına {{formatted}} soru sordum.",
+        "meetings_one": "RHEMA {{formatted}} toplantımı kaydetti ve notlarını benim yerime yazdı.",
+        "meetings_other": "RHEMA {{formatted}} toplantımı kaydetti ve notlarını benim yerime yazdı."
       }
     }
   },
@@ -3890,11 +3890,11 @@
     "restored": "Ayarlarınız bozulmuştu ve bir yedekten geri yüklendi.",
     "restoredDescription": "Son değişiklikler eksik olabilir.",
     "unrecoverableTitle": "Ayarlarınız kurtarılamadı",
-    "unrecoverableDescription": "REMA varsayılan ayarlarla başlatıldı. Bozuk dosya {{file}} adıyla saklandı.",
+    "unrecoverableDescription": "RHEMA varsayılan ayarlarla başlatıldı. Bozuk dosya {{file}} adıyla saklandı.",
     "notSavingTitle": "Ayar değişiklikleri kaydedilmeyecek",
-    "notSavingDescription": "Ayar dosyası okunamadığı için olduğu gibi bırakıldı. Tekrar denemek için REMA'yu yeniden başlatın.",
+    "notSavingDescription": "Ayar dosyası okunamadığı için olduğu gibi bırakıldı. Tekrar denemek için RHEMA'yu yeniden başlatın.",
     "saveFailingTitle": "Ayarlar kaydedilmiyor",
-    "saveFailingDescription": "Son değişiklikleriniz henüz kaydedilmedi. REMA denemeye devam edecek.",
+    "saveFailingDescription": "Son değişiklikleriniz henüz kaydedilmedi. RHEMA denemeye devam edecek.",
     "dismiss": "Kapat"
   },
   "commandMode": {

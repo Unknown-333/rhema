@@ -6,7 +6,7 @@ abstract final class CommandStrings {
 
   static String prompt(String name) => 'Tell $name what to do';
   static const promptDetail =
-      'Say it or type it. REMA opens apps, plays music, sends email and '
+      'Say it or type it. RHEMA opens apps, plays music, sends email and '
       'more.';
   static const examples = 'Try';
 
@@ -27,10 +27,10 @@ abstract final class CommandStrings {
   static const sendCommand = 'Send the command';
 
   static String offlineNote(String name) =>
-      '$name is offline. Open REMA on it to tell it what to do.';
-  static String updateTitle(String name) => 'Update REMA on $name';
+      '$name is offline. Open RHEMA on it to tell it what to do.';
+  static String updateTitle(String name) => 'Update RHEMA on $name';
   static String updateNote(String name) =>
-      'Update REMA on $name to tell it what to do from your phone.';
+      'Update RHEMA on $name to tell it what to do from your phone.';
 
   static String transcribing(String name) => 'Transcribing on $name…';
   static String working(String name) => '$name is on it…';
@@ -51,8 +51,8 @@ abstract final class CommandStrings {
 
   /// Shown only when the computer gave no reason of its own.
   static const needsComputerUseBody =
-      'That needs REMA to work the screen itself. Turn on "Control the '
-      'screen when needed" in REMA on the computer (Commands page).';
+      'That needs RHEMA to work the screen itself. Turn on "Control the '
+      'screen when needed" in RHEMA on the computer (Commands page).';
   static const doIt = 'Do it';
   static const answerHint = 'Or type an answer';
   static const answer = 'Answer';
@@ -70,10 +70,10 @@ abstract final class CommandStrings {
   /// [DictateStrings.error].
   static String error(String code, String name) => switch (code) {
     'command_mode_off' =>
-      'Turn on Voice commands in REMA on $name (Commands page).',
-    'not_configured' => 'REMA on $name has no AI model set up for commands.',
+      'Turn on Voice commands in RHEMA on $name (Commands page).',
+    'not_configured' => 'RHEMA on $name has no AI model set up for commands.',
     'unsupported' =>
-      'Update REMA on $name to tell it what to do from your phone.',
+      'Update RHEMA on $name to tell it what to do from your phone.',
     'busy' =>
       '$name is busy with another command or request. Try again in a moment.',
     'timeout' =>

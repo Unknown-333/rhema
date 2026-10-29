@@ -285,7 +285,7 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final suggestions = _Suggestions(onAsk: onAsk);
     final greeting = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -293,7 +293,7 @@ class _Empty extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (heading) ...[
-            const RemaOrb(size: 100),
+            const RhemaOrb(size: 100),
             const SizedBox(height: Space.s40),
           ],
           Semantics(
@@ -303,7 +303,7 @@ class _Empty extends StatelessWidget {
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: RemaType.display.copyWith(color: t.ink),
+              style: RhemaType.display.copyWith(color: t.ink),
             ),
           ),
           const SizedBox(height: Space.s8),
@@ -312,7 +312,7 @@ class _Empty extends StatelessWidget {
             child: Text(
               AssistantStrings.greetingDetail(name),
               textAlign: TextAlign.center,
-              style: RemaType.rowBody.copyWith(color: t.muted),
+              style: RhemaType.rowBody.copyWith(color: t.muted),
             ),
           ),
         ],
@@ -379,7 +379,7 @@ class _Suggestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final scale = MediaQuery.textScalerOf(context).scale(1);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -389,7 +389,7 @@ class _Suggestions extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, Space.s8),
           child: Text(
             AssistantStrings.examples,
-            style: RemaType.label.copyWith(color: t.muted),
+            style: RhemaType.label.copyWith(color: t.muted),
           ),
         ),
         SizedBox(
@@ -437,7 +437,7 @@ class _SuggestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = onTap != null;
     return Semantics(
       button: true,
@@ -490,14 +490,14 @@ class _SuggestionCard extends StatelessWidget {
                         title,
                         maxLines: titleLines,
                         overflow: TextOverflow.ellipsis,
-                        style: RemaType.rowTitle.copyWith(color: t.ink),
+                        style: RhemaType.rowTitle.copyWith(color: t.ink),
                       ),
                       const SizedBox(height: Space.s2),
                       Text(
                         detail,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: RemaType.footnote.copyWith(color: t.muted),
+                        style: RhemaType.footnote.copyWith(color: t.muted),
                       ),
                     ],
                   ),
@@ -519,7 +519,7 @@ class _LatestButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Semantics(
       button: true,
       label: AssistantStrings.scrollToLatest,

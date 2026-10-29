@@ -1,8 +1,8 @@
 {
-  "product": "REMA",
+  "product": "RHEMA",
   "status": "pre-release",
-  "applicationId": "com.rema.desktop",
-  "mobileApplicationId": "com.rema.mobile",
+  "applicationId": "com.rhema.desktop",
+  "mobileApplicationId": "com.rhema.mobile",
   "mark": "brand/svg/mark.svg",
   "colors": {
     "tile": "#000000",

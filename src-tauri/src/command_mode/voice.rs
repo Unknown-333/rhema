@@ -259,7 +259,7 @@ pub async fn confirm_from_card(app: &AppHandle, seq: u32, accept: bool) {
         debug!("Ignoring a confirmation for command card {seq}: it is not waiting");
         return;
     };
-    // On macOS a click on the card made REMA the active app; the send's key
+    // On macOS a click on the card made RHEMA the active app; the send's key
     // press belongs to the user's window.
     crate::account::approval::hand_back_focus(app).await;
     let result = super::confirm_command(app, report.id, accept).await;

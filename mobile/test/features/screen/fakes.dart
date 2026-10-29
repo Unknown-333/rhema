@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/core/session_store.dart';
-import 'package:rema_mobile/src/features/screen/live_protocol.dart';
-import 'package:rema_mobile/src/features/screen/rtc_link.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/core/session_store.dart';
+import 'package:rhema_mobile/src/features/screen/live_protocol.dart';
+import 'package:rhema_mobile/src/features/screen/rtc_link.dart';
 
 import '../../helpers.dart';
 

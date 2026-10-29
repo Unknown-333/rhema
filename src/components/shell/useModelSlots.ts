@@ -27,7 +27,7 @@ import {
   FREE_CHAT_MODEL,
   FREE_PROVIDER_ID,
   FREE_PROVIDER_LABEL,
-  isRemaFree,
+  isRhemaFree,
 } from "@/lib/freeCredit";
 import type { ModelSlot } from "./navigation";
 import { useSlotDataStore } from "./slotData";
@@ -80,7 +80,7 @@ const KEYLESS_LLM_PROVIDERS = new Set([
   "local",
   "custom",
   "apple_intelligence",
-  "rema_free",
+  "rhema_free",
 ]);
 
 const findLocal = (models: ModelInfo[], id: string | null | undefined) =>
@@ -123,10 +123,10 @@ export const summarizeStt = (
       providerLabel: provider?.label ?? id,
       // A provider with one fixed model (Amazon Transcribe's "standard") is
       // named by the provider; the model id would tell the user nothing.
-      // One fixed model (Amazon Transcribe's "standard", REMA free's own)
+      // One fixed model (Amazon Transcribe's "standard", RHEMA free's own)
       // is named by the provider.
       modelLabel:
-        cloudSttFixedModel(provider) || isRemaFree(id)
+        cloudSttFixedModel(provider) || isRhemaFree(id)
           ? (provider?.label ?? null)
           : prettyModelName(model) || null,
       modelId: model || null,
@@ -196,7 +196,7 @@ const summarizeLlm = (
     providerLabel: isDevice ? null : llmProviderLabel(settings, providerId),
     modelLabel: local
       ? localModelLabel(local, t)
-      : isRemaFree(providerId)
+      : isRhemaFree(providerId)
         ? FREE_PROVIDER_LABEL
         : prettyModelName(modelId) || null,
     modelId: modelId.trim() || null,
@@ -220,7 +220,7 @@ export const summarizeAssistant = (
   settings: AppSettings | null,
   models: ModelInfo[],
   t: TFunction,
-  /** Rust runs the assistant on REMA free (its choice cannot run). */
+  /** Rust runs the assistant on RHEMA free (its choice cannot run). */
   onFreeCredit = false,
 ): SlotSummary => {
   const providerId = onFreeCredit
@@ -309,7 +309,7 @@ export const summarizeVoice = (
     where: onThisComputer ? "device" : "cloud",
     providerId: engine,
     providerKind: "tts",
-    providerLabel: isRemaFree(engine)
+    providerLabel: isRhemaFree(engine)
       ? FREE_PROVIDER_LABEL
       : t(`settings.assistant.tts.engines.${engine}`, {
           defaultValue: engine,
@@ -317,7 +317,7 @@ export const summarizeVoice = (
     modelLabel:
       engine === "kokoro"
         ? t("modelsHub.voice.kokoroModel")
-        : isRemaFree(engine)
+        : isRhemaFree(engine)
           ? FREE_PROVIDER_LABEL
           : pack
             ? getTranslatedModelName(pack, t)
@@ -348,7 +348,7 @@ export const useModelSlots = (): Record<ModelSlot, SlotSummary> => {
   const serving = useFreeCredit().status?.serving;
 
   return useMemo(() => {
-    // A job Rust runs on REMA free because the user's own choice cannot
+    // A job Rust runs on RHEMA free because the user's own choice cannot
     // run is shown as what it really is.
     const sttSettings =
       settings && serving?.stt

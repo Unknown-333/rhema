@@ -18,7 +18,7 @@ use specta::Type;
 
 /// User-Agent sent with Hub API requests (the Hub asks clients to identify
 /// themselves; anonymous requests are otherwise rate-limited more aggressively).
-const USER_AGENT: &str = "rema";
+const USER_AGENT: &str = "rhema";
 
 /// A single repo returned by a Hub model search.
 #[derive(Debug, Clone, Serialize, Type)]

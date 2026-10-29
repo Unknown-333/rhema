@@ -81,7 +81,7 @@ export function metaValues(report: CommandReport): Record<string, string> {
 
 /**
  * How long "Run after N seconds" waits before a typed command runs. The
- * Debug box is in REMA's own window, and typing and key presses go to
+ * Debug box is in RHEMA's own window, and typing and key presses go to
  * whatever window is in front when the tool runs, so the wait is the time the
  * user has to click into the app the command is for.
  */

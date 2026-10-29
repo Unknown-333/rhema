@@ -1,4 +1,4 @@
-# NixOS module for REMA voice assistant
+# NixOS module for RHEMA voice assistant
 #
 # Handles system-level configuration that the package wrapper cannot:
 #   - udev rule for /dev/uinput (rdev grab() needs it for virtual input)
@@ -7,12 +7,12 @@
 #
 # Usage in your flake:
 #
-#   inputs.rema.url = "github:OWNER/rema";
+#   inputs.rhema.url = "github:Unknown-333/rhema";
 #
 #   nixosConfigurations.myhost = nixpkgs.lib.nixosSystem {
 #     modules = [
-#       rema.nixosModules.default
-#       { programs.rema.enable = true; }
+#       rhema.nixosModules.default
+#       { programs.rhema.enable = true; }
 #     ];
 #   };
 {
@@ -22,16 +22,16 @@
   ...
 }:
 let
-  cfg = config.programs.rema;
+  cfg = config.programs.rhema;
 in
 {
-  options.programs.rema = {
-    enable = lib.mkEnableOption "REMA offline voice assistant";
+  options.programs.rhema = {
+    enable = lib.mkEnableOption "RHEMA offline voice assistant";
 
     package = lib.mkOption {
       type = lib.types.package;
-      defaultText = lib.literalExpression "rema.packages.\${system}.rema";
-      description = "The REMA package to use.";
+      defaultText = lib.literalExpression "rhema.packages.\${system}.rhema";
+      description = "The RHEMA package to use.";
     };
   };
 

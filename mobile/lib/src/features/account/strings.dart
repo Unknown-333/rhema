@@ -3,7 +3,7 @@ abstract final class AccountStrings {
   static const devices = 'Devices';
   static const connecting = 'Connecting to the server…';
   static const thisPhone = 'This phone';
-  static const serverNote = 'Found automatically. REMA keeps it up to date.';
+  static const serverNote = 'Found automatically. RHEMA keeps it up to date.';
   static const licences = 'Licences';
   static String version(String version) => 'Version $version';
   static const online = 'Online';
@@ -16,12 +16,12 @@ abstract final class AccountStrings {
   static String removeTooltip(String name) => 'Remove $name';
   static String removeTitle(String name) => 'Remove $name?';
   static const removeBody =
-      'It will be signed out of REMA. To use it with this phone again, '
+      'It will be signed out of RHEMA. To use it with this phone again, '
       'sign in on it.';
   static const sendFeedback = 'Send feedback';
   static const deleteTitle = 'Delete your account?';
   static const deleteBody =
-      'This permanently deletes your REMA account and signs out every '
+      'This permanently deletes your RHEMA account and signs out every '
       "device, including this phone. It can't be undone.";
 
   static String lastSeen(DateTime at, DateTime now) =>
@@ -49,9 +49,9 @@ abstract final class FeedbackStrings {
   static const title = 'Send feedback';
   static const intro =
       'A bug, an idea or a question: say it however it comes out. '
-      'It goes straight to the person who makes REMA.';
+      'It goes straight to the person who makes RHEMA.';
   static const message = 'Message';
-  static const messageHint = 'What happened, or what would make REMA better?';
+  static const messageHint = 'What happened, or what would make RHEMA better?';
   static const messageShort =
       "Write a few words so there's something to go on.";
   static const messageLong = "That's longer than 5,000 characters.";

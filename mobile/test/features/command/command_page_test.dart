@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/design/components.dart';
-import 'package:rema_mobile/src/features/command/command_controller.dart';
+import 'package:rhema_mobile/src/design/components.dart';
+import 'package:rhema_mobile/src/features/command/command_controller.dart';
 
 import '../../app_test.dart'
     show enabled, finish, goTo, mic, progress, pumpApp, tabs;
@@ -254,8 +254,8 @@ void main() {
     });
     expect(
       find.text(
-        'That needs REMA to work the screen itself. Turn on "Control the '
-        'screen when needed" in REMA on the computer (Commands page).',
+        'That needs RHEMA to work the screen itself. Turn on "Control the '
+        'screen when needed" in RHEMA on the computer (Commands page).',
       ),
       findsOne,
     );
@@ -273,7 +273,7 @@ void main() {
     });
     expect(
       find.text(
-        'Turn on Voice commands in REMA on ALEX-PC (Commands page).',
+        'Turn on Voice commands in RHEMA on ALEX-PC (Commands page).',
       ),
       findsOneWidget,
     );
@@ -286,7 +286,7 @@ void main() {
       'error': 'not_configured',
     });
     expect(
-      find.text('REMA on ALEX-PC has no AI model set up for commands.'),
+      find.text('RHEMA on ALEX-PC has no AI model set up for commands.'),
       findsOneWidget,
     );
     await finish(tester, relay);
@@ -326,7 +326,7 @@ void main() {
 
   testWidgets('a spoken command sends the recording', (tester) async {
     final file = File(
-      '${Directory.systemTemp.createTempSync('rema-test').path}/c.wav',
+      '${Directory.systemTemp.createTempSync('rhema-test').path}/c.wav',
     )..writeAsBytesSync(List.filled(44, 7));
     final (server, relay) = await pumpApp(
       tester,
@@ -384,7 +384,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     expect(
       find.text(
-        'Update REMA on OLD-PC to tell it what to do from your phone.',
+        'Update RHEMA on OLD-PC to tell it what to do from your phone.',
       ),
       findsOneWidget,
     );

@@ -60,7 +60,7 @@ const BalanceLine: React.FC<{ view: FreeCreditView }> = ({ view }) => {
   );
 };
 
-/** Points one job at REMA free and refreshes the settings it changed. */
+/** Points one job at RHEMA free and refreshes the settings it changed. */
 const useChooseFree = () => {
   const { t } = useTranslation();
   const { refreshSettings } = useSettings();
@@ -171,7 +171,7 @@ export const FreeCreditGroup: React.FC = () => {
 };
 
 /**
- * Models, on one job's tab: the balance, "Use REMA free ($1 included)"
+ * Models, on one job's tab: the balance, "Use RHEMA free ($1 included)"
  * while that job runs on something else, and what to do once it is spent.
  * Shows nothing to someone who is signed out.
  */

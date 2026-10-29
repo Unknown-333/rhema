@@ -71,11 +71,11 @@ class KeyPad extends StatelessWidget {
     ];
   }
 
-  Future<void> _openMore(BuildContext context) => showRemaSheet<void>(
+  Future<void> _openMore(BuildContext context) => showRhemaSheet<void>(
     context,
     title: DictateStrings.moreKeys,
     builder: (sheet) {
-      final t = sheet.rema;
+      final t = sheet.rhema;
       return SingleChildScrollView(
         child: SheetRows(
           dividerInset: 16,
@@ -86,7 +86,7 @@ class KeyPad extends StatelessWidget {
                 semanticLabel: label,
                 trailing: Text(
                   keys,
-                  style: RemaType.mono.copyWith(color: t.muted),
+                  style: RhemaType.mono.copyWith(color: t.muted),
                 ),
                 onTap: () {
                   Navigator.pop(sheet);
@@ -251,7 +251,7 @@ class _KeyCapState extends State<KeyCap> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = widget.onPressed != null;
     final fg = widget.primary ? t.canvas : t.ink;
     final bg = widget.primary
@@ -270,7 +270,7 @@ class _KeyCapState extends State<KeyCap> {
           if (widget.text case final text?)
             Text(
               text,
-              style: RemaType.label.copyWith(
+              style: RhemaType.label.copyWith(
                 color: fg,
                 fontWeight: FontWeight.w600,
               ),

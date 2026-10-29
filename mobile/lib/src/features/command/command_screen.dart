@@ -357,7 +357,7 @@ class _Examples extends StatelessWidget {
           itemBuilder: (context, i) {
             final example = CommandStrings.exampleCommands[i];
             return Center(
-              child: RemaChip(
+              child: RhemaChip(
                 label: example,
                 icon: _exampleIcons[i % _exampleIcons.length],
                 onPressed: () => onTap(example),
@@ -395,7 +395,7 @@ class _ResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final result = outcome.result;
     final error = outcome.error;
 
@@ -475,7 +475,7 @@ class _ResultCard extends StatelessWidget {
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: RemaType.label.copyWith(
+                      style: RhemaType.label.copyWith(
                         color: color,
                         fontWeight: FontWeight.w600,
                       ),
@@ -492,7 +492,7 @@ class _ResultCard extends StatelessWidget {
           ],
           if (message case final message?) ...[
             const SizedBox(height: Space.s4),
-            Text(message, style: RemaType.rowBody.copyWith(color: t.ink)),
+            Text(message, style: RhemaType.rowBody.copyWith(color: t.ink)),
           ],
           if (error == null && result != null && result.confirmable) ...[
             if (result.pending case final pending?) ...[
@@ -510,7 +510,7 @@ class _ResultCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         pending,
-                        style: RemaType.rowTitle.copyWith(color: t.ink),
+                        style: RhemaType.rowTitle.copyWith(color: t.ink),
                       ),
                     ),
                   ],
@@ -542,7 +542,7 @@ class _ResultCard extends StatelessWidget {
           if (error == null && result != null && result.answerable) ...[
             if (result.question case final question?) ...[
               const SizedBox(height: Space.s12),
-              Text(question, style: RemaType.rowTitle.copyWith(color: t.ink)),
+              Text(question, style: RhemaType.rowTitle.copyWith(color: t.ink)),
             ],
             if (result.choices.isNotEmpty) ...[
               const SizedBox(height: Space.s8),
@@ -550,7 +550,7 @@ class _ResultCard extends StatelessWidget {
                 spacing: Space.s8,
                 children: [
                   for (final choice in result.choices)
-                    RemaChip(
+                    RhemaChip(
                       label: choice,
                       onPressed: enabled ? () => onAnswer(choice) : null,
                     ),
@@ -623,7 +623,7 @@ class _SaidState extends State<_Said> {
       CommandStrings.said(widget.said),
       maxLines: _open ? null : 1,
       overflow: _open ? null : TextOverflow.ellipsis,
-      style: RemaType.footnote.copyWith(color: context.rema.muted),
+      style: RhemaType.footnote.copyWith(color: context.rhema.muted),
     ),
   );
 }
@@ -642,7 +642,7 @@ class _AnswerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Container(
       constraints: const BoxConstraints(minHeight: 44),
       decoration: BoxDecoration(
@@ -660,10 +660,10 @@ class _AnswerField extends StatelessWidget {
               onSubmitted: onAnswer,
               onTapOutside: (_) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
-              style: RemaType.body.copyWith(color: t.ink),
+              style: RhemaType.body.copyWith(color: t.ink),
               decoration: InputDecoration(
                 hintText: CommandStrings.answerHint,
-                hintStyle: RemaType.body.copyWith(color: t.muted),
+                hintStyle: RhemaType.body.copyWith(color: t.muted),
                 filled: false,
                 isDense: true,
                 border: InputBorder.none,
@@ -701,7 +701,7 @@ class _RecentRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final (IconData icon, Color color, Color wash) = switch (item.status) {
       CommandStatus.done => (AppIcons.check, t.success, t.successSoft),
       CommandStatus.failed => (AppIcons.close, t.danger, t.dangerSoft),
@@ -746,18 +746,18 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        RemaOrb(size: compact ? 56 : 80),
+        RhemaOrb(size: compact ? 56 : 80),
         SizedBox(height: compact ? Space.s24 : Space.s32),
         Semantics(
           header: true,
           child: Text(
             CommandStrings.prompt(name),
             textAlign: TextAlign.center,
-            style: RemaType.title1.copyWith(color: t.ink),
+            style: RhemaType.title1.copyWith(color: t.ink),
           ),
         ),
         const SizedBox(height: Space.s8),
@@ -766,7 +766,7 @@ class _Hero extends StatelessWidget {
           child: Text(
             CommandStrings.promptDetail,
             textAlign: TextAlign.center,
-            style: RemaType.rowBody.copyWith(color: t.muted),
+            style: RhemaType.rowBody.copyWith(color: t.muted),
           ),
         ),
       ],

@@ -402,7 +402,7 @@ fn file_score(query: &str, path: &Path) -> f64 {
         .fold(echoed, f64::max);
     // Below a whole-word match the score is a spelling likeness of the whole
     // string, and a long request that shares one word with a short name
-    // ("REMA demo project report" against "rema-orig") reads as close:
+    // ("RHEMA demo project report" against "rhema-orig") reads as close:
     // the shared start alone lifts it. So it is scaled by how many of the
     // request's words the name actually holds; a typo still counts as held.
     if best >= 0.95 {
@@ -730,24 +730,24 @@ mod tests {
     }
 
     /// A name that shares only its first word with a long request does not
-    /// beat the file the request spells out (a weak "rema" match once sent
+    /// beat the file the request spells out (a weak "rhema" match once sent
     /// the wrong attachment).
     #[test]
     fn one_shared_word_does_not_beat_the_named_file() {
         let home = tempfile::tempdir().unwrap();
-        let report = touch(home.path(), "Documents/REMA Demo Project Report.pdf");
-        touch(home.path(), "Desktop/video/rema-orig.txt");
+        let report = touch(home.path(), "Documents/RHEMA Demo Project Report.pdf");
+        touch(home.path(), "Desktop/video/rhema-orig.txt");
         let (_, actions) = run(
             vec![],
             vec![home.path().into()],
-            json!({"name": "the REMA demo project report"}),
+            json!({"name": "the RHEMA demo project report"}),
         );
         assert_eq!(actions, opened(&report));
-        let candidate = |p: &str| file_score("rema demo project report", Path::new(p));
-        assert!(candidate("x/rema-orig.txt") < DEFAULT_MIN_SCORE);
-        assert!(candidate("x/REMA Demo Project Report.pdf") >= 0.95);
+        let candidate = |p: &str| file_score("rhema demo project report", Path::new(p));
+        assert!(candidate("x/rhema-orig.txt") < DEFAULT_MIN_SCORE);
+        assert!(candidate("x/RHEMA Demo Project Report.pdf") >= 0.95);
         // A typo in one word still finds the file.
-        assert!(candidate("x/REMA Demo Projcet Report.pdf") >= DEFAULT_MIN_SCORE);
+        assert!(candidate("x/RHEMA Demo Projcet Report.pdf") >= DEFAULT_MIN_SCORE);
     }
 
     /// Two files of one name in different folders are a question whose

@@ -30,7 +30,7 @@
 //! sent once Gmail's chip says "Attachment: <file>": a draft whose file did
 //! not attach is never sent, and [`send`] checks the chip again before it
 //! presses Send. "Me" is the user's own address (`command_own_email`, filled
-//! from the signed-in REMA account), asked for once when unknown and then
+//! from the signed-in RHEMA account), asked for once when unknown and then
 //! remembered (`remember_as_mine`, [`address_to_remember`]).
 //!
 //! Recipients are spoken names, so they go through the contact book, and the
@@ -71,11 +71,11 @@ const TRUNCATION_MARK: &str = " …";
 const FOCUS_SETTLE: Duration = Duration::from_millis(400);
 
 /// Whether the waits below run at their real length: always outside tests,
-/// and in a live test (`REMA_LIVE_RUN`), where a real browser has to come
+/// and in a live test (`RHEMA_LIVE_RUN`), where a real browser has to come
 /// up. Unit tests use a sliver of each, since most never put a Gmail window
 /// in front.
 fn real_waits() -> bool {
-    !cfg!(test) || std::env::var_os("REMA_LIVE_RUN").is_some()
+    !cfg!(test) || std::env::var_os("RHEMA_LIVE_RUN").is_some()
 }
 
 /// How long [`run`] watches for the draft to come forward after opening the

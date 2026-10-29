@@ -290,9 +290,9 @@ fn track(
     let track = TrackLocalStaticSample::new(
         started,
         MediaStreamTrack::new(
-            "rema-live-view".to_owned(),
-            format!("rema-{kind}"),
-            format!("rema-{kind}"),
+            "rhema-live-view".to_owned(),
+            format!("rhema-{kind}"),
+            format!("rhema-{kind}"),
             kind,
             vec![RTCRtpEncodingParameters {
                 rtp_coding_parameters: RTCRtpCodingParameters {

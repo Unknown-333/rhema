@@ -35,7 +35,7 @@ const Figure: React.FC<{
 );
 
 /**
- * The top of Home, in one card: whether REMA can listen right now and with
+ * The top of Home, in one card: whether RHEMA can listen right now and with
  * which model, the keys that start a dictation, and a voice line that
  * breathes while the speech model is ready (flat and grey when it is not).
  * Along its foot, three numbers that open Insights. The first thing on the

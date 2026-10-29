@@ -25,12 +25,12 @@ import { SseMeter, wavSeconds } from "./metering";
  */
 
 export const MODEL_IDS = {
-  chat: "rema-free-chat",
-  transcribe: "rema-free-transcribe",
-  speech: "rema-free-speech",
+  chat: "rhema-free-chat",
+  transcribe: "rhema-free-transcribe",
+  speech: "rhema-free-speech",
 } as const;
 
-export const CREDIT_HEADER = "x-rema-credit-remaining";
+export const CREDIT_HEADER = "x-rhema-credit-remaining";
 export const CHAT_MAX_BYTES = 4 * 1024 * 1024;
 export const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
 export const SPEECH_MAX_CHARS = 4096;
@@ -137,7 +137,7 @@ export class Free {
     return new ApiError(
       402,
       "credit_exhausted",
-      `Your free $${this.config.limitUsd} is used up. Add your own API key in REMA to keep going.`,
+      `Your free $${this.config.limitUsd} is used up. Add your own API key in RHEMA to keep going.`,
       this.remainingHeader(subject),
     );
   }
@@ -214,7 +214,7 @@ export class Free {
         id,
         object: "model",
         created: 0,
-        owned_by: "rema",
+        owned_by: "rhema",
       })),
     });
   }

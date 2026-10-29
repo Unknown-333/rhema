@@ -91,14 +91,14 @@ export function looksLikeEmail(email: string): boolean {
 
 /** One line for the "Include app version and system" checkbox. */
 export const describeSystem = (info: FeedbackSystemInfo) =>
-  `REMA ${info.app_version} · ${info.os} · ${info.arch} · ${info.install}`;
+  `RHEMA ${info.app_version} · ${info.os} · ${info.arch} · ${info.install}`;
 
 // ── Draft ────────────────────────────────────────────────────────────────
 // Closing the dialog, a failed send, or an app restart must not throw away a
 // bug report someone took the time to write.
 
-const DRAFT_KEY = "rema.feedback.draft";
-const EMAIL_KEY = "rema.feedback.email";
+const DRAFT_KEY = "rhema.feedback.draft";
+const EMAIL_KEY = "rhema.feedback.email";
 
 export interface FeedbackDraft {
   kind: FeedbackKind;

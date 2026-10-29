@@ -68,7 +68,7 @@ fn build_custom_word_match_keys(word: &str, word_index: usize) -> Vec<CustomWord
 /// shares a character with a custom word. Those keys are skipped here (the
 /// custom word still reaches models that take a native decode prompt).
 ///
-/// Upstream Handy limits this to ASCII. REMA keeps other space-separated
+/// Upstream Handy limits this to ASCII. RHEMA keeps other space-separated
 /// scripts (Devanagari, Cyrillic, accented Latin, Hangul…) because a Nepali or
 /// Russian name is exactly the kind of word people add; lengths are measured in
 /// characters, not bytes, so those scripts are scored on the same scale as
@@ -1286,10 +1286,10 @@ mod tests {
             apply_custom_words("ask ChatGPT to do it", &words, 0.18),
             "ask ChatGPT to do it"
         );
-        let words = vec!["REMA".to_string()];
+        let words = vec!["RHEMA".to_string()];
         assert_eq!(
-            apply_custom_words("Tell REMA to stop", &words, 0.18),
-            "Tell REMA to stop"
+            apply_custom_words("Tell RHEMA to stop", &words, 0.18),
+            "Tell RHEMA to stop"
         );
     }
 
@@ -1308,7 +1308,7 @@ mod tests {
 
     #[test]
     fn test_apply_custom_words_devanagari_is_matched_by_characters() {
-        // Non-ASCII words stay eligible (REMA keeps them on), scored by
+        // Non-ASCII words stay eligible (RHEMA keeps them on), scored by
         // character count: one substitution in a six-character name is 1/6.
         let words = vec!["ईशानजी".to_string()];
         assert_eq!(

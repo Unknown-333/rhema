@@ -35,10 +35,10 @@
     "downloading": "Téléchargement… {{progress}} %",
     "downloadingUnknown": "Téléchargement…",
     "installing": "Installation…",
-    "reopening": "REMA se ferme pour installer la mise à jour et se rouvrira dans quelques secondes.",
+    "reopening": "RHEMA se ferme pour installer la mise à jour et se rouvrira dans quelques secondes.",
     "updatedTo": "Mis à jour vers la version {{version}}",
     "restart": "Redémarrer maintenant",
-    "readyToRestart": "La mise à jour est installée. Redémarrez REMA pour en profiter.",
+    "readyToRestart": "La mise à jour est installée. Redémarrez RHEMA pour en profiter.",
     "installFailed": "La mise à jour ne s'est pas installée. Vous pouvez réessayer, ou télécharger le programme d'installation et le lancer vous-même.",
     "downloadFailed": "Le téléchargement n'a pas abouti. Vérifiez votre connexion et réessayez.",
     "downloadInstaller": "Télécharger le programme d'installation",
@@ -49,13 +49,13 @@
     "showInFolder": "Afficher dans le dossier",
     "viewRelease": "Voir sur GitHub",
     "hint": {
-      "windows": "REMA se ferme, installe la mise à jour et se rouvre. Vous n'avez rien d'autre à faire.",
-      "macos": "REMA redémarre sur la nouvelle version. macOS peut ensuite vous redemander d'autoriser le microphone et l'accessibilité.",
-      "linux": "REMA redémarre sur la nouvelle version. Une installation .deb vous demande d'abord votre mot de passe."
+      "windows": "RHEMA se ferme, installe la mise à jour et se rouvre. Vous n'avez rien d'autre à faire.",
+      "macos": "RHEMA redémarre sur la nouvelle version. macOS peut ensuite vous redemander d'autoriser le microphone et l'accessibilité.",
+      "linux": "RHEMA redémarre sur la nouvelle version. Une installation .deb vous demande d'abord votre mot de passe."
     },
     "modes": {
       "portable": "Il s'agit de la version portable, qui ne peut pas se remplacer elle-même. Téléchargez la nouvelle version et copiez-y votre dossier Data.",
-      "packageManager": "REMA a été installé par votre gestionnaire de paquets : mettez-le à jour depuis celui-ci, par exemple avec yay -Syu rema-bin.",
+      "packageManager": "RHEMA a été installé par votre gestionnaire de paquets : mettez-le à jour depuis celui-ci, par exemple avec yay -Syu rhema-bin.",
       "download": "Cette copie ne peut pas se mettre à jour d'elle-même. Téléchargez le programme d'installation et lancez-le pour obtenir la nouvelle version."
     },
     "pill": {
@@ -70,7 +70,7 @@
   "feedback": {
     "button": "Envoyer un commentaire",
     "title": "Envoyer un commentaire",
-    "description": "Je lis chaque message moi-même, alors dites-le comme ça vient. Merci de m'aider à améliorer REMA.",
+    "description": "Je lis chaque message moi-même, alors dites-le comme ça vient. Merci de m'aider à améliorer RHEMA.",
     "kind": {
       "label": "Type de commentaire",
       "bug": "Bug",
@@ -79,7 +79,7 @@
     },
     "placeholder": {
       "bug": "Que s'est-il passé, et à quoi vous attendiez-vous ?",
-      "idea": "Qu'est-ce qui rendrait REMA plus utile pour vous ?",
+      "idea": "Qu'est-ce qui rendrait RHEMA plus utile pour vous ?",
       "question": "Que voulez-vous savoir ?"
     },
     "messageLabel": "Message",
@@ -114,7 +114,7 @@
       "too_many_screenshots": "Vous pouvez joindre jusqu'à 3 captures d'écran.",
       "too_large": "Les captures d'écran sont trop lourdes à envoyer. Retirez-en une et réessayez.",
       "invalid_screenshot": "L'une des captures n'est pas une image PNG, JPEG ou WebP. Retirez-la et réessayez.",
-      "no_server": "REMA ne trouve pas son serveur de commentaires pour le moment. Votre message est conservé ici, réessayez plus tard.",
+      "no_server": "RHEMA ne trouve pas son serveur de commentaires pour le moment. Votre message est conservé ici, réessayez plus tard.",
       "network": "Impossible de joindre le serveur de commentaires. Vérifiez votre connexion ; votre message est conservé ici.",
       "rate_limited": "Vous avez envoyé beaucoup de commentaires en peu de temps. Réessayez dans un moment.",
       "rejected": "Le commentaire n'a pas pu être accepté. Essayez de le raccourcir et renvoyez-le.",
@@ -168,10 +168,10 @@
       "retry": "Réessayer"
     },
     "tour": {
-      "features": "Ce que fait REMA",
+      "features": "Ce que fait RHEMA",
       "count": "{{current}} sur {{total}}",
       "next": "Suivant",
-      "finish": "Ouvrir REMA",
+      "finish": "Ouvrir RHEMA",
       "tabs": {
         "dictate": "Dictée",
         "ask": "Assistant",
@@ -249,7 +249,7 @@
       "ready": "Tout est prêt"
     },
     "speechToText": {
-      "title": "Comment REMA doit-il vous entendre ?",
+      "title": "Comment RHEMA doit-il vous entendre ?",
       "subtitle": "Cela transforme votre voix en texte, directement sur votre machine. Choisissez-en un, changez à tout moment.",
       "cards": {
         "fast": {
@@ -314,7 +314,7 @@
       "downloadingVoice": "Votre modèle de voix arrive. {{percentage}} % effectués.",
       "downloadingGeneric": "Téléchargement en cours. {{percentage}} % effectués.",
       "signOff": "C'est tout. Allez, dites quelque chose.",
-      "openApp": "Ouvrir REMA"
+      "openApp": "Ouvrir RHEMA"
     },
     "errors": {
       "selectModel": "Impossible de sélectionner ce modèle. Veuillez réessayer.",
@@ -446,7 +446,7 @@
     },
     "permissions": {
       "title": "Autorisations requises",
-      "description": "REMA a besoin de quelques autorisations pour fonctionner correctement.",
+      "description": "RHEMA a besoin de quelques autorisations pour fonctionner correctement.",
       "microphone": {
         "title": "Accès au microphone",
         "description": "Nécessaire pour entendre votre voix pour la transcription."
@@ -456,7 +456,7 @@
         "description": "Nécessaire pour taper le texte transcrit dans vos applications.",
         "stuckHint": "Déjà activé dans les Réglages Système ? Après une mise à jour, macOS peut conserver une autorisation qui ne correspond plus à cette version.",
         "reset": "Réinitialiser l'autorisation",
-        "resetDone": "Réactivez maintenant REMA dans les Réglages Système."
+        "resetDone": "Réactivez maintenant RHEMA dans les Réglages Système."
       },
       "grant": "Accorder l'autorisation",
       "granted": "Accordé",
@@ -465,7 +465,7 @@
       "errors": {
         "checkFailed": "Impossible de vérifier les autorisations. Veuillez réessayer.",
         "requestFailed": "Impossible de demander l'autorisation. Veuillez réessayer.",
-        "resetFailed": "Impossible de réinitialiser l'autorisation. Retirez REMA de la liste Accessibilité, puis ajoutez-le à nouveau."
+        "resetFailed": "Impossible de réinitialiser l'autorisation. Retirez RHEMA de la liste Accessibilité, puis ajoutez-le à nouveau."
       }
     },
     "frame": {
@@ -656,7 +656,7 @@
           },
           "command": {
             "name": "Commande vocale",
-            "description": "Dites ce que vous voulez faire, par exemple « ouvre YouTube », et REMA s'en charge."
+            "description": "Dites ce que vous voulez faire, par exemple « ouvre YouTube », et RHEMA s'en charge."
           },
           "hands_free": {
             "name": "Mains libres",
@@ -700,7 +700,7 @@
       },
       "handsFree": {
         "unavailableKeys": "Fonctionne quand la dictée n'utilise que des touches de modification, comme Ctrl + Win. Avec {{keys}}, désactivez plutôt « Maintenir pour parler » : chaque dictée continue jusqu'à ce que vous appuyiez à nouveau sur les touches.",
-        "unavailableEngine": "Nécessite le moteur clavier REMA Keys ({{where}}). Ou désactivez « Maintenir pour parler » : chaque dictée continue jusqu'à ce que vous appuyiez à nouveau sur les touches.",
+        "unavailableEngine": "Nécessite le moteur clavier RHEMA Keys ({{where}}). Ou désactivez « Maintenir pour parler » : chaque dictée continue jusqu'à ce que vous appuyiez à nouveau sur les touches.",
         "taken": "{{name}} utilise déjà {{keys}} : cette touche ne fait rien tant que l'un des deux n'a pas changé.",
         "needsKey": "Choisissez une seule touche, comme Espace ou Entrée. Une touche de modification seule ne peut pas être la touche mains libres.",
         "pressKey": "Appuyez sur une touche…",
@@ -757,9 +757,9 @@
       "clearSearch": "Effacer la recherche",
       "noSearchResults": "Aucun modèle nommé « {{query}} ».",
       "olderHint": "Ancien format. {{model}} ({{size}}) est la nouvelle version de ce modèle.",
-      "retiredHint": "Utilise un ancien moteur que REMA n'inclut plus. Téléchargez plutôt {{model}} ({{size}}).",
+      "retiredHint": "Utilise un ancien moteur que RHEMA n'inclut plus. Téléchargez plutôt {{model}} ({{size}}).",
       "retired": {
-        "notice": "Ces modèles utilisaient un ancien moteur que REMA n'inclut plus.",
+        "notice": "Ces modèles utilisaient un ancien moteur que RHEMA n'inclut plus.",
         "newVersion": "Nouvelle version : {{model}} · {{size}}",
         "getNewVersion": "Obtenir la nouvelle version",
         "useNewVersion": "Utiliser la nouvelle version",
@@ -822,7 +822,7 @@
         "rescanDone_one": "{{count}} modèle local trouvé.",
         "rescanDone_many": "{{count}} modèles locaux trouvés.",
         "rescanDone_other": "{{count}} modèles locaux trouvés.",
-        "footnote": "Les dossiers liés sont réanalysés au démarrage de REMA, donc les modèles que vous y ajoutez ensuite apparaissent tout seuls. Délier un dossier ou retirer un modèle le retire seulement de cette liste — vos fichiers restent là où ils sont.",
+        "footnote": "Les dossiers liés sont réanalysés au démarrage de RHEMA, donc les modèles que vous y ajoutez ensuite apparaissent tout seuls. Délier un dossier ou retirer un modèle le retire seulement de cette liste — vos fichiers restent là où ils sont.",
         "removeTitle": "Retirer de la liste ?",
         "removeConfirm": "Retirer « {{modelName}} » de votre liste de modèles ?\n\nLe fichier lui-même reste là où il est :\n{{path}}",
         "missingBadge": "Fichier introuvable",
@@ -912,7 +912,7 @@
         "label": "Boutons de la souris comme raccourcis",
         "description": "Utilisez le bouton central, Précédent ou Suivant de votre souris comme raccourci : cliquez sur les touches d'un raccourci, puis appuyez sur le bouton. Tant qu'il sert de raccourci, le bouton ne fait rien d'autre.",
         "linux": "Sous Linux, seul le bouton central fonctionne.",
-        "needsEngine": "Nécessite la gestion du clavier REMA Keys."
+        "needsEngine": "Nécessite la gestion du clavier RHEMA Keys."
       },
       "longFormChunking": {
         "title": "Découper les longs enregistrements",
@@ -930,11 +930,11 @@
       },
       "autostart": {
         "label": "Lancer au démarrage",
-        "description": "Ouvrir REMA automatiquement lorsque vous vous connectez."
+        "description": "Ouvrir RHEMA automatiquement lorsque vous vous connectez."
       },
       "showTrayIcon": {
         "label": "Afficher l'icône dans la barre système",
-        "description": "Garder REMA dans votre barre système."
+        "description": "Garder RHEMA dans votre barre système."
       },
       "trayIconColor": {
         "label": "Icône de la barre système en couleur",
@@ -942,7 +942,7 @@
       },
       "closeBehavior": {
         "label": "Quitter lorsque je ferme la fenêtre",
-        "description": "Lorsque cette option est désactivée, fermer la fenêtre laisse REMA actif dans la barre système et vos raccourcis continuent de fonctionner. Lorsqu'elle est activée, fermer la fenêtre quitte complètement l'application."
+        "description": "Lorsque cette option est désactivée, fermer la fenêtre laisse RHEMA actif dans la barre système et vos raccourcis continuent de fonctionner. Lorsqu'elle est activée, fermer la fenêtre quitte complètement l'application."
       },
       "overlayStyle": {
         "title": "Fenêtre d'enregistrement",
@@ -1036,8 +1036,8 @@
       },
       "customWords": {
         "title": "Mots personnalisés",
-        "description": "Les noms, produits et expressions que REMA doit orthographier à votre manière.",
-        "info": "Exemple : ajoutez « Kokoro » si REMA écrit « Coco row ».",
+        "description": "Les noms, produits et expressions que RHEMA doit orthographier à votre manière.",
+        "info": "Exemple : ajoutez « Kokoro » si RHEMA écrit « Coco row ».",
         "placeholder": "Ajoutez un nom, un terme ou une courte expression",
         "add": "Ajouter",
         "empty": "Aucun mot personnalisé pour l'instant.",
@@ -1046,7 +1046,7 @@
       },
       "autoLearn": {
         "label": "Apprendre les mots que je corrige",
-        "description": "Retient votre orthographe quand vous corrigez un mot mal compris par REMA.",
+        "description": "Retient votre orthographe quand vous corrigez un mot mal compris par RHEMA.",
         "info": "Seul le champ dans lequel il vient d'écrire est lu, pendant environ une minute. Rien n'est envoyé en ligne, et chaque mot appris est listé ici.",
         "unsupported": "L'apprentissage des corrections n'est disponible que sur Windows pour l'instant. Vous pouvez toujours ajouter des mots à la main ci-dessus.",
         "learnedTitle": "Appris à partir de vos corrections",
@@ -1060,7 +1060,7 @@
         "title": "Remplacements de texte",
         "description": "Remplacez une expression de votre transcription par un texte que vous utilisez souvent. Exemple : « mon e-mail » devient « alex@example.com ».",
         "rulesTitle": "Règles de remplacement",
-        "rulesHint": "Choisissez ce que REMA entend et ce qu'il doit insérer.",
+        "rulesHint": "Choisissez ce que RHEMA entend et ce qu'il doit insérer.",
         "empty": "Créez une règle pour une expression que vous dites souvent.",
         "addFirst": "Créer la première règle",
         "addRule": "Ajouter un remplacement",
@@ -1439,7 +1439,7 @@
       },
       "updateChecks": {
         "label": "Vérifier les mises à jour automatiquement",
-        "description": "Recherche une nouvelle version au démarrage de REMA, puis toutes les 12 heures. Vous pouvez toujours vérifier manuellement."
+        "description": "Recherche une nouvelle version au démarrage de RHEMA, puis toutes les 12 heures. Vous pouvez toujours vérifier manuellement."
       },
       "soundTheme": {
         "label": "Thème sonore",
@@ -1499,7 +1499,7 @@
       "smartSpacing": {
         "label": "Espacement intelligent",
         "description": "Adapte chaque dictée au texte déjà présent dans le champ, pour s'arrêter et reprendre sans que les mots se collent.",
-        "info": "Avant de coller, REMA regarde les quelques caractères autour du curseur et n'ajoute une espace que là où il en faut une. Si une app masque son texte, il se sert plutôt de sa propre dernière dictée. Rien n'est enregistré ni envoyé nulle part. Sur macOS, il utilise l'autorisation d'accessibilité que REMA a déjà. Sous Linux, les apps Chrome, Electron et Qt ne partagent leur texte que si l'accessibilité du bureau est activée."
+        "info": "Avant de coller, RHEMA regarde les quelques caractères autour du curseur et n'ajoute une espace que là où il en faut une. Si une app masque son texte, il se sert plutôt de sa propre dernière dictée. Rien n'est enregistré ni envoyé nulle part. Sur macOS, il utilise l'autorisation d'accessibilité que RHEMA a déjà. Sous Linux, les apps Chrome, Electron et Qt ne partagent leur texte que si l'accessibilité du bureau est activée."
       },
       "smartSpacingFixCase": {
         "label": "Corriger les majuscules",
@@ -1507,7 +1507,7 @@
       },
       "smartSpacingJoin": {
         "label": "Relier les phrases interrompues",
-        "description": "Supprime le point ajouté par REMA quand vous vous êtes arrêté au milieu d'une phrase, comme dans « Je suis allé au. »"
+        "description": "Supprime le point ajouté par RHEMA quand vous vous êtes arrêté au milieu d'une phrase, comme dans « Je suis allé au. »"
       },
       "keyboardImplementation": {
         "title": "Gestion du clavier",
@@ -1639,7 +1639,7 @@
       },
       "appDataDirectory": {
         "title": "Dossier des données de l'application",
-        "description": "Où REMA conserve vos modèles, votre historique et vos paramètres."
+        "description": "Où RHEMA conserve vos modèles, votre historique et vos paramètres."
       },
       "sourceCode": {
         "title": "Code source",
@@ -1648,12 +1648,12 @@
       },
       "license": {
         "title": "Licence",
-        "description": "REMA est un logiciel open source sous licence MIT. Les mentions des tiers figurent dans la licence.",
+        "description": "RHEMA est un logiciel open source sous licence MIT. Les mentions des tiers figurent dans la licence.",
         "button": "Voir la licence"
       },
       "supportDevelopment": {
         "title": "Soutenir le développement",
-        "description": "Aidez-nous à continuer à développer REMA",
+        "description": "Aidez-nous à continuer à développer RHEMA",
         "button": "Faire un don"
       }
     },
@@ -1661,7 +1661,7 @@
       "enable": {
         "title": "Assistant",
         "label": "Activer l'assistant",
-        "description": "Désactivez cette option pour réduire REMA à la dictée. Le panneau flottant est fermé et n'est jamais chargé, ses raccourcis sont libérés et la mémoire qu'il utilisait est rendue. Générer avec Flow et le nettoyage IA continuent de fonctionner."
+        "description": "Désactivez cette option pour réduire RHEMA à la dictée. Le panneau flottant est fermé et n'est jamais chargé, ses raccourcis sont libérés et la mémoire qu'il utilisait est rendue. Générer avec Flow et le nettoyage IA continuent de fonctionner."
       },
       "shortcuts": {
         "title": "Raccourcis"
@@ -1700,7 +1700,7 @@
         "deleteModelFailed": "Impossible de supprimer le modèle.",
         "finderSectionTitle": "Plus de modèles sur l'appareil",
         "finderTitle": "Parcourir Hugging Face",
-        "finderDescription": "Cherchez parmi des milliers de modèles GGUF et téléchargez-en un directement dans REMA.",
+        "finderDescription": "Cherchez parmi des milliers de modèles GGUF et téléchargez-en un directement dans RHEMA.",
         "finderAction": "Trouver un modèle",
         "huggingFaceTitle": "Vos modèles",
         "catalogEmpty": "Aucun modèle local recommandé n'est disponible pour le moment."
@@ -1823,7 +1823,7 @@
           "label": "Moment de la capture"
         },
         "screenRecording": {
-          "description": "La vision d'écran nécessite l'autorisation d'enregistrement de l'écran sur macOS. Accordez-la dans les Réglages du système, puis redémarrez REMA pour qu'elle prenne effet.",
+          "description": "La vision d'écran nécessite l'autorisation d'enregistrement de l'écran sur macOS. Accordez-la dans les Réglages du système, puis redémarrez RHEMA pour qu'elle prenne effet.",
           "grant": "Ouvrir les Réglages du système"
         }
       },
@@ -2000,7 +2000,7 @@
         "testGpuMoved": "Votre carte graphique a déformé l'extrait, il a donc été coupé. Kokoro utilise maintenant le processeur : testez à nouveau pour l'entendre.",
         "testGpuForced": "Votre carte graphique a déformé l'extrait, il a donc été coupé. Réglez « S'exécute sur » sur Automatique ou Processeur.",
         "testGpuSuspect": "L'extrait est sorti déformé, il a donc été coupé. Testez à nouveau pour vérifier votre carte graphique.",
-        "testPhrase": "Bonjour ! Ceci est un test de la sortie vocale de REMA.",
+        "testPhrase": "Bonjour ! Ceci est un test de la sortie vocale de RHEMA.",
         "downloadStart": "Téléchargement de la voix Kokoro…",
         "downloadProgress": "Téléchargement de la voix Kokoro… {{progress}} %",
         "downloadReady": "Voix Kokoro prête ✓",
@@ -2102,7 +2102,7 @@
     "account": {
       "signedOut": {
         "title": "Connectez votre téléphone",
-        "body": "Connectez-vous ici et dans l'application REMA de votre téléphone avec le même compte. Vous pourrez alors dicter et saisir du texte sur cet ordinateur depuis votre téléphone.",
+        "body": "Connectez-vous ici et dans l'application RHEMA de votre téléphone avec le même compte. Vous pourrez alors dicter et saisir du texte sur cet ordinateur depuis votre téléphone.",
         "modeLabel": "Se connecter ou créer un compte",
         "signIn": "Se connecter",
         "createAccount": "Créer un compte",
@@ -2123,7 +2123,7 @@
         "online": "Connecté",
         "connecting": "Connexion en cours…",
         "offline": "Hors ligne",
-        "offlineHint": "REMA ne parvient pas à joindre le serveur pour le moment et continue d'essayer. En attendant, votre téléphone ne peut pas utiliser cet ordinateur."
+        "offlineHint": "RHEMA ne parvient pas à joindre le serveur pour le moment et continue d'essayer. En attendant, votre téléphone ne peut pas utiliser cet ordinateur."
       },
       "phone": {
         "title": "Téléphone",
@@ -2131,12 +2131,12 @@
         "remoteInputHint": "Permet à votre téléphone de dicter et de saisir du texte sur cet ordinateur.",
         "remoteWindows": "Laisser les téléphones voir et utiliser les fenêtres",
         "remoteWindowsHint": "Votre téléphone peut lister les fenêtres ouvertes, en regarder une en direct, et y saisir du texte, appuyer sur des touches ou cliquer. Une carte ici indique quand un téléphone regarde, avec Arrêter.",
-        "install": "Installez l'application REMA sur votre téléphone et connectez-vous avec {{email}}."
+        "install": "Installez l'application RHEMA sur votre téléphone et connectez-vous avec {{email}}."
       },
       "keys": {
         "title": "Clés API",
         "sync": "Synchroniser les clés API",
-        "syncHint": "Les clés que vous ajoutez sur cet ordinateur sont enregistrées, chiffrées, dans votre compte REMA et apparaissent sur vos autres ordinateurs."
+        "syncHint": "Les clés que vous ajoutez sur cet ordinateur sont enregistrées, chiffrées, dans votre compte RHEMA et apparaissent sur vos autres ordinateurs."
       },
       "devices": {
         "title": "Appareils",
@@ -2164,7 +2164,7 @@
       "server": {
         "title": "Serveur de compte",
         "using": "Utilise {{host}}",
-        "notFound": "Le serveur est introuvable pour le moment. REMA continue d'essayer."
+        "notFound": "Le serveur est introuvable pour le moment. RHEMA continue d'essayer."
       },
       "errors": {
         "generic": "Une erreur s'est produite. Réessayez.",
@@ -2285,7 +2285,7 @@
     "list": {
       "title": "Réunions enregistrées",
       "emptyTitle": "Aucune réunion pour l'instant",
-      "emptyHint": "Lancez l'enregistrement avant un appel : REMA conserve la transcription, découpée par intervenant.",
+      "emptyHint": "Lancez l'enregistrement avant un appel : RHEMA conserve la transcription, découpée par intervenant.",
       "loadMore": "Charger plus",
       "speakers_one": "{{count}} intervenant",
       "speakers_many": "{{count}} intervenants",
@@ -2452,7 +2452,7 @@
   },
   "accessibility": {
     "permissionsRequired": "Autorisations d'accessibilité requises",
-    "permissionsDescription": "REMA a besoin des autorisations d'accessibilité pour taper le texte transcrit.",
+    "permissionsDescription": "RHEMA a besoin des autorisations d'accessibilité pour taper le texte transcrit.",
     "openSettings": "Ouvrir les Préférences Système",
     "dismiss": "Ignorer"
   },
@@ -2481,7 +2481,7 @@
   },
   "appLanguage": {
     "title": "Langue de l'application",
-    "description": "Changer la langue de l'interface de REMA"
+    "description": "Changer la langue de l'interface de RHEMA"
   },
   "overlay": {
     "preparing": "Préparation du micro…",
@@ -2880,7 +2880,7 @@
       "performance": "Performances"
     },
     "about": {
-      "appName": "REMA",
+      "appName": "RHEMA",
       "version": "Version {{version}}",
       "project": "Projet",
       "docs": "Documentation",
@@ -2898,7 +2898,7 @@
     "subtitleTap": "Appuyez sur votre raccourci dans n'importe quelle application, parlez, puis appuyez à nouveau. Vos mots apparaissent à l'emplacement du curseur.",
     "needsModel": {
       "title": "Choisissez un modèle vocal pour commencer à dicter.",
-      "description": "REMA a besoin d'un modèle de reconnaissance vocale avant de pouvoir écrire ce que vous dites.",
+      "description": "RHEMA a besoin d'un modèle de reconnaissance vocale avant de pouvoir écrire ce que vous dites.",
       "action": "Choisir un modèle"
     },
     "stats": {
@@ -2977,8 +2977,8 @@
         "open": "Réglages du clavier"
       },
       "linux": {
-        "wayland": "Sous Wayland, votre bureau ne transmet ces touches à REMA que lorsqu'une de ses fenêtres est au premier plan. Pour les utiliser dans n'importe quelle app, ajoutez-les comme raccourcis dans les paramètres du système.",
-        "noAccess": "REMA Keys ne peut pas lire le clavier sur cet ordinateur, ces raccourcis ne font donc encore rien.",
+        "wayland": "Sous Wayland, votre bureau ne transmet ces touches à RHEMA que lorsqu'une de ses fenêtres est au premier plan. Pour les utiliser dans n'importe quelle app, ajoutez-les comme raccourcis dans les paramètres du système.",
+        "noAccess": "RHEMA Keys ne peut pas lire le clavier sur cet ordinateur, ces raccourcis ne font donc encore rien.",
         "setUp": "Configurer",
         "where": {
           "gnome": "Ouvrez Paramètres → Clavier → Afficher et personnaliser les raccourcis → Raccourcis personnalisés, ajoutez-en un pour chaque commande ci-dessous et appuyez sur les touches voulues.",
@@ -2986,7 +2986,7 @@
           "other": "Ajoutez un raccourci personnalisé dans les paramètres clavier de votre bureau, ou une ligne bind dans la configuration de votre compositeur, pour chaque commande ci-dessous."
         },
         "tapOnly": "Un raccourci ajouté ainsi fonctionne comme « Appuyer pour activer » : appuyez une fois pour démarrer et une autre fois pour arrêter.",
-        "access": "Ou autorisez REMA Keys à lire le clavier. Exécutez ceci dans un terminal, puis déconnectez-vous et reconnectez-vous :",
+        "access": "Ou autorisez RHEMA Keys à lire le clavier. Exécutez ceci dans un terminal, puis déconnectez-vous et reconnectez-vous :",
         "copy": "Copier",
         "copied": "Copié"
       }
@@ -3018,7 +3018,7 @@
     }
   },
   "speechUpdate": {
-    "title": "{{model}} utilisait un ancien moteur que REMA n'inclut plus.",
+    "title": "{{model}} utilisait un ancien moteur que RHEMA n'inclut plus.",
     "newVersion": "Sa nouvelle version est {{model}}.",
     "ready": "{{model}} est téléchargé et prêt.",
     "noVersion": "Choisissez un autre modèle pour continuer à dicter.",
@@ -3027,12 +3027,12 @@
     "retry": "Réessayer",
     "chooseAnother": "Choisir un autre modèle",
     "progressLabel": "Téléchargement de la nouvelle version",
-    "dialogTitle": "REMA a un nouveau moteur vocal",
+    "dialogTitle": "RHEMA a un nouveau moteur vocal",
     "dialogBody": "Il est plus rapide et plus stable, vous rencontrerez donc moins de problèmes. {{model}} utilisait l'ancien moteur et a besoin de sa nouvelle version pour continuer à fonctionner.",
     "later": "Plus tard"
   },
   "modelsHub": {
-    "description": "Dans REMA, chaque tâche est confiée à un modèle de votre choix. Exécutez-le sur cet ordinateur pour la confidentialité, ou dans le cloud pour la rapidité.",
+    "description": "Dans RHEMA, chaque tâche est confiée à un modèle de votre choix. Exécutez-le sur cet ordinateur pour la confidentialité, ou dans le cloud pour la rapidité.",
     "addLocal": "Ajouter un fichier de modèle",
     "privacyNote": "Les modèles sur cet ordinateur n'envoient jamais votre voix ni votre texte ailleurs. Les modèles cloud les envoient au fournisseur choisi, avec votre clé API.",
     "inUse": "Utilisé",
@@ -3193,12 +3193,12 @@
     "shortcutRow": "Raccourci"
   },
   "dictionary": {
-    "description": "Apprenez à REMA les noms et les termes que vous utilisez, et créez des raccourcis qui se développent en texte plus long.",
+    "description": "Apprenez à RHEMA les noms et les termes que vous utilisez, et créez des raccourcis qui se développent en texte plus long.",
     "words": {
       "title": "Vos mots",
-      "description": "Noms, jargon et orthographes que REMA doit toujours respecter.",
+      "description": "Noms, jargon et orthographes que RHEMA doit toujours respecter.",
       "placeholder": "Ajoutez un nom, un terme ou une orthographe…",
-      "empty": "Rien pour l'instant. Ajoutez les mots sur lesquels REMA se trompe souvent."
+      "empty": "Rien pour l'instant. Ajoutez les mots sur lesquels RHEMA se trompe souvent."
     },
     "replacements": {
       "title": "Remplacements",
@@ -3207,7 +3207,7 @@
     "addWord": "Ajouter un mot"
   },
   "commandsPage": {
-    "description": "Dites ce que vous voulez faire, et REMA le fait sur cet ordinateur : ouvrir un site, lancer une chanson, changer d'application, écrire un e-mail.",
+    "description": "Dites ce que vous voulez faire, et RHEMA le fait sur cet ordinateur : ouvrir un site, lancer une chanson, changer d'application, écrire un e-mail.",
     "enable": "Commandes vocales",
     "offNotice": "Les commandes vocales sont désactivées. Activez-les pour que leur raccourci serve à quelque chose ; ce que vous dites est alors envoyé au modèle qui exécute les commandes.",
     "shortcut": {
@@ -3596,16 +3596,16 @@
   },
   "freeCredit": {
     "title": "Crédit gratuit",
-    "explain": "Chaque compte REMA inclut {{amount}} d'utilisation de l'IA, partagés entre la transcription, le nettoyage par IA, l'assistant, les commandes vocales et les réponses lues à voix haute. Aucune clé API nécessaire.",
+    "explain": "Chaque compte RHEMA inclut {{amount}} d'utilisation de l'IA, partagés entre la transcription, le nettoyage par IA, l'assistant, les commandes vocales et les réponses lues à voix haute. Aucune clé API nécessaire.",
     "balance": "Crédit gratuit : il reste {{remaining}} sur {{limit}}",
     "checking": "Vérification de votre crédit gratuit…",
-    "option": "Utiliser REMA free ({{amount}} inclus)",
-    "use": "Utiliser REMA free",
+    "option": "Utiliser RHEMA free ({{amount}} inclus)",
+    "use": "Utiliser RHEMA free",
     "inUse": "Utilisé",
     "exhausted": "Votre crédit gratuit est épuisé. Ajoutez votre propre clé API pour continuer à utiliser les fonctions cloud.",
-    "disabled": "REMA free n'est pas disponible pour le moment. Ajoutez votre propre clé API pour continuer à utiliser les fonctions cloud.",
+    "disabled": "RHEMA free n'est pas disponible pour le moment. Ajoutez votre propre clé API pour continuer à utiliser les fonctions cloud.",
     "addKey": "Ajouter votre propre clé",
-    "failed": "Impossible de passer à REMA free.",
+    "failed": "Impossible de passer à RHEMA free.",
     "setupHint": "Vous êtes connecté : vous pouvez transcrire dans le cloud avec votre crédit gratuit, sans rien télécharger.",
     "jobs": {
       "stt": "Dictée vocale",
@@ -3666,7 +3666,7 @@
     "or": "ou",
     "changeOther": "Modifier les autres touches du raccourci {{name}}",
     "pressKeysOrButton": "Appuyez sur des touches ou un bouton de la souris…",
-    "mouseNeedsKeysEngine": "Les boutons de la souris nécessitent la gestion du clavier REMA Keys (Paramètres → Avancé → Expérimental).",
+    "mouseNeedsKeysEngine": "Les boutons de la souris nécessitent la gestion du clavier RHEMA Keys (Paramètres → Avancé → Expérimental).",
     "mouse": {
       "middle": "Bouton central",
       "back": "Bouton Précédent",
@@ -3745,7 +3745,7 @@
     }
   },
   "insights": {
-    "about": "Votre utilisation de REMA, comptabilisée sur cet ordinateur.",
+    "about": "Votre utilisation de RHEMA, comptabilisée sur cet ordinateur.",
     "nothingYet": "Vos statistiques apparaîtront dès que vous dicterez, poserez une question à l'assistant ou enregistrerez une réunion.",
     "goHome": "Voir vos raccourcis",
     "figures": {
@@ -3813,7 +3813,7 @@
     },
     "share": {
       "button": "Partager",
-      "nothingYet": "Vous aurez quelque chose à partager une fois que vous aurez utilisé REMA.",
+      "nothingYet": "Vous aurez quelque chose à partager une fois que vous aurez utilisé RHEMA.",
       "title": "Partagez vos statistiques",
       "private": "Créée sur cet ordinateur. Rien n'est envoyé en ligne.",
       "size": "Taille",
@@ -3844,13 +3844,13 @@
       "openSite": "Ouvrir {{site}}",
       "openFailed": "Impossible d'ouvrir {{site}}",
       "more": "Autres applications",
-      "sheetTitle": "Mes statistiques REMA",
+      "sheetTitle": "Mes statistiques RHEMA",
       "shareFailed": "Impossible d'ouvrir le partage",
       "drawFailed": "Impossible de générer les cartes. Fermez cette fenêtre et réessayez.",
       "tagline": "Gratuit · Open source · Fonctionne hors ligne",
       "cards": {
         "highlights": {
-          "title": "Mon bilan REMA",
+          "title": "Mon bilan RHEMA",
           "words_one": "mot dicté",
           "words_many": "mots dictés",
           "words_other": "mots dictés",
@@ -3927,15 +3927,15 @@
         }
       },
       "post": {
-        "dictation_one": "J'ai dicté {{formatted}} mot à mon ordinateur au lieu de le taper, grâce à REMA.",
-        "dictation_many": "J'ai dicté {{formatted}} de mots à mon ordinateur au lieu de les taper, grâce à REMA.",
-        "dictation_other": "J'ai dicté {{formatted}} mots à mon ordinateur au lieu de les taper, grâce à REMA.",
-        "asks_one": "J'ai posé {{formatted}} question à l'assistant de REMA sans changer d'onglet.",
-        "asks_many": "J'ai posé {{formatted}} de questions à l'assistant de REMA sans changer d'onglet.",
-        "asks_other": "J'ai posé {{formatted}} questions à l'assistant de REMA sans changer d'onglet.",
-        "meetings_one": "REMA a enregistré {{formatted}} réunion et pris les notes à ma place.",
-        "meetings_many": "REMA a enregistré {{formatted}} de réunions et pris les notes à ma place.",
-        "meetings_other": "REMA a enregistré {{formatted}} réunions et pris les notes à ma place."
+        "dictation_one": "J'ai dicté {{formatted}} mot à mon ordinateur au lieu de le taper, grâce à RHEMA.",
+        "dictation_many": "J'ai dicté {{formatted}} de mots à mon ordinateur au lieu de les taper, grâce à RHEMA.",
+        "dictation_other": "J'ai dicté {{formatted}} mots à mon ordinateur au lieu de les taper, grâce à RHEMA.",
+        "asks_one": "J'ai posé {{formatted}} question à l'assistant de RHEMA sans changer d'onglet.",
+        "asks_many": "J'ai posé {{formatted}} de questions à l'assistant de RHEMA sans changer d'onglet.",
+        "asks_other": "J'ai posé {{formatted}} questions à l'assistant de RHEMA sans changer d'onglet.",
+        "meetings_one": "RHEMA a enregistré {{formatted}} réunion et pris les notes à ma place.",
+        "meetings_many": "RHEMA a enregistré {{formatted}} de réunions et pris les notes à ma place.",
+        "meetings_other": "RHEMA a enregistré {{formatted}} réunions et pris les notes à ma place."
       }
     }
   },
@@ -3943,11 +3943,11 @@
     "restored": "Vos paramètres étaient endommagés et ont été restaurés à partir d'une sauvegarde.",
     "restoredDescription": "Vos dernières modifications peuvent manquer.",
     "unrecoverableTitle": "Impossible de récupérer vos paramètres",
-    "unrecoverableDescription": "REMA a démarré avec les paramètres par défaut. Le fichier endommagé a été conservé sous le nom {{file}}.",
+    "unrecoverableDescription": "RHEMA a démarré avec les paramètres par défaut. Le fichier endommagé a été conservé sous le nom {{file}}.",
     "notSavingTitle": "Les modifications des paramètres ne seront pas enregistrées",
-    "notSavingDescription": "Le fichier de paramètres n'a pas pu être lu, il a donc été laissé tel quel. Redémarrez REMA pour réessayer.",
+    "notSavingDescription": "Le fichier de paramètres n'a pas pu être lu, il a donc été laissé tel quel. Redémarrez RHEMA pour réessayer.",
     "saveFailingTitle": "Les paramètres ne sont pas enregistrés",
-    "saveFailingDescription": "Vos dernières modifications ne sont pas encore enregistrées. REMA continue d'essayer.",
+    "saveFailingDescription": "Vos dernières modifications ne sont pas encore enregistrées. RHEMA continue d'essayer.",
     "dismiss": "Ignorer"
   },
   "commandMode": {

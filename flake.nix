@@ -1,5 +1,5 @@
 {
-  description = "REMA - A free, open source, local-first voice assistant (dictation, AI chat panel, screen vision) that works completely offline";
+  description = "RHEMA - A free, open source, local-first voice assistant (dictation, AI chat panel, screen vision) that works completely offline";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -86,8 +86,8 @@
           };
         in
         {
-          rema = pkgs.rustPlatform.buildRustPackage {
-            pname = "rema";
+          rhema = pkgs.rustPlatform.buildRustPackage {
+            pname = "rhema";
             inherit version;
             src = self;
 
@@ -174,14 +174,14 @@
 
             meta = {
               description = "A free, open source, local-first voice assistant (dictation, AI chat panel, screen vision) that works completely offline";
-              homepage = "https://github.com/OWNER/rema";
+              homepage = "https://github.com/Unknown-333/rhema";
               license = lib.licenses.mit;
-              mainProgram = "rema";
+              mainProgram = "rhema";
               platforms = supportedSystems;
             };
           };
 
-          default = self.packages.${system}.rema;
+          default = self.packages.${system}.rhema;
         }
       );
 
@@ -190,7 +190,7 @@
         { lib, pkgs, ... }:
         {
           imports = [ ./nix/module.nix ];
-          programs.rema.package = lib.mkDefault self.packages.${pkgs.stdenv.hostPlatform.system}.rema;
+          programs.rhema.package = lib.mkDefault self.packages.${pkgs.stdenv.hostPlatform.system}.rhema;
         };
 
       # Home-manager module for per-user service
@@ -198,7 +198,7 @@
         { lib, pkgs, ... }:
         {
           imports = [ ./nix/hm-module.nix ];
-          services.rema.package = lib.mkDefault self.packages.${pkgs.stdenv.hostPlatform.system}.rema;
+          services.rhema.package = lib.mkDefault self.packages.${pkgs.stdenv.hostPlatform.system}.rhema;
         };
 
       # Development shell for building from source
@@ -238,7 +238,7 @@
             XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:${pkgs.hicolor-icon-theme}/share";
 
             shellHook = ''
-              echo "REMA development environment"
+              echo "RHEMA development environment"
               bun install
               echo "Run 'bun run tauri dev' to start"
             '';

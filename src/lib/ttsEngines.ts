@@ -155,11 +155,11 @@ export const TTS_ENGINES: readonly TtsEngineSpec[] = [
     speed: [0.5, 1.5],
   },
   {
-    // REMA free: the account server speaks, on the account's free credit.
+    // RHEMA free: the account server speaks, on the account's free credit.
     // No address and no key: both come from the signed-in session.
-    id: "rema_free",
+    id: "rhema_free",
     key: "none",
-    model: { example: "rema-free-speech" },
+    model: { example: "rhema-free-speech" },
     voice: { required: false, example: "alloy" },
     speed: [0.25, 4],
   },

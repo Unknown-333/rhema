@@ -92,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
         setState(() => _google = google);
       }
     } on ApiException {
-      // Unreachable (a network still coming up at launch) or not a REMA
+      // Unreachable (a network still coming up at launch) or not a RHEMA
       // server: no Google button for now, and signing in says what is wrong.
       // Ask again, or someone who signed up with Google never sees it.
       if (mounted && session.serverUrl == server) {
@@ -150,11 +150,11 @@ class _SignInScreenState extends State<SignInScreen> {
   /// release build whose discovery has never answered). There is nothing to
   /// change here: the server only ever comes from discovery.
   Widget _serverStatus(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final session = _services.session;
     final finder = session.finder;
     final url = session.serverUrl;
-    final style = RemaType.footnote.copyWith(color: t.muted);
+    final style = RhemaType.footnote.copyWith(color: t.muted);
     if (url != null) {
       final label = session.serverChoice == ServerChoice.pinned
           ? AuthStrings.developmentServer
@@ -163,7 +163,7 @@ class _SignInScreenState extends State<SignInScreen> {
         TextSpan(
           children: [
             TextSpan(text: '$label · '),
-            TextSpan(text: Uri.parse(url).authority, style: RemaType.mono),
+            TextSpan(text: Uri.parse(url).authority, style: RhemaType.mono),
           ],
         ),
         textAlign: TextAlign.center,
@@ -199,7 +199,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final creating = _mode == _Mode.create;
     final busy = _busy != _Busy.none;
     const scroll = EdgeInsets.only(bottom: 120);
@@ -209,20 +209,20 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         const Align(
           alignment: AlignmentDirectional.centerStart,
-          child: RemaMark(size: 44),
+          child: RhemaMark(size: 44),
         ),
         const SizedBox(height: Space.s24),
         Semantics(
           header: true,
           child: Text(
             creating ? AuthStrings.createTitle : AuthStrings.signInTitle,
-            style: RemaType.display.copyWith(color: t.ink),
+            style: RhemaType.display.copyWith(color: t.ink),
           ),
         ),
         const SizedBox(height: Space.s8),
         Text(
           AuthStrings.subtitle,
-          style: RemaType.rowBody.copyWith(color: t.muted),
+          style: RhemaType.rowBody.copyWith(color: t.muted),
         ),
         const SizedBox(height: Space.s32),
         SegmentedPill<_Mode>(
@@ -248,7 +248,7 @@ class _SignInScreenState extends State<SignInScreen> {
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.next,
             autofillHints: const [AutofillHints.name],
-            style: RemaType.body.copyWith(color: t.ink),
+            style: RhemaType.body.copyWith(color: t.ink),
             decoration: const InputDecoration(labelText: AuthStrings.name),
             validator: (value) => (value ?? '').trim().runes.length > 64
                 ? AuthStrings.nameLong
@@ -264,7 +264,7 @@ class _SignInScreenState extends State<SignInScreen> {
           autocorrect: false,
           textInputAction: TextInputAction.next,
           autofillHints: const [AutofillHints.email],
-          style: RemaType.body.copyWith(color: t.ink),
+          style: RhemaType.body.copyWith(color: t.ink),
           decoration: const InputDecoration(labelText: AuthStrings.email),
           validator: (value) {
             final email = (value ?? '').trim();
@@ -287,7 +287,7 @@ class _SignInScreenState extends State<SignInScreen> {
           autofillHints: [
             creating ? AutofillHints.newPassword : AutofillHints.password,
           ],
-          style: RemaType.body.copyWith(color: t.ink),
+          style: RhemaType.body.copyWith(color: t.ink),
           decoration: InputDecoration(
             labelText: AuthStrings.password,
             helperText: creating ? AuthStrings.passwordHelp : null,
@@ -341,7 +341,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: Space.s12),
                 child: Text(
                   AuthStrings.or,
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
               ),
               Expanded(child: Divider(color: t.hairline)),

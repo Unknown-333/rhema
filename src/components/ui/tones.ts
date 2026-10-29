@@ -5,7 +5,7 @@ import type React from "react";
  * tinted icon tile on the left, and some controls (shortcut pills) pick up the
  * same hue. Tints stay low-saturation (`/15`) so they read as calm accents in
  * both light and dark themes rather than shouting. `teal` is a legacy name
- * for the brand accent (REMA coral); the rest add just enough variety to
+ * for the brand accent (RHEMA coral); the rest add just enough variety to
  * make scanning easier.
  */
 export type SettingTone =

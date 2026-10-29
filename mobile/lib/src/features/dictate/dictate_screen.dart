@@ -112,7 +112,7 @@ class _DictateScreenState extends State<DictateScreen>
     showSnack(context, DictateStrings.copied);
   }
 
-  Future<void> _chooseDestination() => showRemaSheet<void>(
+  Future<void> _chooseDestination() => showRhemaSheet<void>(
     context,
     title: DictateStrings.goesTo,
     builder: (sheet) => WindowPicker(
@@ -329,7 +329,7 @@ class _DictateScreenState extends State<DictateScreen>
     bool canDictate, {
     bool compact = false,
   }) {
-    final t = context.rema;
+    final t = context.rhema;
     final outcome = c.outcome;
     final sending = c.phase == DictatePhase.sending;
     final idle = c.phase == DictatePhase.idle;
@@ -346,7 +346,7 @@ class _DictateScreenState extends State<DictateScreen>
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: RemaType.footnote.copyWith(color: t.muted),
+          style: RhemaType.footnote.copyWith(color: t.muted),
         ),
       ),
     );
@@ -384,7 +384,7 @@ class _DictateScreenState extends State<DictateScreen>
                     voice.paused
                         ? DictateStrings.paused
                         : DictateStrings.listening,
-                    style: RemaType.title2.copyWith(color: t.ink),
+                    style: RhemaType.title2.copyWith(color: t.ink),
                   ),
                 ],
               ),
@@ -394,7 +394,7 @@ class _DictateScreenState extends State<DictateScreen>
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: RemaType.footnote.copyWith(color: t.muted),
+                style: RhemaType.footnote.copyWith(color: t.muted),
               ),
             ],
           ),
@@ -429,7 +429,7 @@ class _DictateScreenState extends State<DictateScreen>
                 Flexible(
                   child: Text(
                     text,
-                    style: RemaType.footnote.copyWith(color: t.muted),
+                    style: RhemaType.footnote.copyWith(color: t.muted),
                   ),
                 ),
               ],
@@ -518,7 +518,7 @@ class _DictateScreenState extends State<DictateScreen>
                   title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: RemaType.footnote.copyWith(color: t.ink),
+                  style: RhemaType.footnote.copyWith(color: t.ink),
                 ),
               ),
             ],

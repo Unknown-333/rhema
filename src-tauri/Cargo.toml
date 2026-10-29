@@ -1,11 +1,11 @@
 [package]
-name = "rema"
+name = "rhema"
 version = "0.1.0"
-description = "REMA"
+description = "RHEMA"
 authors = ["Aayush Paudel"]
 edition = "2021"
 license = "MIT"
-default-run = "rema"
+default-run = "rhema"
 
 [features]
 # Tauri serves `build.devUrl` unless its production custom protocol is enabled.
@@ -39,7 +39,7 @@ incremental = true # Compile your binary in smaller steps.
 # (rust-lang/rust#45929). The session is saved before linking, so every retry fails
 # identically until the cache goes:
 #
-#   cargo clean -p rema      # then rebuild; only this crate recompiles (~2 min)
+#   cargo clean -p rhema      # then rebuild; only this crate recompiles (~2 min)
 #
 # Changing opt-level does not prevent it (it recurred at level 2 on 2026-09-30);
 # a profile change only appears to fix it because it discards the cache.
@@ -57,7 +57,7 @@ opt-level = 2
 #
 # Drop to `debug = 0` only if you also stop wanting line numbers in backtraces;
 # it measured no faster than this once the incremental cache was warm.
-[profile.dev.package.rema]
+[profile.dev.package.rhema]
 debug = "line-tables-only"
 
 # Build every DEPENDENCY optimised, even in a dev build. Our own crate stays at
@@ -88,7 +88,7 @@ opt-level = 3
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "rema_app_lib"
+name = "rhema_app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 # [[bin]]
@@ -355,7 +355,7 @@ transcribe-cpp = { version = "=0.4.0", default-features = false, features = [
 
 # transcribe.cpp Windows aarch64 (Windows-on-ARM): STATIC, CPU-only (no
 # features → the single portable ggml CPU backend is compiled into
-# rema.exe, zero DLLs shipped). Rationale (mirrors Handy):
+# rhema.exe, zero DLLs shipped). Rationale (mirrors Handy):
 #   * Adreno Vulkan drivers on WoA are immature, and ggml-vulkan's shader
 #     generator (vulkan-shaders-gen) does not build under the clang-cl/lld
 #     toolchain that ggml's ARM CPU backend requires — so `vulkan` is out.
@@ -383,7 +383,7 @@ tauri-nspanel = { git = "https://github.com/ahkohd/tauri-nspanel", branch = "v2.
 keyring = { version = "3", features = ["apple-native"] }
 # Smart spacing (see smart_spacing/macos.rs): reads the few characters around
 # the caret of the field a dictation is pasted into, through the Accessibility
-# API REMA already has permission for. Same objc2 family and version as
+# API RHEMA already has permission for. Same objc2 family and version as
 # the rest of the graph.
 objc2-application-services = { version = "=0.3.2", default-features = false, features = [
   "std",
@@ -508,7 +508,7 @@ keyring = { version = "3", features = [
 
 # Patched tauri-runtime branch carrying the Tauri 2.10.2 fixes this app needs.
 # A build dependency, not branding. To drop the third-party source, fork it
-# under REMA's own organisation and point these three lines at the fork.
+# under RHEMA's own organisation and point these three lines at the fork.
 [patch.crates-io]
 tauri-runtime = { git = "https://github.com/cjpais/tauri.git", branch = "handy-2.10.2" }
 tauri-runtime-wry = { git = "https://github.com/cjpais/tauri.git", branch = "handy-2.10.2" }

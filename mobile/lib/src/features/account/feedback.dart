@@ -48,8 +48,8 @@ abstract final class FeedbackRules {
     };
     final version = osVersion.trim();
     final line = version.isEmpty
-        ? 'REMA phone $appVersion · $name'
-        : 'REMA phone $appVersion · $name $version';
+        ? 'RHEMA phone $appVersion · $name'
+        : 'RHEMA phone $appVersion · $name $version';
     // The server keeps at most 300 characters of it.
     final runes = line.runes.toList();
     return runes.length <= 300 ? line : String.fromCharCodes(runes.take(300));

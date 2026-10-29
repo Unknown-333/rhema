@@ -117,7 +117,7 @@ impl fmt::Display for TreeError {
 /// The platform's accessibility reader and actor.
 pub trait AccessibilityTree: Send + Sync {
     /// Snapshot `window` (or the foreground window for `None`). Never one of
-    /// REMA's own windows. Invalidates the ids of every earlier snapshot.
+    /// RHEMA's own windows. Invalidates the ids of every earlier snapshot.
     fn snapshot(&self, window: Option<i64>) -> Result<UiSnapshot, TreeError>;
     /// Act on an element of the latest snapshot.
     fn act(&self, element: u32, action: &UiAction) -> Result<(), TreeError>;

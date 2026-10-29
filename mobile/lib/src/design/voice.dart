@@ -103,7 +103,7 @@ class _LiveWaveformState extends State<LiveWaveform> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return ExcludeSemantics(
       child: SizedBox(
         height: widget.height,
@@ -187,7 +187,7 @@ class _MicOrbState extends State<MicOrb> {
             voice.onStart!();
           };
     final enabled = onPressed != null;
-    final t = context.rema;
+    final t = context.rhema;
     final moving = motionAllowed(context);
     // The halo and ripples spill past the orb's own box; the layout is the
     // orb.
@@ -227,7 +227,7 @@ class _MicOrbState extends State<MicOrb> {
                     alignment: Alignment.center,
                     clipBehavior: Clip.none,
                     children: [
-                      RemaOrb(
+                      RhemaOrb(
                         size: size,
                         mood: recording && !voice.paused
                             ? OrbMood.listening
@@ -326,7 +326,7 @@ class RecordingStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -360,15 +360,15 @@ class _Clock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return ValueListenableBuilder(
       valueListenable: voice.elapsed,
       builder: (context, value, _) => Text(
         voice.paused ? voice.pausedLabel : clock(value),
         textScaler: MediaQuery.textScalerOf(context).clamp(maxScaleFactor: 1.2),
         style: voice.paused
-            ? RemaType.footnote.copyWith(color: t.warning)
-            : RemaType.mono.copyWith(color: t.muted),
+            ? RhemaType.footnote.copyWith(color: t.warning)
+            : RhemaType.mono.copyWith(color: t.muted),
       ),
     );
   }
@@ -406,7 +406,7 @@ class ComposerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final enabled = onPressed != null;
     final bg = !enabled && background != null
         ? t.fill
@@ -463,7 +463,7 @@ class ComposerButton extends StatelessWidget {
                   decoration: brand && enabled
                       ? BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: RemaColors.gradient,
+                          gradient: RhemaColors.gradient,
                         )
                       : null,
                   child: Center(
@@ -571,7 +571,7 @@ class _ComposerState extends State<Composer> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final voice = widget.voice;
     final recording = voice?.recording ?? false;
     return Padding(
@@ -611,7 +611,7 @@ class _ComposerState extends State<Composer> {
     if (text.contains('\n')) return true;
     final room = c.maxWidth - (widget.leading == null ? 16 : 48) - 4 - 48 - 2;
     final painter = TextPainter(
-      text: TextSpan(text: text, style: RemaType.body),
+      text: TextSpan(text: text, style: RhemaType.body),
       maxLines: 1,
       textDirection: Directionality.of(context),
       textScaler: MediaQuery.textScalerOf(context),
@@ -622,7 +622,7 @@ class _ComposerState extends State<Composer> {
   }
 
   Widget _recording(VoiceState voice) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       key: const ValueKey('recording'),
       padding: const EdgeInsets.all(4),
@@ -659,7 +659,7 @@ class _ComposerState extends State<Composer> {
   }
 
   Widget _typing(BuildContext context, String text) {
-    final t = context.rema;
+    final t = context.rhema;
     final voice = widget.voice;
     final hasText = text.trim().isNotEmpty;
     final Widget trailing;
@@ -736,7 +736,7 @@ class _ComposerState extends State<Composer> {
               inputFormatters: widget.inputFormatters,
               textCapitalization: TextCapitalization.sentences,
               onTapOutside: (_) => _focus.unfocus(),
-              style: RemaType.body.copyWith(
+              style: RhemaType.body.copyWith(
                 color: widget.enabled ? t.ink : t.faint,
               ),
               cursorColor: t.accent,
@@ -750,7 +750,7 @@ class _ComposerState extends State<Composer> {
                 focusedBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                hintStyle: RemaType.body.copyWith(color: t.faint),
+                hintStyle: RhemaType.body.copyWith(color: t.faint),
               ),
             ),
           ),

@@ -7,7 +7,7 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /*
- * Design system — REMA "Quiet" (docs/rema-brand.md §5–6).
+ * Design system — RHEMA "Quiet" (docs/rhema-brand.md §5–6).
  *
  * One neutral canvas, a near-white stone on the light theme and a soft
  * graphite on the dark. The navigation sits straight on it, with no card of

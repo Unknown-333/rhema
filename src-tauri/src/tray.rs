@@ -157,7 +157,7 @@ fn themed_icon_path(theme: AppTheme, state: TrayIconState) -> &'static str {
         (AppTheme::Symbolic, TrayIconState::Recording) => "resources/tray_recording.png",
         (AppTheme::Symbolic, TrayIconState::Transcribing) => "resources/tray_transcribing.png",
         // Colored (Linux, opt-in): the colour logo, then coral state glyphs
-        (AppTheme::Colored, TrayIconState::Idle) => "resources/rema.png",
+        (AppTheme::Colored, TrayIconState::Idle) => "resources/rhema.png",
         (AppTheme::Colored, TrayIconState::Recording) => "resources/recording.png",
         (AppTheme::Colored, TrayIconState::Transcribing) => "resources/transcribing.png",
     }
@@ -343,9 +343,9 @@ pub fn tray_tooltip() -> String {
 
 fn version_label() -> String {
     if cfg!(debug_assertions) {
-        format!("REMA v{} (Dev)", env!("CARGO_PKG_VERSION"))
+        format!("RHEMA v{} (Dev)", env!("CARGO_PKG_VERSION"))
     } else {
-        format!("REMA v{}", env!("CARGO_PKG_VERSION"))
+        format!("RHEMA v{}", env!("CARGO_PKG_VERSION"))
     }
 }
 
@@ -577,7 +577,7 @@ mod tests {
     fn build_entry(transcription: &str, post_processed: Option<&str>) -> HistoryEntry {
         HistoryEntry {
             id: 1,
-            file_name: "rema-1.wav".to_string(),
+            file_name: "rhema-1.wav".to_string(),
             timestamp: 0,
             saved: false,
             title: "Recording".to_string(),
@@ -605,7 +605,7 @@ mod tests {
     fn tray_icon_returns_err_when_file_does_not_exist() {
         // A missing/undecodable icon must surface as an Err (which
         // change_tray_icon logs), never a panic that would abort the app.
-        let missing = std::path::PathBuf::from("rema_nonexistent_tray_icon_xyz.png");
+        let missing = std::path::PathBuf::from("rhema_nonexistent_tray_icon_xyz.png");
         assert!(load_tray_icon(Ok(missing)).is_err());
     }
 
@@ -653,7 +653,7 @@ mod tests {
         );
         assert_eq!(
             themed_icon_path(AppTheme::Colored, TrayIconState::Idle),
-            "resources/rema.png"
+            "resources/rhema.png"
         );
         assert_eq!(
             themed_icon_path(AppTheme::Symbolic, TrayIconState::Idle),

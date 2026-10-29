@@ -715,7 +715,7 @@ pub(crate) fn realize_gtk_window(window: &tauri::webview::WebviewWindow) {
 #[cfg(target_os = "linux")]
 fn init_gtk_layer_shell(overlay_window: &tauri::webview::WebviewWindow) -> bool {
     if env_flag_enabled("NO_GTK_LAYER_SHELL") {
-        debug!("Skipping GTK layer shell init (REMA_NO_GTK_LAYER_SHELL is enabled)");
+        debug!("Skipping GTK layer shell init (RHEMA_NO_GTK_LAYER_SHELL is enabled)");
         return false;
     }
 
@@ -1641,7 +1641,7 @@ pub fn show_speech_download_overlay(app_handle: &AppHandle, model_id: &str) {
 
 /// "<Model> needs an update", with a line saying the new version is on the
 /// Models page, for a voice shortcut pressed while the selected speech model
-/// is one whose engine REMA no longer includes (see
+/// is one whose engine RHEMA no longer includes (see
 /// `speech_readiness`). Up as long as the download notice, because it is the
 /// only explanation the user gets where they are looking; the main window
 /// opens behind it with the way forward.

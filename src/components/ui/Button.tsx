@@ -15,7 +15,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 /**
  * One button vocabulary for the whole window.
  *
- * `primary` is REMA's ember, a flat fill with 8px corners (`.btn-primary` in
+ * `primary` is RHEMA's ember, a flat fill with 8px corners (`.btn-primary` in
  * App.css): the text-safe ember with white text on the light theme, `#FF6A52`
  * with graphite text on the dark, so the one action a view asks for reads as
  * the brand. Keep it to one per view; everything else is `secondary` or `ghost`.

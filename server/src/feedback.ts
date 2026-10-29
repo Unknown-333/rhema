@@ -255,7 +255,7 @@ async function fileIssue(
       authorization: `Bearer ${github.token}`,
       accept: "application/vnd.github+json",
       "content-type": "application/json",
-      "user-agent": "rema-server",
+      "user-agent": "rhema-server",
       "x-github-api-version": "2022-11-28",
     },
     body: JSON.stringify(issueFor(entry)),

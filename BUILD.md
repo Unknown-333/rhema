@@ -1,6 +1,6 @@
 # Build Instructions
 
-This guide covers how to set up the development environment and build REMA from source across different platforms.
+This guide covers how to set up the development environment and build RHEMA from source across different platforms.
 
 ## Prerequisites
 
@@ -51,7 +51,7 @@ ORT_LIB_LOCATION=$(brew --prefix onnxruntime)/lib ORT_PREFER_DYNAMIC_LINK=1 bun 
 > "Stage ONNX Runtime for Intel macOS" step in
 > [.github/workflows/build.yml](.github/workflows/build.yml) copies the dylib
 > into `src-tauri/onnx-libs/`, rewrites its install name to `@rpath/...` _before_
-> linking, and ships it inside `REMA.app/Contents/Frameworks`. Don't
+> linking, and ships it inside `RHEMA.app/Contents/Frameworks`. Don't
 > distribute a locally built Intel `.dmg`; use a CI artifact.
 
 Intel macOS is currently built in `test-build.yml` only, and is not yet part of
@@ -108,7 +108,7 @@ any release. See [issue #19](https://github.com/Unknown-333/rhema/issues/19).
 
 ```bash
 git clone git@github.com:Unknown-333/rhema.git
-cd REMA
+cd RHEMA
 ```
 
 ### 2. Install Dependencies
@@ -146,19 +146,19 @@ Create it once, on any machine with OpenSSL:
 
 ```bash
 openssl req -x509 -newkey rsa:2048 -days 3650 -nodes \
-  -keyout rema-signing.key -out rema-signing.crt \
-  -subj "/CN=REMA Release Signing" \
+  -keyout rhema-signing.key -out rhema-signing.crt \
+  -subj "/CN=RHEMA Release Signing" \
   -addext "keyUsage=critical,digitalSignature" \
   -addext "extendedKeyUsage=codeSigning"
 # -legacy: the macOS keychain cannot import OpenSSL 3's default PKCS#12 encryption
-openssl pkcs12 -export -legacy -inkey rema-signing.key -in rema-signing.crt \
-  -name "REMA Release Signing" -out rema-signing.p12 -passout pass:<password>
-openssl base64 -A -in rema-signing.p12 -out rema-signing.p12.b64
+openssl pkcs12 -export -legacy -inkey rhema-signing.key -in rhema-signing.crt \
+  -name "RHEMA Release Signing" -out rhema-signing.p12 -passout pass:<password>
+openssl base64 -A -in rhema-signing.p12 -out rhema-signing.p12.b64
 ```
 
 Then add three repository secrets: `APPLE_CERTIFICATE` (the contents of the
 `.b64` file), `APPLE_CERTIFICATE_PASSWORD` (the password), and optionally
-`APPLE_SIGNING_IDENTITY` (`REMA Release Signing`; without it the first
+`APPLE_SIGNING_IDENTITY` (`RHEMA Release Signing`; without it the first
 identity in the file is used). `build.yml` signs unsigned macOS builds with it
 when the secret is present and falls back to the old unsigned bundle when it is
 not. The step "Verify stable macOS signature" fails the build if the signature
@@ -173,7 +173,7 @@ replaces the unsigned signature; after that, updates keep it.
 
 ## Linux Install (from source)
 
-The raw binary (`src-tauri/target/release/rema`) cannot run standalone — it needs Tauri resource files (tray icons, sounds, VAD model) to be co-located at the expected path.
+The raw binary (`src-tauri/target/release/rhema`) cannot run standalone — it needs Tauri resource files (tray icons, sounds, VAD model) to be co-located at the expected path.
 
 ### Arch Linux
 
@@ -185,7 +185,7 @@ bun run install:arch
 
 It installs any missing build dependencies with `pacman`, builds the current
 checkout, and installs a self-contained copy for the current user under
-`~/.local`. It also creates the `speak` and `rema` terminal commands and a
+`~/.local`. It also creates the `speak` and `rhema` terminal commands and a
 desktop application entry. `~/.local/bin` must be on `PATH` to use the terminal
 commands (it is by default on most Arch desktop setups).
 
@@ -207,18 +207,18 @@ an app-private directory instead of copying their generic library names into
 
 ```bash
 cd /tmp
-ar x /path/to/REMA/src-tauri/target/release/bundle/deb/REMA_*_amd64.deb data.tar.gz
+ar x /path/to/RHEMA/src-tauri/target/release/bundle/deb/RHEMA_*_amd64.deb data.tar.gz
 tar xzf data.tar.gz
-sudo cp usr/bin/rema /usr/bin/
-sudo cp -r usr/lib/REMA /usr/lib/
+sudo cp usr/bin/rhema /usr/bin/
+sudo cp -r usr/lib/RHEMA /usr/lib/
 sudo cp -r usr/share/icons/hicolor/* /usr/share/icons/hicolor/
-sudo cp usr/share/applications/REMA.desktop /usr/share/applications/
+sudo cp usr/share/applications/RHEMA.desktop /usr/share/applications/
 ```
 
 After subsequent rebuilds, only the binary needs re-copying:
 
 ```bash
-sudo cp src-tauri/target/release/rema /usr/bin/
+sudo cp src-tauri/target/release/rhema /usr/bin/
 ```
 
 Resources only need re-copying if they change upstream (new icons, sounds, etc.).
@@ -232,7 +232,7 @@ Resources only need re-copying if they change upstream (new icons, sounds, etc.)
 The error from Tauri:
 
 ```
-Bundling REMA_*_amd64.AppImage
+Bundling RHEMA_*_amd64.AppImage
 failed to bundle project `failed to run linuxdeploy`
 ```
 
@@ -241,7 +241,7 @@ Tauri swallows the real linuxdeploy error. To see it, run linuxdeploy manually:
 ```bash
 cd src-tauri/target/release/bundle/appimage
 ~/.cache/tauri/linuxdeploy-x86_64.AppImage --appimage-extract-and-run \
-  --appdir REMA.AppDir --plugin gtk --output appimage
+  --appdir RHEMA.AppDir --plugin gtk --output appimage
 ```
 
 **Workaround:** The binary, deb, and rpm bundles all build fine — only the AppImage step fails. To skip it:

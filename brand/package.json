@@ -1,8 +1,8 @@
 {
-  "name": "rema-brand",
+  "name": "rhema-brand",
   "private": true,
   "type": "module",
-  "description": "Generates REMA's logo, icons and wordmark from brand/bitmaps.mjs",
+  "description": "Generates RHEMA's logo, icons and wordmark from brand/bitmaps.mjs",
   "scripts": {
     "build": "bun build.mjs"
   },

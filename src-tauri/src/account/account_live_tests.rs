@@ -5,7 +5,7 @@
 //! the server accepts what it sends, and routes it, has one authority.
 //!
 //! ```text
-//! REMA_ACCOUNT_TEST_SERVER=http://localhost:8787 \
+//! RHEMA_ACCOUNT_TEST_SERVER=http://localhost:8787 \
 //!   cargo test --lib account_live -- --ignored --nocapture
 //! ```
 //!
@@ -30,8 +30,8 @@ use super::socket::{self, Event};
 const WAIT: Duration = Duration::from_secs(10);
 
 fn server() -> String {
-    std::env::var("REMA_ACCOUNT_TEST_SERVER")
-        .expect("set REMA_ACCOUNT_TEST_SERVER to the server's URL")
+    std::env::var("RHEMA_ACCOUNT_TEST_SERVER")
+        .expect("set RHEMA_ACCOUNT_TEST_SERVER to the server's URL")
         .trim_end_matches('/')
         .to_string()
 }
@@ -328,9 +328,9 @@ async fn account_live_phone_requests_reach_the_computer() {
 
 /// A computer that serves a live view of this machine's primary screen to a
 /// real phone app, for checking the phone side by hand (or on an emulator):
-/// it signs in to (or creates) the account in `REMA_LIVE_EMAIL` /
-/// `REMA_LIVE_PASSWORD`, allows every phone on it, and runs for
-/// `REMA_LIVE_MINUTES` (default 15). Each view captures the primary screen
+/// it signs in to (or creates) the account in `RHEMA_LIVE_EMAIL` /
+/// `RHEMA_LIVE_PASSWORD`, allows every phone on it, and runs for
+/// `RHEMA_LIVE_MINUTES` (default 15). Each view captures the primary screen
 /// for real; input is recorded, not delivered.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 #[ignore]
@@ -339,9 +339,9 @@ async fn account_live_serve_a_live_view() {
 
     let server = server();
     let api = Api::new(&server).unwrap();
-    let email = std::env::var("REMA_LIVE_EMAIL").expect("REMA_LIVE_EMAIL");
-    let password = std::env::var("REMA_LIVE_PASSWORD").expect("REMA_LIVE_PASSWORD");
-    let minutes: u64 = std::env::var("REMA_LIVE_MINUTES")
+    let email = std::env::var("RHEMA_LIVE_EMAIL").expect("RHEMA_LIVE_EMAIL");
+    let password = std::env::var("RHEMA_LIVE_PASSWORD").expect("RHEMA_LIVE_PASSWORD");
+    let minutes: u64 = std::env::var("RHEMA_LIVE_MINUTES")
         .ok()
         .and_then(|m| m.parse().ok())
         .unwrap_or(15);

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/features/assistant/assistant_controller.dart';
-import 'package:rema_mobile/src/features/assistant/strings.dart';
+import 'package:rhema_mobile/src/features/assistant/assistant_controller.dart';
+import 'package:rhema_mobile/src/features/assistant/strings.dart';
 
 void main() {
   test('actions and pending are read defensively', () {
@@ -57,11 +57,11 @@ void main() {
         AssistantStrings.error(code, 'ALEX-PC', message: message);
     expect(
       text('assistant_off'),
-      'Turn on the assistant in REMA on ALEX-PC.',
+      'Turn on the assistant in RHEMA on ALEX-PC.',
     );
     expect(
       text('not_configured'),
-      'REMA on ALEX-PC has no AI model set up for the assistant.',
+      'RHEMA on ALEX-PC has no AI model set up for the assistant.',
     );
     expect(text('busy'), 'ALEX-PC is still answering your last question.');
     expect(text('failed', 'Rate limited.'), endsWith('Rate limited.'));

@@ -294,7 +294,7 @@ const Examples: React.FC = () => {
 
 /**
  * Commands: say what you want done ("open YouTube", "play Believer") and
- * REMA does it on this computer. The switch, the keys, what runs commands,
+ * RHEMA does it on this computer. The switch, the keys, what runs commands,
  * a box to try one by typing, and a few things to say. No banner: a plain
  * shortcut row holds the keys as well as one would.
  */

@@ -34,7 +34,7 @@ export type PageId =
   | "dictionary"
   | "models";
 
-/** The four jobs a model does in REMA — one tab each on Models. */
+/** The four jobs a model does in RHEMA — one tab each on Models. */
 export type ModelSlot = "stt" | "cleanup" | "assistant" | "voice";
 
 export const MODEL_SLOTS: ModelSlot[] = [

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/features/command/command_controller.dart';
-import 'package:rema_mobile/src/features/command/recent_commands.dart';
-import 'package:rema_mobile/src/features/command/strings.dart';
+import 'package:rhema_mobile/src/features/command/command_controller.dart';
+import 'package:rhema_mobile/src/features/command/recent_commands.dart';
+import 'package:rhema_mobile/src/features/command/strings.dart';
 
 void main() {
   test('a result is read defensively', () {
@@ -62,11 +62,11 @@ void main() {
     String text(String code) => CommandStrings.error(code, 'ALEX-PC');
     expect(
       text('command_mode_off'),
-      'Turn on Voice commands in REMA on ALEX-PC (Commands page).',
+      'Turn on Voice commands in RHEMA on ALEX-PC (Commands page).',
     );
     expect(
       text('not_configured'),
-      'REMA on ALEX-PC has no AI model set up for commands.',
+      'RHEMA on ALEX-PC has no AI model set up for commands.',
     );
     for (final code in [
       'busy',

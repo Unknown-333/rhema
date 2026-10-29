@@ -190,7 +190,7 @@ pub(crate) fn effective(settings: &AppSettings, model: &str) -> (String, String)
 }
 
 /// [`effective`] with the free credit's state given: `free_signed_in` lets a
-/// router the user pointed at REMA free run, and `free_usable` makes REMA
+/// router the user pointed at RHEMA free run, and `free_usable` makes RHEMA
 /// free the last resort after every provider the user set up a key for.
 pub(crate) fn effective_with(
     settings: &AppSettings,
@@ -239,7 +239,7 @@ pub(crate) fn effective_with(
     }
     // Nothing the user set up can route: the account's free credit can.
     if free_usable {
-        log::info!("Command mode has no key for `{chosen}`; using REMA free");
+        log::info!("Command mode has no key for `{chosen}`; using RHEMA free");
         return (free.to_string(), crate::free_credit::CHAT_MODEL.to_string());
     }
     (chosen.to_string(), model.to_string())
@@ -405,10 +405,10 @@ mod free_credit_tests {
     use crate::settings::get_default_settings;
 
     #[test]
-    fn rema_free_is_the_last_resort() {
+    fn rhema_free_is_the_last_resort() {
         let mut settings = get_default_settings();
         settings.command_router_provider_id = "anthropic".into();
-        // Nothing set up, free credit available: REMA free routes.
+        // Nothing set up, free credit available: RHEMA free routes.
         assert_eq!(
             effective_with(&settings, "claude-haiku-5-5", true, true),
             (PROVIDER_ID.into(), CHAT_MODEL.into())

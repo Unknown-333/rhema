@@ -764,7 +764,7 @@ const settings: Json = {
   push_to_talk: true,
   assistant_push_to_talk: true,
   dictation_silence_stop_secs: 0,
-  // Each platform's default engine; modifier-only keys need REMA Keys.
+  // Each platform's default engine; modifier-only keys need RHEMA Keys.
   keyboard_implementation: previewOs === "linux" ? "tauri" : "handy_keys",
   audio_feedback: false,
   audio_ducking: params.get("ducking") ?? "off",
@@ -792,7 +792,7 @@ const settings: Json = {
     : "parakeet-unified-en-0.6b",
   custom_words: fresh
     ? []
-    : ["Alex Morgan", "REMA", "firecrawl", "Gintama", "Tauri"],
+    : ["Alex Morgan", "RHEMA", "firecrawl", "Gintama", "Tauri"],
   post_process_enabled: true,
   post_process_on_dictation: params.get("cleanupShortcut") === "dictation",
   post_process_skip_short: true,
@@ -829,7 +829,7 @@ const settings: Json = {
   },
   post_process_prompts: [
     {
-      id: "rema_readable",
+      id: "rhema_readable",
       name: "Readable (recommended)",
       prompt: "Turn the transcript into readable text.",
     },
@@ -1785,7 +1785,7 @@ const handlers: Record<string, (args: Json) => unknown> = {
   save_insights_card: () => null,
   // Where the share dialog saves a card for LinkedIn.
   save_insights_card_to_downloads: () =>
-    "C:\\Users\\you\\Downloads\\REMA insights.png",
+    "C:\\Users\\you\\Downloads\\RHEMA insights.png",
   copy_insights_card: () => null,
   share_insights_card: () => null,
   list_meetings: () => ({ meetings, has_more: false }),
@@ -1931,9 +1931,9 @@ const handlers: Record<string, (args: Json) => unknown> = {
   is_portable: () => false,
   is_laptop: () => false,
   get_app_dir_path: () =>
-    "C:\\Users\\preview\\AppData\\Roaming\\com.rema.desktop",
+    "C:\\Users\\preview\\AppData\\Roaming\\com.rhema.desktop",
   get_log_dir_path: () =>
-    "C:\\Users\\preview\\AppData\\Local\\com.rema.desktop\\logs",
+    "C:\\Users\\preview\\AppData\\Local\\com.rhema.desktop\\logs",
   check_custom_sounds: () => ({ start: false, stop: false }),
   assistant_list_tts_voices: () =>
     settings.assistant_tts_engine === "elevenlabs"
@@ -1972,7 +1972,7 @@ const handlers: Record<string, (args: Json) => unknown> = {
       : null,
   get_update_support: () => ({
     mode: "in_app",
-    release_page: "https://github.com/OWNER/rema/releases/latest",
+    release_page: "https://github.com/Unknown-333/rhema/releases/latest",
   }),
   get_feedback_system_info: () => ({
     app_version: "2.0.1",
@@ -2050,7 +2050,7 @@ const handlers: Record<string, (args: Json) => unknown> = {
   set_cleanup_local_model: ({ modelId }) => {
     const generalPrompts = [
       "default_improve_transcriptions",
-      "rema_readable",
+      "rhema_readable",
     ];
     const selected = settings.post_process_selected_prompt_id as string;
     if (modelId === "cleanup-mini" && generalPrompts.includes(selected)) {
@@ -2059,7 +2059,7 @@ const handlers: Record<string, (args: Json) => unknown> = {
       modelId !== "cleanup-mini" &&
       selected === "cleanup_mini"
     ) {
-      settings.post_process_selected_prompt_id = "rema_readable";
+      settings.post_process_selected_prompt_id = "rhema_readable";
     }
     settings.post_process_provider_id = "builtin";
     (settings.post_process_models as Json).builtin = modelId;

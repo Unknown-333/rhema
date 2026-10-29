@@ -550,7 +550,7 @@ pub enum CloudSttUnavailableReason {
     /// sending the audio to another language's model instead would paste a
     /// confident transcript in the wrong language.
     UnsupportedLanguage,
-    /// REMA free is chosen and nobody is signed in to a REMA account.
+    /// RHEMA free is chosen and nobody is signed in to a RHEMA account.
     SignInRequired,
 }
 
@@ -626,7 +626,7 @@ pub enum PostProcessUnavailableReason {
     SelectedPromptMissing,
     SelectedPromptEmpty,
     MissingApiKey,
-    /// REMA free is chosen and nobody is signed in to a REMA account.
+    /// RHEMA free is chosen and nobody is signed in to a RHEMA account.
     SignInRequired,
 }
 
@@ -1220,7 +1220,7 @@ impl ModelUnloadTimeout {
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type)]
 #[serde(rename_all = "snake_case")]
 pub enum SoundTheme {
-    /// REMA's own start/stop cues — the default. Ships a matching lock
+    /// RHEMA's own start/stop cues — the default. Ships a matching lock
     /// cue (`popo_lock.wav`) used by every theme for tap-to-lock.
     Dictation,
     Marimba,
@@ -1750,7 +1750,7 @@ pub struct AppSettings {
     /// sentence, and match the case of a replaced selection.
     #[serde(default = "default_true")]
     pub smart_spacing_fix_case: bool,
-    /// Smart spacing: remove the period REMA itself pasted at the end of
+    /// Smart spacing: remove the period RHEMA itself pasted at the end of
     /// an unfinished sentence ("I went to the.") when the next dictation
     /// continues it.
     #[serde(default = "default_true")]
@@ -1765,7 +1765,7 @@ pub struct AppSettings {
     pub keyboard_implementation: KeyboardImplementation,
     /// Experimental: let the middle, Back and Forward mouse buttons be a
     /// shortcut's keys. Off, a stored mouse button is kept but not registered,
-    /// and the shortcut editor ignores the mouse. Only the REMA Keys
+    /// and the shortcut editor ignores the mouse. Only the RHEMA Keys
     /// engine can see mouse buttons at all.
     #[serde(default)]
     pub mouse_button_shortcuts: bool,
@@ -1799,7 +1799,7 @@ pub struct AppSettings {
     /// Master switch for the assistant experience: the floating panel window,
     /// its two hotkeys, spoken replies, profiles and personal memory.
     ///
-    /// Off makes REMA dictation-only and, crucially, never creates the
+    /// Off makes RHEMA dictation-only and, crucially, never creates the
     /// always-on-top panel WebView — a whole renderer process plus whatever it
     /// loads (the local TTS model above all) that otherwise lives for as long as
     /// the app does. Kept separate from the provider/model settings on purpose:
@@ -2124,7 +2124,7 @@ pub struct AppSettings {
     #[serde(default)]
     pub command_google_account: String,
     /// The user's own email address, which "email me" and "send it to
-    /// myself" mean. Empty: the signed-in REMA account's address is used
+    /// myself" mean. Empty: the signed-in RHEMA account's address is used
     /// (`command_mode::command_settings`), and failing that the command asks
     /// once and keeps the answer here.
     #[serde(default)]
@@ -2744,7 +2744,7 @@ fn default_post_process_providers() -> Vec<PostProcessProvider> {
         supports_structured_output: true,
     });
 
-    // REMA free: the account server's OpenAI-compatible API, paid for by
+    // RHEMA free: the account server's OpenAI-compatible API, paid for by
     // the account's free credit. The base URL is a placeholder; the real
     // address and the session token are put in at request time
     // (`crate::free_credit`), so neither is ever stored here.
@@ -2818,7 +2818,7 @@ fn default_cloud_stt_timeout_secs() -> u64 {
 /// waiting for a new app release.
 pub fn default_cloud_stt_providers() -> Vec<CloudSttProvider> {
     vec![
-        // REMA free: the account server's OpenAI-compatible transcription
+        // RHEMA free: the account server's OpenAI-compatible transcription
         // route, paid for by the account's free credit. Address and token are
         // put in at request time (`crate::free_credit`); none is stored.
         CloudSttProvider {
@@ -3332,7 +3332,7 @@ const LEGACY_IMPROVE_TRANSCRIPTIONS_PROMPT_V4: &str = concat!(
 /// a model rewriting the speaker's meaning and voice, and it must never read as
 /// permission to leave speech debris in punctuated text.
 const LEGACY_IMPROVE_TRANSCRIPTIONS_PROMPT_V5: &str = concat!(
-    "You are the dictation editor in REMA. The input is one raw speech-to-text transcript. The output is the text the speaker would have typed if they had written it instead of said it. Return only that text.\n\n",
+    "You are the dictation editor in RHEMA. The input is one raw speech-to-text transcript. The output is the text the speaker would have typed if they had written it instead of said it. Return only that text.\n\n",
     "Read the whole transcript first and work out the topic, the names in it, and what the speaker is getting at. Then edit. Most of the damage in a transcript is a meaning problem rather than a punctuation problem, and it cannot be fixed left to right.\n\n",
     "REMOVE\n",
     "Filled pauses (um, uh, er, ah), stutters, accidental repeated words, and abandoned fragments.\n",
@@ -3406,7 +3406,7 @@ const LEGACY_IMPROVE_TRANSCRIPTIONS_PROMPT_V5: &str = concat!(
 /// the fourth is there to show that a genuinely clean sentence is left alone —
 /// restraint taught by example rather than by a rule the model can over-apply.
 const IMPROVE_TRANSCRIPTIONS_PROMPT: &str = concat!(
-    "You are the dictation editor in REMA. The input is one raw speech-to-text transcript. The output is the text the speaker would have typed if they had written it instead of said it. Return only that text.\n\n",
+    "You are the dictation editor in RHEMA. The input is one raw speech-to-text transcript. The output is the text the speaker would have typed if they had written it instead of said it. Return only that text.\n\n",
     "Read the whole transcript first and work out the topic, the names in it, and what the speaker is getting at. Then edit. Most of the damage in a transcript is a meaning problem rather than a punctuation problem, and it cannot be fixed left to right.\n\n",
     "THE INPUT ALREADY HAS PUNCTUATION, AND IT IS NOT CLEAN\n",
     "Speech-to-text hands you capital letters and full stops. Do not read that as evidence there is nothing to do. The damage is inside the sentences: half-finished words, a phrase started twice, a subject repeated, a thought abandoned mid-clause. A transcript can be perfectly punctuated and still be unreadable, and returning it unchanged is the main way this job is failed. If you have removed nothing and rebuilt nothing, look again.\n\n",
@@ -3514,7 +3514,7 @@ pub fn cleanup_mini_prompt_text() -> &'static str {
 /// shipped selection onto it. [`DEFAULT_POST_PROCESS_PROMPT_ID`] stays as a
 /// second bundled choice, and its id stays the fallback every repair path uses,
 /// so no existing install's selection or history changes meaning.
-pub const READABLE_POST_PROCESS_PROMPT_ID: &str = "rema_readable";
+pub const READABLE_POST_PROCESS_PROMPT_ID: &str = "rhema_readable";
 const READABLE_POST_PROCESS_PROMPT_NAME: &str = "Readable (recommended)";
 
 /// A general-purpose cleanup prompt built around the result being easy to read.
@@ -3632,7 +3632,7 @@ fn default_assistant_provider_id() -> String {
 /// `assistant::RESPONSE_STYLE_SECTION` instead. Written without em dashes on
 /// purpose: models copy the punctuation of the prompt they are given.
 fn default_assistant_system_prompt() -> String {
-    "You are REMA's assistant, a capable AI helper on the user's desktop. They open you with a hotkey while they are working in another app, and they usually speak their request. Their speech is transcribed before it reaches you, so expect the odd misheard word and go with the most sensible meaning.\n\nHandle whatever they ask: answer questions, explain things, write emails and replies, rewrite, shorten or proofread text, translate, summarize, brainstorm, do quick maths, help with code, and set reminders. Do the task right away instead of describing what you would do. Ask a clarifying question only when you truly cannot proceed without one.\n\nBe direct and useful. Lead with the answer, skip openers like \"Great question\" or \"Sure, here you go\", and fit the length to the request: a quick question gets a sentence or two, a real task gets what it needs. When a screenshot of the user's screen is attached, work from what you actually see in it.".to_string()
+    "You are RHEMA's assistant, a capable AI helper on the user's desktop. They open you with a hotkey while they are working in another app, and they usually speak their request. Their speech is transcribed before it reaches you, so expect the odd misheard word and go with the most sensible meaning.\n\nHandle whatever they ask: answer questions, explain things, write emails and replies, rewrite, shorten or proofread text, translate, summarize, brainstorm, do quick maths, help with code, and set reminders. Do the task right away instead of describing what you would do. Ask a clarifying question only when you truly cannot proceed without one.\n\nBe direct and useful. Lead with the answer, skip openers like \"Great question\" or \"Sure, here you go\", and fit the length to the request: a quick question gets a sentence or two, a real task gets what it needs. When a screenshot of the user's screen is attached, work from what you actually see in it.".to_string()
 }
 
 /// Shipped prompts from earlier versions, each paired with the profile id it
@@ -4202,7 +4202,7 @@ fn ensure_post_process_defaults(settings: &mut AppSettings) -> bool {
         }
 
         let default_model = default_model_for_provider(&provider.id);
-        // REMA free serves one chat model, for the assistant too.
+        // RHEMA free serves one chat model, for the assistant too.
         if provider.id == crate::free_credit::PROVIDER_ID
             && settings
                 .assistant_models
@@ -4550,7 +4550,7 @@ pub fn get_default_settings() -> AppSettings {
         ShortcutBinding {
             id: COMMAND_BINDING_ID.to_string(),
             name: "Voice command".to_string(),
-            description: "Say what you want done, such as \"open YouTube\", and REMA does it."
+            description: "Say what you want done, such as \"open YouTube\", and RHEMA does it."
                 .to_string(),
             default_binding: default_command_shortcut.to_string(),
             current_binding: default_command_shortcut.to_string(),
@@ -4687,7 +4687,7 @@ pub fn get_default_settings() -> AppSettings {
         assistant_models: {
             let mut map = HashMap::new();
             for provider in default_post_process_providers() {
-                // REMA free serves one chat model; every other provider
+                // RHEMA free serves one chat model; every other provider
                 // starts without one.
                 let model = if provider.id == crate::free_credit::PROVIDER_ID {
                     crate::free_credit::CHAT_MODEL.to_string()
@@ -4793,7 +4793,7 @@ impl AppSettings {
             .find(|provider| provider.id == self.post_process_provider_id)
     }
 
-    /// The provider the assistant runs on: the user's choice, or REMA free
+    /// The provider the assistant runs on: the user's choice, or RHEMA free
     /// when that choice cannot run (no model, or no key for a provider that
     /// needs one) and the account's free credit can.
     pub fn active_assistant_provider(&self) -> Option<&PostProcessProvider> {
@@ -5065,7 +5065,7 @@ pub(crate) fn resolve_post_process_brain(
 }
 
 /// [`resolve_post_process_brain`] with the free credit's state given:
-/// `free_usable` lets REMA free serve cleanup when neither selection can.
+/// `free_usable` lets RHEMA free serve cleanup when neither selection can.
 /// It is the last resort, after both of the user's own selections, so a
 /// provider the user set up is never replaced by it.
 pub(crate) fn resolve_post_process_brain_with(
@@ -6280,7 +6280,7 @@ mod tests {
         let path = dir.path().join(SETTINGS_STORE_PATH);
 
         let mut saved = get_default_settings();
-        saved.custom_words = vec!["REMA".to_string()];
+        saved.custom_words = vec!["RHEMA".to_string()];
         saved.selected_model = "parakeet-tdt-0.6b-v3".to_string();
         saved
             .bindings
@@ -6301,7 +6301,7 @@ mod tests {
         ));
         let (restored, _) =
             deserialize_settings_value(reopened.get("settings").expect("settings restored"));
-        assert_eq!(restored.custom_words, vec!["REMA".to_string()]);
+        assert_eq!(restored.custom_words, vec!["RHEMA".to_string()]);
         assert_eq!(restored.selected_model, "parakeet-tdt-0.6b-v3");
         assert_eq!(
             restored.bindings["transcribe"].current_binding,
@@ -8366,7 +8366,7 @@ mod tests {
         map.insert("whisper_accelerator".into(), serde_json::json!("cpu"));
         map.insert(
             "custom_words".into(),
-            serde_json::json!(["Kubernetes", "REMA"]),
+            serde_json::json!(["Kubernetes", "RHEMA"]),
         );
         let bindings = map["bindings"].as_object_mut().unwrap();
         for (i, binding) in bindings.values_mut().enumerate() {

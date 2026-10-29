@@ -2,8 +2,8 @@
 //! settings would use (the same fallback to the assistant's provider), so a
 //! prompt or tool change can be tried on the real model before a release. Most
 //! only ask for the plan; `command_mode_live_carry_out` runs the executor for
-//! real (`REMA_LIVE_RUN`), and refuses any email not addressed to
-//! `REMA_LIVE_OWN_EMAIL` alone.
+//! real (`RHEMA_LIVE_RUN`), and refuses any email not addressed to
+//! `RHEMA_LIVE_OWN_EMAIL` alone.
 //!
 //! ```text
 //! cargo test --lib command_mode::live_tests -- --ignored --nocapture
@@ -20,7 +20,7 @@ use crate::settings::AppSettings;
 /// The settings the installed app would load, with its keys from the keychain.
 pub(crate) fn installed_settings() -> AppSettings {
     let dir = std::env::var("APPDATA").expect("APPDATA");
-    let path = std::path::Path::new(&dir).join("com.rema.desktop/settings_store.json");
+    let path = std::path::Path::new(&dir).join("com.rhema.desktop/settings_store.json");
     let text = std::fs::read_to_string(&path).expect("the installed app's settings");
     let text = text.trim_start_matches('\u{feff}');
     let store: serde_json::Value = serde_json::from_str(text).expect("settings JSON");
@@ -182,14 +182,14 @@ async fn command_mode_live_agent_works_calculator() {
     );
 }
 
-/// Route each command in `REMA_LIVE_COMMANDS` (separated by `|`) several
-/// times (`REMA_LIVE_REPEAT`, default 5) and print every plan, to tell a
+/// Route each command in `RHEMA_LIVE_COMMANDS` (separated by `|`) several
+/// times (`RHEMA_LIVE_REPEAT`, default 5) and print every plan, to tell a
 /// flaky route from a wrong one.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 #[ignore = "calls the model this machine's settings name"]
 async fn command_mode_live_repeat() {
-    let commands = std::env::var("REMA_LIVE_COMMANDS").unwrap_or_default();
-    let repeat: usize = std::env::var("REMA_LIVE_REPEAT")
+    let commands = std::env::var("RHEMA_LIVE_COMMANDS").unwrap_or_default();
+    let repeat: usize = std::env::var("RHEMA_LIVE_REPEAT")
         .ok()
         .and_then(|n| n.parse().ok())
         .unwrap_or(5);
@@ -375,7 +375,7 @@ async fn command_mode_live_routing_sweep() {
 }
 
 /// Print the buttons and fields the accessibility tree reads in the first
-/// window whose title contains `REMA_LIVE_WINDOW`, three reads a second
+/// window whose title contains `RHEMA_LIVE_WINDOW`, three reads a second
 /// apart (a Chromium browser fills its tree in after the first request).
 #[cfg(target_os = "windows")]
 #[test]
@@ -383,7 +383,7 @@ async fn command_mode_live_routing_sweep() {
 fn command_mode_live_dump_window() {
     use super::agent;
     use super::effects::{Effects, LiveEffects};
-    let wanted = std::env::var("REMA_LIVE_WINDOW").expect("REMA_LIVE_WINDOW");
+    let wanted = std::env::var("RHEMA_LIVE_WINDOW").expect("RHEMA_LIVE_WINDOW");
     let window = LiveEffects
         .open_windows()
         .into_iter()
@@ -394,7 +394,7 @@ fn command_mode_live_dump_window() {
         match tree.snapshot(Some(window.id)) {
             Ok(snapshot) => {
                 println!("READ {read}: {} elements", snapshot.elements.len());
-                let everything = std::env::var_os("REMA_LIVE_ALL").is_some();
+                let everything = std::env::var_os("RHEMA_LIVE_ALL").is_some();
                 for element in snapshot.elements.iter().filter(|e| {
                     everything || matches!(e.role.as_str(), "button" | "edit" | "document")
                 }) {
@@ -411,7 +411,7 @@ fn command_mode_live_dump_window() {
 }
 
 /// Try the ways of sending the Gmail draft open in the window whose title
-/// contains `REMA_LIVE_WINDOW`, one at a time, printing the title after
+/// contains `RHEMA_LIVE_WINDOW`, one at a time, printing the title after
 /// each: the keyboard into the message body then Ctrl+Enter, then the Send
 /// button. For a draft addressed to the tester only.
 #[cfg(target_os = "windows")]
@@ -421,7 +421,7 @@ fn command_mode_live_try_send() {
     use super::agent::{self, tree::UiAction};
     use super::effects::{Effects, KeyCombo, LiveEffects};
     use super::registry::Modifier;
-    let wanted = std::env::var("REMA_LIVE_WINDOW").expect("REMA_LIVE_WINDOW");
+    let wanted = std::env::var("RHEMA_LIVE_WINDOW").expect("RHEMA_LIVE_WINDOW");
     let effects = LiveEffects;
     let window = effects
         .open_windows()
@@ -527,9 +527,9 @@ async fn command_mode_live_review_phrasing() {
     assert!(wrong.is_empty(), "wrong: {wrong:?}");
 }
 
-/// Carry out each command in `REMA_LIVE_RUN` (separated by `|`) on this
+/// Carry out each command in `RHEMA_LIVE_RUN` (separated by `|`) on this
 /// computer, through the real executor and the real effects, and print what it
-/// did. An email is refused unless every recipient is `REMA_LIVE_OWN_EMAIL`,
+/// did. An email is refused unless every recipient is `RHEMA_LIVE_OWN_EMAIL`,
 /// and an email command handed to the screen agent is refused too, so nothing
 /// can reach anyone else.
 #[cfg(target_os = "windows")]
@@ -542,8 +542,8 @@ async fn command_mode_live_carry_out() {
     use super::{CommandModeState, CommandOrigin, CommandReport, Scope};
     use std::sync::Arc;
 
-    let commands = std::env::var("REMA_LIVE_RUN").expect("REMA_LIVE_RUN");
-    let own = std::env::var("REMA_LIVE_OWN_EMAIL")
+    let commands = std::env::var("RHEMA_LIVE_RUN").expect("RHEMA_LIVE_RUN");
+    let own = std::env::var("RHEMA_LIVE_OWN_EMAIL")
         .unwrap_or_default()
         .trim()
         .to_lowercase();
@@ -641,7 +641,7 @@ async fn command_mode_live_carry_out() {
 /// Email a file for real: a small file is written to Documents, the router
 /// plans "email me …" against this machine's model, and the executor finds
 /// the file, attaches it in Gmail and sends it, with evidence. "Me" is
-/// `REMA_LIVE_OWN_EMAIL`, and a plan addressed to anyone else (or handed to
+/// `RHEMA_LIVE_OWN_EMAIL`, and a plan addressed to anyone else (or handed to
 /// the screen agent) is refused before anything runs. The file is deleted
 /// afterwards.
 #[cfg(target_os = "windows")]
@@ -654,27 +654,27 @@ async fn command_mode_live_email_file() {
     use super::{CommandModeState, CommandOrigin, CommandReport, Scope};
     use std::sync::Arc;
 
-    let own = std::env::var("REMA_LIVE_OWN_EMAIL")
-        .expect("REMA_LIVE_OWN_EMAIL")
+    let own = std::env::var("RHEMA_LIVE_OWN_EMAIL")
+        .expect("RHEMA_LIVE_OWN_EMAIL")
         .trim()
         .to_lowercase();
     assert!(
         own.contains('@'),
-        "REMA_LIVE_OWN_EMAIL must be an address"
+        "RHEMA_LIVE_OWN_EMAIL must be an address"
     );
     let home = std::env::var_os("USERPROFILE").expect("USERPROFILE");
     let file = std::path::Path::new(&home)
         .join("Documents")
-        .join("REMA live test attachment.txt");
-    std::fs::write(&file, "Sent by REMA's live email-a-file test.").unwrap();
+        .join("RHEMA live test attachment.txt");
+    std::fs::write(&file, "Sent by RHEMA's live email-a-file test.").unwrap();
 
     let mut settings = installed_settings();
     settings.command_own_email = own.clone();
     settings.command_confirm_irreversible = false;
     let llm = llm::router_for(&settings).expect("a usable router model");
     let state = CommandModeState::default();
-    let command = std::env::var("REMA_LIVE_COMMAND")
-        .unwrap_or_else(|_| "email me the rema live test attachment".into());
+    let command = std::env::var("RHEMA_LIVE_COMMAND")
+        .unwrap_or_else(|_| "email me the rhema live test attachment".into());
     let started = Instant::now();
     let context = CommandContext::capture();
     let followup = Followup::default();
@@ -759,15 +759,15 @@ async fn command_mode_live_email_file() {
 }
 
 /// Discard the Gmail drafts the live tests left open: every "Compose Mail"
-/// tab whose subject is one of the tests' own ("REMA attach probe",
-/// "REMA live test …"). Any other draft is left exactly as it is.
+/// tab whose subject is one of the tests' own ("RHEMA attach probe",
+/// "RHEMA live test …"). Any other draft is left exactly as it is.
 #[cfg(target_os = "windows")]
 #[test]
 #[ignore = "discards the live tests' Gmail drafts on this computer"]
 fn command_mode_live_discard_test_drafts() {
     use super::agent::{self, tree::UiAction};
     use super::effects::{Effects, LiveEffects};
-    const OURS: &[&str] = &["rema attach probe", "rema live test"];
+    const OURS: &[&str] = &["rhema attach probe", "rhema live test"];
     let tree = agent::tree();
     for window in LiveEffects.open_windows() {
         let Ok(snapshot) = tree.snapshot(Some(window.id)) else {

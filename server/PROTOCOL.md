@@ -1,4 +1,4 @@
-# REMA account & device protocol (v1)
+# RHEMA account & device protocol (v1)
 
 The contract between the account server (`server/`), the desktop app
 (`src-tauri/`), and the phone app (`mobile/`). Change it here first, then in all
@@ -78,7 +78,7 @@ The server's address can change, so neither app hard-codes it. Both read it
 from a discovery address, defined once per app:
 
 ```
-GET https://discovery.rema.invalid
+GET https://discovery.rhema.invalid
 → 200, JSON: { "apiBaseUrl": "http://192.168.1.20:8787" }
 ```
 
@@ -213,7 +213,7 @@ token (`Authorization: Bearer <token>`).
 | `POST /v1/free/audio/transcriptions` | OpenAI multipart (`file`, `model`, `language?`, `prompt?`, `response_format?`) → `{ "text": "…" }` |
 | `POST /v1/free/audio/speech`         | `{ input, voice?, model?, response_format?, speed? }` → MP3 bytes (`audio/mpeg`)                   |
 
-- Model ids: `rema-free-chat`, `rema-free-transcribe`, `rema-free-speech`.
+- Model ids: `rhema-free-chat`, `rhema-free-transcribe`, `rhema-free-speech`.
   The `model` a request names is ignored: the server always uses its
   configured upstream model for that kind. `/models` lists only the kinds this
   server has configured.
@@ -247,7 +247,7 @@ token (`Authorization: Bearer <token>`).
   estimate, `usedUsd` may end slightly above `limitUsd`; `remainingUsd` never
   goes below 0.
 - Every metered response (success or 402) carries
-  `X-REMA-Credit-Remaining: <usd>`, the balance after this request. For a
+  `X-RHEMA-Credit-Remaining: <usd>`, the balance after this request. For a
   streamed answer the header is sent before the answer, so it is the balance
   before it; read `/balance` afterwards for the exact figure.
 - The balance belongs to the account's email address, not its id: deleting an
@@ -257,7 +257,7 @@ token (`Authorization: Bearer <token>`).
   and 4096 characters of speech `input` (413 `payload_too_large`, or 400
   `invalid_request` for the text).
 - Errors: 401 `unauthorized`, 402 `credit_exhausted` (message: "Your free $1 is
-  used up. Add your own API key in REMA to keep going."), 503
+  used up. Add your own API key in RHEMA to keep going."), 503
   `free_disabled`, and `upstream_error`: a request the upstream refused as
   malformed keeps its 4xx status and the upstream's own `message` and `param`
   (so a client can drop an unsupported parameter and retry); anything else the
@@ -278,7 +278,7 @@ PKCE verifier.
    `redirect_uri` must be exactly one of:
    - desktop: `http://127.0.0.1:<port>/callback` (a loopback listener the app
      started; port 1024–65535)
-   - phone: `rema://auth/callback`
+   - phone: `rhema://auth/callback`
 
    Anything else answers 400 with an HTML page and no redirect. If Google is not
    configured the server redirects to `redirect_uri?error=google_unavailable`.
@@ -326,7 +326,7 @@ refused, so feedback never fails over a session.
 { "kind": "bug",                     // bug|idea|question, optional
   "message": "The overlay hides…",   // required, 3–5000 chars after trim
   "email": "me@example.com",         // optional: where the person wants a reply
-  "system": "REMA 2.3.0 · Windows 11 · x86_64 · nsis",  // optional, ≤ 300 chars
+  "system": "RHEMA 2.3.0 · Windows 11 · x86_64 · nsis",  // optional, ≤ 300 chars
   "screenshots": [                   // optional, at most 3
     { "mediaType": "image/webp",     // image/png|image/jpeg|image/webp
       "data": "<base64>" } ] }
@@ -635,7 +635,7 @@ see and use windows", off by default; with it off every request below answers
 
 // computer → phone
 { "kind": "result", "requestId": "uuid", "ok": true,
-  "windows": [ { "id": "w1", "title": "Claude Code — rema", "app": "Windows Terminal", "front": true } ] }
+  "windows": [ { "id": "w1", "title": "Claude Code — rhema", "app": "Windows Terminal", "front": true } ] }
 { "kind": "result", "requestId": "uuid", "ok": true, "pressed": 1 }   // windows.keys
 ```
 

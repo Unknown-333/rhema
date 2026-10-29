@@ -440,7 +440,7 @@ export const MemoryActions: React.FC = () => {
   const exportMemory = async () => {
     try {
       const path = await save({
-        defaultPath: "rema-memory.json",
+        defaultPath: "rhema-memory.json",
         filters: [{ name: "Memory", extensions: ["json"] }],
       });
       if (path && (await run(commands.exportAssistantMemory(path)))) {

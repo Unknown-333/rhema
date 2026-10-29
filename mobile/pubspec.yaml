@@ -1,5 +1,5 @@
-name: rema_mobile
-description: "REMA for Android and iOS: a wireless mic and keyboard for REMA on your computer."
+name: rhema_mobile
+description: "RHEMA for Android and iOS: a wireless mic and keyboard for RHEMA on your computer."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -64,7 +64,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # REMA's type (docs/rema-brand.md, Studio): Geist for everything you
+  # RHEMA's type (docs/rhema-brand.md, Studio): Geist for everything you
   # read and operate, Geist Mono for figures that line up, Plus Jakarta Sans
   # 800 for the wordmark only. Static instances from the official releases;
   # the licences sit beside them. Then the Phosphor icon fonts.

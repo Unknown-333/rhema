@@ -24,7 +24,7 @@ function decode(text: string, where: string): Uint8Array {
 }
 
 /**
- * The AES-256 key that encrypts stored API keys: `REMA_SECRETS_KEY` (base64
+ * The AES-256 key that encrypts stored API keys: `RHEMA_SECRETS_KEY` (base64
  * of 32 bytes) when set; otherwise `secrets.key` beside the database, created
  * with 32 random bytes on first start (mode 0600 where the OS has modes). An
  * in-memory database gets a key that lives as long as the process.
@@ -35,8 +35,8 @@ export function resolveSecretsKey(
 ): SecretsKey {
   if (fromEnv !== undefined && fromEnv.trim() !== "") {
     return {
-      key: decode(fromEnv, "REMA_SECRETS_KEY"),
-      source: "REMA_SECRETS_KEY",
+      key: decode(fromEnv, "RHEMA_SECRETS_KEY"),
+      source: "RHEMA_SECRETS_KEY",
     };
   }
   if (databasePath === ":memory:") {

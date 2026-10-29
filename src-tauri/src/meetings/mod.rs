@@ -14,7 +14,7 @@
 //! * **The output is a document, not a paste.** Nothing is typed into another
 //!   app. The result is a stored transcript plus generated notes the user edits.
 //!
-//! Storage lives in its own `rema_meetings.db` rather than joining `rema.db`.
+//! Storage lives in its own `rhema_meetings.db` rather than joining `rhema.db`.
 //! A dictation history is small, hot, and written on every transcription; a
 //! meeting store is large, cold, and written in bursts. Keeping them apart means
 //! a meetings migration can never put a user's dictation history at risk, and a

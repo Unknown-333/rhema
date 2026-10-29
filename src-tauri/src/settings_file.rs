@@ -844,7 +844,7 @@ mod tests {
     fn user_settings() -> Value {
         json!({
             "settings": {
-                "custom_words": ["REMA", "Qwen"],
+                "custom_words": ["RHEMA", "Qwen"],
                 "selected_model": "parakeet-tdt-0.6b-v3",
                 "bindings": { "transcribe": { "current_binding": "command_right" } }
             },
@@ -979,7 +979,7 @@ mod tests {
         // A different file does refresh it.
         write_json(
             &path,
-            &json!({ "settings": { "custom_words": ["REMA"] } }),
+            &json!({ "settings": { "custom_words": ["RHEMA"] } }),
         );
         drop(SettingsFile::open(path.clone()));
         assert_eq!(fs::read(&backup).unwrap(), fs::read(&path).unwrap());
@@ -1508,14 +1508,14 @@ mod tests {
         let path = store_path(&dir);
         {
             let file = SettingsFile::open(path.clone());
-            file.set("settings", json!({ "custom_words": ["REMA"] }));
+            file.set("settings", json!({ "custom_words": ["RHEMA"] }));
             file.flush().unwrap();
         }
         let file = SettingsFile::open(path);
         assert_eq!(file.outcome(), &LoadOutcome::Loaded);
         assert_eq!(
             file.get("settings"),
-            Some(json!({ "custom_words": ["REMA"] }))
+            Some(json!({ "custom_words": ["RHEMA"] }))
         );
     }
 

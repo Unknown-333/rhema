@@ -106,7 +106,7 @@ pub fn close_command_card(app: &AppHandle, seq: u32) -> bool {
 }
 /// The height the popup measured for its cards; 0 until it has.
 static HEIGHT: AtomicU32 = AtomicU32::new(0);
-/// Whether REMA was the active app the last time it was looked at before
+/// Whether RHEMA was the active app the last time it was looked at before
 /// a click on the popup (the click itself activates it).
 #[cfg(target_os = "macos")]
 static ACTIVE_WHEN_ASKED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
@@ -352,7 +352,7 @@ pub fn fit(app: &AppHandle, requested: f64) {
     });
 }
 
-/// After a click on the popup: on macOS it made REMA the active app, so
+/// After a click on the popup: on macOS it made RHEMA the active app, so
 /// the next paste (the one Allow lets through, or any later one) would land
 /// here. Nothing to do elsewhere, where the popup cannot take the foreground.
 #[cfg(not(target_os = "macos"))]
@@ -360,7 +360,7 @@ pub async fn hand_back_focus(_app: &AppHandle) {}
 
 /// `hide:` gives activation back to the app that had it (as the assistant's
 /// Insert does), then the windows it hid return without taking it again.
-/// Skipped when REMA was active just before the click: the user was in
+/// Skipped when RHEMA was active just before the click: the user was in
 /// one of its windows, and the paste belongs there.
 #[cfg(target_os = "macos")]
 pub async fn hand_back_focus(app: &AppHandle) {

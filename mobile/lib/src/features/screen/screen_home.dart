@@ -141,7 +141,7 @@ class _ScreenHomeState extends State<ScreenHome> {
   }
 
   Widget _buildBody(BuildContext context, Device computer, bool watchable) {
-    final t = context.rema;
+    final t = context.rhema;
     final listing = _controller.listing;
     final error = _error;
     final name = computer.name;
@@ -243,17 +243,17 @@ class _ScreenHomeState extends State<ScreenHome> {
                     children: [
                       if (screen.primary)
                         const TextSpan(text: '${ScreenStrings.primary} · '),
-                      TextSpan(text: '${screen.width}', style: RemaType.mono),
+                      TextSpan(text: '${screen.width}', style: RhemaType.mono),
                       const TextSpan(text: ' × '),
                       TextSpan(
                         text: '${screen.height}',
-                        style: RemaType.mono,
+                        style: RhemaType.mono,
                       ),
                     ],
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
                 trailing: trailing(watched: watchedId == screen.id),
                 enabled: watchable,
@@ -337,7 +337,7 @@ class _TurnOnSteps extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: const EdgeInsets.only(top: Space.s16),
       child: Column(
@@ -359,7 +359,7 @@ class _TurnOnSteps extends StatelessWidget {
                     ),
                     child: Text(
                       '${i + 1}',
-                      style: RemaType.label.copyWith(
+                      style: RhemaType.label.copyWith(
                         color: t.ink,
                         fontWeight: FontWeight.w600,
                       ),
@@ -369,7 +369,7 @@ class _TurnOnSteps extends StatelessWidget {
                   Expanded(
                     child: Text(
                       step,
-                      style: RemaType.rowBody.copyWith(color: t.ink),
+                      style: RhemaType.rowBody.copyWith(color: t.ink),
                     ),
                   ),
                 ],
@@ -377,7 +377,7 @@ class _TurnOnSteps extends StatelessWidget {
             ),
           Text(
             ScreenStrings.turnOnBody,
-            style: RemaType.footnote.copyWith(color: t.muted),
+            style: RhemaType.footnote.copyWith(color: t.muted),
           ),
         ],
       ),

@@ -1,5 +1,5 @@
-// The Material theme built from REMA's tokens. Screens style themselves
-// through it (and `context.rema`), never with colours of their own.
+// The Material theme built from RHEMA's tokens. Screens style themselves
+// through it (and `context.rhema`), never with colours of their own.
 
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
@@ -11,8 +11,8 @@ import 'tokens.dart';
 /// the navigation bar in the canvas colour, edge to edge.
 SystemUiOverlayStyle systemBars(Brightness brightness) {
   final t = brightness == Brightness.light
-      ? RemaColors.light
-      : RemaColors.dark;
+      ? RhemaColors.light
+      : RhemaColors.dark;
   final light = brightness == Brightness.light;
   return (light ? SystemUiOverlayStyle.dark : SystemUiOverlayStyle.light)
       .copyWith(
@@ -29,7 +29,7 @@ SystemUiOverlayStyle systemBars(Brightness brightness) {
 
 ThemeData buildTheme(Brightness brightness) {
   final light = brightness == Brightness.light;
-  final t = light ? RemaColors.light : RemaColors.dark;
+  final t = light ? RhemaColors.light : RhemaColors.dark;
 
   final scheme = ColorScheme(
     brightness: brightness,
@@ -92,7 +92,7 @@ ThemeData buildTheme(Brightness brightness) {
     useMaterial3: true,
     brightness: brightness,
     colorScheme: scheme,
-    fontFamily: RemaFonts.text,
+    fontFamily: RhemaFonts.text,
     textTheme: text,
     primaryTextTheme: text,
     scaffoldBackgroundColor: t.canvas,
@@ -143,7 +143,7 @@ ThemeData buildTheme(Brightness brightness) {
         padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(horizontal: 20),
         ),
-        textStyle: WidgetStatePropertyAll(RemaType.button),
+        textStyle: WidgetStatePropertyAll(RhemaType.button),
         iconSize: const WidgetStatePropertyAll(20),
         shape: const WidgetStatePropertyAll(pill),
         side: focusRing,
@@ -163,7 +163,7 @@ ThemeData buildTheme(Brightness brightness) {
         padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(horizontal: 20),
         ),
-        textStyle: WidgetStatePropertyAll(RemaType.button),
+        textStyle: WidgetStatePropertyAll(RhemaType.button),
         iconSize: const WidgetStatePropertyAll(20),
         shape: const WidgetStatePropertyAll(pill),
         side: WidgetStateProperty.resolveWith(
@@ -191,7 +191,7 @@ ThemeData buildTheme(Brightness brightness) {
         padding: const WidgetStatePropertyAll(
           EdgeInsets.symmetric(horizontal: 12),
         ),
-        textStyle: WidgetStatePropertyAll(RemaType.button),
+        textStyle: WidgetStatePropertyAll(RhemaType.button),
         iconSize: const WidgetStatePropertyAll(20),
         shape: const WidgetStatePropertyAll(pill),
         side: focusRing,
@@ -220,11 +220,11 @@ ThemeData buildTheme(Brightness brightness) {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: t.fill,
-      hintStyle: RemaType.body.copyWith(color: t.muted),
-      labelStyle: RemaType.body.copyWith(color: t.muted),
+      hintStyle: RhemaType.body.copyWith(color: t.muted),
+      labelStyle: RhemaType.body.copyWith(color: t.muted),
       floatingLabelBehavior: FloatingLabelBehavior.never,
-      helperStyle: RemaType.footnote.copyWith(color: t.muted),
-      errorStyle: RemaType.footnote.copyWith(color: t.danger),
+      helperStyle: RhemaType.footnote.copyWith(color: t.muted),
+      errorStyle: RhemaType.footnote.copyWith(color: t.danger),
       errorMaxLines: 3,
       helperMaxLines: 2,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -273,7 +273,7 @@ ThemeData buildTheme(Brightness brightness) {
       behavior: SnackBarBehavior.floating,
       backgroundColor: t.inverse,
       elevation: 0,
-      contentTextStyle: RemaType.rowBody.copyWith(color: t.onInverse),
+      contentTextStyle: RhemaType.rowBody.copyWith(color: t.onInverse),
       actionTextColor: light ? const Color(0xFFFF8F7C) : t.accent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Radii.md),
@@ -291,7 +291,7 @@ ThemeData buildTheme(Brightness brightness) {
         color: t.inverse,
         borderRadius: BorderRadius.circular(Radii.xs),
       ),
-      textStyle: RemaType.footnote.copyWith(color: t.onInverse),
+      textStyle: RhemaType.footnote.copyWith(color: t.onInverse),
     ),
     popupMenuTheme: PopupMenuThemeData(
       color: t.card,
@@ -319,24 +319,24 @@ ThemeData buildTheme(Brightness brightness) {
   );
 }
 
-TextTheme _textTheme(RemaColors t) {
+TextTheme _textTheme(RhemaColors t) {
   TextStyle ink(TextStyle s) => s.copyWith(color: t.ink);
   return TextTheme(
     // Off-scale Material slots alias onto the scale.
-    displayLarge: ink(RemaType.title1),
-    displayMedium: ink(RemaType.title1),
-    displaySmall: ink(RemaType.display),
-    headlineLarge: ink(RemaType.title1),
-    headlineMedium: ink(RemaType.title1),
-    headlineSmall: ink(RemaType.title1),
-    titleLarge: ink(RemaType.title2),
-    titleMedium: ink(RemaType.title2),
-    titleSmall: ink(RemaType.rowTitle),
-    bodyLarge: ink(RemaType.body),
-    bodyMedium: ink(RemaType.rowBody),
-    bodySmall: RemaType.footnote.copyWith(color: t.muted),
-    labelLarge: ink(RemaType.button),
-    labelMedium: ink(RemaType.label),
-    labelSmall: ink(RemaType.caption),
+    displayLarge: ink(RhemaType.title1),
+    displayMedium: ink(RhemaType.title1),
+    displaySmall: ink(RhemaType.display),
+    headlineLarge: ink(RhemaType.title1),
+    headlineMedium: ink(RhemaType.title1),
+    headlineSmall: ink(RhemaType.title1),
+    titleLarge: ink(RhemaType.title2),
+    titleMedium: ink(RhemaType.title2),
+    titleSmall: ink(RhemaType.rowTitle),
+    bodyLarge: ink(RhemaType.body),
+    bodyMedium: ink(RhemaType.rowBody),
+    bodySmall: RhemaType.footnote.copyWith(color: t.muted),
+    labelLarge: ink(RhemaType.button),
+    labelMedium: ink(RhemaType.label),
+    labelSmall: ink(RhemaType.caption),
   );
 }

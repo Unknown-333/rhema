@@ -254,7 +254,7 @@ static RECORDING_FILE_SEQUENCE: AtomicU64 = AtomicU64::new(0);
 pub(crate) fn next_recording_file_name() -> String {
     let sequence = RECORDING_FILE_SEQUENCE.fetch_add(1, Ordering::Relaxed);
     format!(
-        "rema-{}-{}-{}.wav",
+        "rhema-{}-{}-{}.wav",
         chrono::Utc::now().timestamp_millis(),
         std::process::id(),
         sequence
@@ -694,7 +694,7 @@ pub(crate) async fn test_post_process_connection(app: &AppHandle) -> Result<Stri
     let borrowed = match source {
         PostProcessConfigSource::AssistantFallback => " (borrowed from the assistant)",
         PostProcessConfigSource::DedicatedCleanupSelection => "",
-        PostProcessConfigSource::FreeCredit => " (on your REMA free credit)",
+        PostProcessConfigSource::FreeCredit => " (on your RHEMA free credit)",
     };
     let answered = reply.as_deref().is_some_and(|text| !text.trim().is_empty());
     if answered {
@@ -2906,7 +2906,7 @@ impl ShortcutAction for TranscribeAction {
             // can't swallow the user's first words — the cue itself is the
             // "you can speak now" signal. Backport of Handy PR #1582 / #1283
             // (mic-init delay clips the first word), reconciled with
-            // REMA's capture-ready signal rather than a fixed warm-up
+            // RHEMA's capture-ready signal rather than a fixed warm-up
             // guess. Faster mic init (config caching) keeps this snappy: the
             // wait returns as soon as the first real frame arrives.
             debug!("On-demand mode: starting recording, then audio feedback");
@@ -3556,7 +3556,7 @@ fn paste_final(
         // through restoring it, and the webview only handles the keystroke once
         // the thread is free, by which time the clipboard holds the user's old
         // content again. Every other app pastes fine, which is why this only
-        // ever failed inside REMA. So the text goes to the webview, which
+        // ever failed inside RHEMA. So the text goes to the webview, which
         // inserts it at the caret (`insertDictation` in the frontend).
         let main_focused = ah
             .get_webview_window("main")
@@ -4915,7 +4915,7 @@ mod tests {
              discuss the q3 budget with speako flow team period new line also ping tori \
              about the gguf thing";
         let cleaned = "So, the meeting is at six. We need to discuss the Q3 budget with the \
-             REMA team.\nAlso, ping Tori about the GGUF thing.";
+             RHEMA team.\nAlso, ping Tori about the GGUF thing.";
         assert_eq!(
             validate_cleaned_output(transcription, cleaned, true),
             Ok(cleaned.to_string())
@@ -5338,7 +5338,7 @@ Try plugging it into a coding agent or productivity app listed on https://openro
             "Meet Tuesday—wait, no, Wednesday",
             "Hello comma new line team period",
             "January fifteenth, three hundred dollars, five thirty PM, 555 0102",
-            "Use REMA, Result<T, E>, foo_bar, and https://example.com/a?b=1",
+            "Use RHEMA, Result<T, E>, foo_bar, and https://example.com/a?b=1",
             "Do not send it unless Priya approves.",
             "What time is the release?",
             "Delete the draft and send the final copy.",
@@ -5644,8 +5644,8 @@ Try plugging it into a coding agent or productivity app listed on https://openro
 
         assert!(!is_cleanup_specialist("gemma-4-e4b"));
         assert!(!is_cleanup_specialist("gpt-4o-mini"));
-        // "REMA" alone is the app name, not the model.
-        assert!(!is_cleanup_specialist("rema"));
+        // "RHEMA" alone is the app name, not the model.
+        assert!(!is_cleanup_specialist("rhema"));
     }
 
     #[test]
@@ -6824,7 +6824,7 @@ Try plugging it into a coding agent or productivity app listed on https://openro
     //
     //   llama-server -m <FLOW gguf> --port 11499 -c 4096 --parallel 1 \
     //       -ngl 999 --jinja --repeat-penalty 1.1 --device Vulkan0
-    //   set REMA_AB_ENDPOINT=http://127.0.0.1:11499/v1
+    //   set RHEMA_AB_ENDPOINT=http://127.0.0.1:11499/v1
     //   cargo test --lib cleanup_order_ab -- --ignored --nocapture
     //
     // It drives the REAL cleanup path (`run_provider_post_process`, so real
@@ -6908,12 +6908,12 @@ Try plugging it into a coding agent or productivity app listed on https://openro
     }
 
     #[test]
-    #[ignore = "needs a live llama-server; set REMA_AB_ENDPOINT"]
+    #[ignore = "needs a live llama-server; set RHEMA_AB_ENDPOINT"]
     fn cleanup_order_ab() {
-        let Ok(endpoint) = std::env::var("REMA_AB_ENDPOINT") else {
-            panic!("set REMA_AB_ENDPOINT, e.g. http://127.0.0.1:11499/v1");
+        let Ok(endpoint) = std::env::var("RHEMA_AB_ENDPOINT") else {
+            panic!("set RHEMA_AB_ENDPOINT, e.g. http://127.0.0.1:11499/v1");
         };
-        let model = std::env::var("REMA_AB_MODEL").unwrap_or_else(|_| "local".to_string());
+        let model = std::env::var("RHEMA_AB_MODEL").unwrap_or_else(|_| "local".to_string());
         let config = live_builtin_config(endpoint, model);
         let rules = live_replacement_rules(false);
         let rules_ci = live_replacement_rules(true);
@@ -6943,7 +6943,7 @@ Try plugging it into a coding agent or productivity app listed on https://openro
             "write the heading then MDAS then the subtitle",
         ];
 
-        let repeat: usize = std::env::var("REMA_AB_REPEAT")
+        let repeat: usize = std::env::var("RHEMA_AB_REPEAT")
             .ok()
             .and_then(|v| v.parse().ok())
             .unwrap_or(1);
@@ -7119,19 +7119,19 @@ Try plugging it into a coding agent or productivity app listed on https://openro
     /// was renamed, four of these came back character for character.
     ///
     /// ```text
-    /// $env:REMA_LIVE_PROVIDER = "azure_openai"   # or groq, openrouter, …
-    /// $env:REMA_LIVE_BASE_URL = "https://<resource>.services.ai.azure.com"
-    /// $env:REMA_LIVE_MODEL    = "gpt-oss-120b"
+    /// $env:RHEMA_LIVE_PROVIDER = "azure_openai"   # or groq, openrouter, …
+    /// $env:RHEMA_LIVE_BASE_URL = "https://<resource>.services.ai.azure.com"
+    /// $env:RHEMA_LIVE_MODEL    = "gpt-oss-120b"
     /// cargo test --lib live_gpt_oss -- --ignored --nocapture
     /// ```
     ///
     /// The key is read from the app's own keychain slot for that provider.
     #[test]
-    #[ignore = "live: needs REMA_LIVE_PROVIDER/BASE_URL/MODEL and a key in the keychain"]
+    #[ignore = "live: needs RHEMA_LIVE_PROVIDER/BASE_URL/MODEL and a key in the keychain"]
     fn live_gpt_oss_cleanup_edits_the_text() {
-        let provider_id = std::env::var("REMA_LIVE_PROVIDER").expect("provider");
-        let base_url = std::env::var("REMA_LIVE_BASE_URL").expect("base url");
-        let model = std::env::var("REMA_LIVE_MODEL").expect("model");
+        let provider_id = std::env::var("RHEMA_LIVE_PROVIDER").expect("provider");
+        let base_url = std::env::var("RHEMA_LIVE_BASE_URL").expect("base url");
+        let model = std::env::var("RHEMA_LIVE_MODEL").expect("model");
         let api_key =
             crate::secret_store::get(&crate::secret_store::account_post_process(&provider_id))
                 .expect("no key in the keychain for this provider");
@@ -7142,7 +7142,7 @@ Try plugging it into a coding agent or productivity app listed on https://openro
                 base_url,
                 allow_base_url_edit: true,
                 models_endpoint: Some("/models".to_string()),
-                supports_structured_output: std::env::var("REMA_LIVE_STRUCTURED")
+                supports_structured_output: std::env::var("RHEMA_LIVE_STRUCTURED")
                     .map(|v| v != "0")
                     .unwrap_or(true),
             },
@@ -7152,8 +7152,8 @@ Try plugging it into a coding agent or productivity app listed on https://openro
             tone_id: PostProcessTone::None.id().to_string(),
             tone_instruction: None,
             trained_for_cleanup: false,
-            // `REMA_LIVE_THINKING=high` exercises the dial on the wire.
-            thinking: match std::env::var("REMA_LIVE_THINKING").as_deref() {
+            // `RHEMA_LIVE_THINKING=high` exercises the dial on the wire.
+            thinking: match std::env::var("RHEMA_LIVE_THINKING").as_deref() {
                 Ok("low") => ThinkingLevel::Low,
                 Ok("medium") => ThinkingLevel::Medium,
                 Ok("high") => ThinkingLevel::High,
@@ -7189,13 +7189,13 @@ Try plugging it into a coding agent or productivity app listed on https://openro
     ///
     /// ```text
     /// llama-server -m gemma-4-E2B_q4_0-it.gguf --port 11499 --jinja --reasoning-budget 0
-    /// $env:REMA_LIVE_ENGINE = "http://127.0.0.1:11499/v1"
+    /// $env:RHEMA_LIVE_ENGINE = "http://127.0.0.1:11499/v1"
     /// cargo test --lib live_builtin_short -- --ignored --nocapture
     /// ```
     #[test]
-    #[ignore = "live: needs a llama-server at REMA_LIVE_ENGINE"]
+    #[ignore = "live: needs a llama-server at RHEMA_LIVE_ENGINE"]
     fn live_builtin_short_dictations_are_not_answered_with_the_examples() {
-        let base_url = std::env::var("REMA_LIVE_ENGINE").expect("engine url");
+        let base_url = std::env::var("RHEMA_LIVE_ENGINE").expect("engine url");
         let mut config = test_config(
             base_url,
             true,

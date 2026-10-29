@@ -7,7 +7,7 @@ import '../../core/models.dart';
 import '../../core/pkce.dart';
 
 /// The phone's redirect target (PROTOCOL.md, "Google sign-in").
-const googleRedirectUri = 'rema://auth/callback';
+const googleRedirectUri = 'rhema://auth/callback';
 
 /// Google sign-in through an auth session (Custom Tabs on Android,
 /// ASWebAuthenticationSession on iOS). Null when the person backed out.
@@ -22,7 +22,7 @@ Future<AuthResponse?> signInWithGoogle(ApiClient api) async {
             challenge: pkce.challenge,
           )
           .toString(),
-      callbackUrlScheme: 'rema',
+      callbackUrlScheme: 'rhema',
     );
   } on PlatformException catch (e) {
     if (e.code == 'CANCELED') return null;

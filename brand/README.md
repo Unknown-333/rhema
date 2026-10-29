@@ -1,4 +1,4 @@
-# REMA brand assets
+# RHEMA brand assets
 
 Everything here is generated from the dot bitmaps in `bitmaps.mjs`.
 

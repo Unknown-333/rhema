@@ -27,7 +27,7 @@ export const DebugPaths: React.FC<DebugPathsProps> = ({
           </span>{" "}
           {/* eslint-disable-next-line i18next/no-literal-string */}
           <span className="font-mono text-xs select-text">
-            %APPDATA%/com.rema.desktop
+            %APPDATA%/com.rhema.desktop
           </span>
         </div>
         <div>
@@ -36,7 +36,7 @@ export const DebugPaths: React.FC<DebugPathsProps> = ({
           </span>{" "}
           {/* eslint-disable-next-line i18next/no-literal-string */}
           <span className="font-mono text-xs select-text">
-            %APPDATA%/com.rema.desktop/models
+            %APPDATA%/com.rhema.desktop/models
           </span>
         </div>
         <div>
@@ -45,7 +45,7 @@ export const DebugPaths: React.FC<DebugPathsProps> = ({
           </span>{" "}
           {/* eslint-disable-next-line i18next/no-literal-string */}
           <span className="font-mono text-xs select-text">
-            %APPDATA%/com.rema.desktop/settings_store.json
+            %APPDATA%/com.rhema.desktop/settings_store.json
           </span>
         </div>
       </div>

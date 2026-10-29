@@ -1,4 +1,4 @@
-// REMA brand bitmaps: the single source of truth for every mark, glyph and
+// RHEMA brand bitmaps: the single source of truth for every mark, glyph and
 // wordmark. Each string is one row of dots.
 //   '#'  lit dot (ink: white on dark, near-black on light)
 //   'R'  signal-red dot (the text cursor; red always means "mic live" in the
@@ -44,12 +44,13 @@ export const CLEANUP_BADGE = [
 /** 5 x 7 capitals for the wordmark. */
 export const LETTERS = {
   R: ["####.", "#...#", "#...#", "####.", "#.#..", "#..#.", "#...#"],
+  H: ["#...#", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
   E: ["#####", "#....", "#....", "####.", "#....", "#....", "#####"],
   M: ["#...#", "##.##", "#.#.#", "#.#.#", "#...#", "#...#", "#...#"],
   A: [".###.", "#...#", "#...#", "#####", "#...#", "#...#", "#...#"],
 };
 
-export const WORD = "REMA";
+export const WORD = "RHEMA";
 
 export const COLORS = {
   tile: "#000000",

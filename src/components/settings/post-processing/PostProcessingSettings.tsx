@@ -220,7 +220,7 @@ const NONE_PROMPT_ID = "none";
  * user's own prompt has no "original".
  */
 const SHIPPED_PROMPT_IDS = new Set([
-  "rema_readable",
+  "rhema_readable",
   "default_improve_transcriptions",
   "cleanup_mini",
 ]);

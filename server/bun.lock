@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "rema-server",
+      "name": "rhema-server",
       "devDependencies": {
         "@types/bun": "1.4.3",
         "typescript": "~5.6.3",

@@ -1427,7 +1427,7 @@ mod tests {
 
         #[test]
         fn windows_default_ctrl_win_survives_an_unrelated_modifier_tap() {
-            // The REMA Windows dictation default is ctrl_left+super.
+            // The RHEMA Windows dictation default is ctrl_left+super.
             let mut state = ManagerState::new();
             let hotkey = Hotkey::new(Modifiers::CTRL_LEFT | Modifiers::CMD_LEFT, None).unwrap();
             let id = HotkeyId(0);

@@ -14,7 +14,7 @@ use std::time::{Duration, Instant};
 use serde_json::Value;
 
 /// The one address that says where the account server is.
-pub const DISCOVERY_URL: &str = "https://discovery.rema.invalid";
+pub const DISCOVERY_URL: &str = "https://discovery.rhema.invalid";
 const TIMEOUT: Duration = Duration::from_secs(10);
 /// Asked at most this often.
 const EVERY: Duration = Duration::from_secs(60);

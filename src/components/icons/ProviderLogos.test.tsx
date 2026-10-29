@@ -30,7 +30,7 @@ const IDS: Record<ProviderKind, string[]> = {
     "apple_intelligence",
     "bedrock_mantle",
     "builtin",
-    "rema_free",
+    "rhema_free",
     "local",
     "custom",
   ],
@@ -41,7 +41,7 @@ const IDS: Record<ProviderKind, string[]> = {
     "openrouter",
     "deepgram",
     "mistral",
-    "rema_free",
+    "rhema_free",
     "custom",
   ],
   tts: [
@@ -60,19 +60,19 @@ const IDS: Record<ProviderKind, string[]> = {
     "xai",
     "mistral",
     "inworld",
-    "rema_free",
+    "rhema_free",
     "custom",
   ],
   search: ["serper", "brave", "tavily", "exa", "serpapi", "tinyfish"],
 };
 
-/** Ids with no brand of their own, rendered with a REMA glyph on purpose:
+/** Ids with no brand of their own, rendered with a RHEMA glyph on purpose:
  *  our own engine, user-defined endpoints, the open-source local voice, and
  *  search backends with no open-source monochrome mark — each with its own
  *  glyph, so a grid of search backends never shows three identical tiles. */
 const GLYPHS: Record<string, string> = {
   builtin: "glyph-cpu",
-  rema_free: "glyph-gift",
+  rhema_free: "glyph-gift",
   custom: "glyph-plug",
   kokoro: "glyph-audio-lines",
   kitten: "glyph-cat",

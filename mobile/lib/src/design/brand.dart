@@ -1,4 +1,4 @@
-// The REMA mark and wordmark, drawn rather than shipped as images so they
+// The RHEMA mark and wordmark, drawn rather than shipped as images so they
 // stay sharp at every size and need no asset.
 
 import 'package:flutter/material.dart';
@@ -8,8 +8,8 @@ import 'tokens.dart';
 /// The dot-wave mark: a waveform that settles into a line of text and ends in
 /// a red cursor, white on the black tile. Same bitmap as `brand/bitmaps.mjs`
 /// (`MARK`) and `src/components/Logo.tsx`, on its 1024 grid.
-class RemaMark extends StatelessWidget {
-  const RemaMark({super.key, this.size = 32, this.tile = true});
+class RhemaMark extends StatelessWidget {
+  const RhemaMark({super.key, this.size = 32, this.tile = true});
 
   final double size;
 
@@ -92,14 +92,14 @@ class Wordmark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-    'REMA',
+    'RHEMA',
     style: TextStyle(
-      fontFamily: RemaFonts.display,
+      fontFamily: RhemaFonts.display,
       fontWeight: FontWeight.w800,
       fontSize: size,
       height: 1,
       letterSpacing: 0.04 * size,
-      color: color ?? context.rema.ink,
+      color: color ?? context.rhema.ink,
     ),
   );
 }
@@ -112,12 +112,12 @@ class LogoLockup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-    label: 'REMA',
+    label: 'RHEMA',
     excludeSemantics: true,
     child: Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        RemaMark(size: size),
+        RhemaMark(size: size),
         SizedBox(width: size * 0.3),
         Wordmark(size: size * 0.82),
       ],

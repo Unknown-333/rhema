@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/features/dictate/dictate_screen.dart';
-import 'package:rema_mobile/src/features/dictate/remote_windows.dart';
+import 'package:rhema_mobile/src/features/dictate/dictate_screen.dart';
+import 'package:rhema_mobile/src/features/dictate/remote_windows.dart';
 
 void main() {
   group('windowsOf', () {
@@ -12,7 +12,7 @@ void main() {
         'windows': [
           {
             'id': 'w1',
-            'title': 'Claude Code — rema',
+            'title': 'Claude Code — rhema',
             'app': 'Windows Terminal',
             'front': true,
           },

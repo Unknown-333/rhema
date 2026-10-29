@@ -14,7 +14,7 @@
          the system WebView) does, and its default refuses http. Only the
          https discovery answer can name a server; the user cannot type one. -->
     <application
-        android:label="REMA"
+        android:label="RHEMA"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -42,7 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Receives rema://auth/callback at the end of Google sign-in
+        <!-- Receives rhema://auth/callback at the end of Google sign-in
              (flutter_web_auth_2). -->
         <activity
             android:name="com.linusu.flutter_web_auth_2.CallbackActivity"
@@ -52,7 +52,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="rema"/>
+                <data android:scheme="rhema"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

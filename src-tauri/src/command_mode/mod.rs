@@ -1,4 +1,4 @@
-//! Command mode: say what you want done, and REMA does it on screen.
+//! Command mode: say what you want done, and RHEMA does it on screen.
 //!
 //! "Send an email to Ron about a meeting at 9:00" becomes one request to a
 //! small, fast model that picks a predefined tool and fills in its arguments
@@ -444,7 +444,7 @@ fn effects_for(
 }
 
 /// The settings a command runs with: the user's own, with their email
-/// address taken from the signed-in REMA account when they never gave one,
+/// address taken from the signed-in RHEMA account when they never gave one,
 /// so "email me this file" has somewhere to go.
 fn command_settings(app: &AppHandle) -> crate::settings::AppSettings {
     let mut settings = crate::settings::get_settings(app);

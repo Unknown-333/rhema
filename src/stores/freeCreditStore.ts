@@ -12,9 +12,9 @@ const FOCUS_REFRESH_MS = 30_000;
 
 interface FreeCreditStore {
   status: FreeCreditStatus | null;
-  /** A "Use REMA free" request is running for this job. */
+  /** A "Use RHEMA free" request is running for this job. */
   choosing: FreeCreditJob | null;
-  /** Point one job at REMA free. Resolves to an error code, or null. */
+  /** Point one job at RHEMA free. Resolves to an error code, or null. */
   choose: (job: FreeCreditJob) => Promise<string | null>;
 }
 
@@ -31,7 +31,7 @@ export const useFreeCreditStore = create<FreeCreditStore>((set) => ({
       }
       return result.error;
     } catch (error) {
-      console.error("Failed to choose REMA free:", error);
+      console.error("Failed to choose RHEMA free:", error);
       return "server";
     } finally {
       set({ choosing: null });
@@ -66,7 +66,7 @@ const start = () => {
   void listen<AccountStatus>("account-status-changed", () => void load()).catch(
     () => {},
   );
-  // A setting changed elsewhere can move a job on or off REMA free.
+  // A setting changed elsewhere can move a job on or off RHEMA free.
   void listen("assistant-settings-changed", () => void load()).catch(() => {});
   window.addEventListener("focus", () => {
     const now = Date.now();

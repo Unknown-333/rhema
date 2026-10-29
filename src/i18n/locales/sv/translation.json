@@ -35,10 +35,10 @@
     "downloading": "Laddar ner… {{progress}}%",
     "downloadingUnknown": "Laddar ner…",
     "installing": "Installerar…",
-    "reopening": "REMA stängs för att installera uppdateringen och öppnas igen om några sekunder.",
+    "reopening": "RHEMA stängs för att installera uppdateringen och öppnas igen om några sekunder.",
     "updatedTo": "Uppdaterad till version {{version}}",
     "restart": "Starta om nu",
-    "readyToRestart": "Uppdateringen är installerad. Starta om REMA för att börja använda den.",
+    "readyToRestart": "Uppdateringen är installerad. Starta om RHEMA för att börja använda den.",
     "installFailed": "Uppdateringen installerades inte. Du kan försöka igen, eller ladda ner installationsprogrammet och köra det själv.",
     "downloadFailed": "Nedladdningen blev inte klar. Kontrollera anslutningen och försök igen.",
     "downloadInstaller": "Ladda ner installationsprogram",
@@ -49,13 +49,13 @@
     "showInFolder": "Visa i mapp",
     "viewRelease": "Visa på GitHub",
     "hint": {
-      "windows": "REMA stängs, installerar uppdateringen och öppnas igen. Du behöver inte klicka på något mer.",
-      "macos": "REMA startar om med den nya versionen. macOS kan be dig tillåta Mikrofon och Hjälpmedel igen efteråt.",
-      "linux": "REMA startar om med den nya versionen. En .deb-installation ber först om ditt lösenord."
+      "windows": "RHEMA stängs, installerar uppdateringen och öppnas igen. Du behöver inte klicka på något mer.",
+      "macos": "RHEMA startar om med den nya versionen. macOS kan be dig tillåta Mikrofon och Hjälpmedel igen efteråt.",
+      "linux": "RHEMA startar om med den nya versionen. En .deb-installation ber först om ditt lösenord."
     },
     "modes": {
       "portable": "Det här är den portabla versionen, som inte kan ersätta sig själv. Ladda ner den nya versionen och kopiera din Data-mapp till den.",
-      "packageManager": "REMA installerades av din pakethanterare, så uppdatera den där, till exempel med yay -Syu rema-bin.",
+      "packageManager": "RHEMA installerades av din pakethanterare, så uppdatera den där, till exempel med yay -Syu rhema-bin.",
       "download": "Den här kopian kan inte uppdatera sig själv på plats. Ladda ner installationsprogrammet och kör det för att få den nya versionen."
     },
     "pill": {
@@ -70,7 +70,7 @@
   "feedback": {
     "button": "Skicka feedback",
     "title": "Skicka feedback",
-    "description": "Jag läser varje meddelande själv, så skriv precis som det blir. Tack för att du hjälper till att göra REMA bättre.",
+    "description": "Jag läser varje meddelande själv, så skriv precis som det blir. Tack för att du hjälper till att göra RHEMA bättre.",
     "kind": {
       "label": "Typ av feedback",
       "bug": "Fel",
@@ -79,7 +79,7 @@
     },
     "placeholder": {
       "bug": "Vad hände, och vad förväntade du dig i stället?",
-      "idea": "Vad skulle göra REMA bättre för dig?",
+      "idea": "Vad skulle göra RHEMA bättre för dig?",
       "question": "Vad vill du veta?"
     },
     "messageLabel": "Meddelande",
@@ -114,7 +114,7 @@
       "too_many_screenshots": "Du kan bifoga upp till 3 skärmbilder.",
       "too_large": "Skärmbilderna är för stora för att skicka. Ta bort en och försök igen.",
       "invalid_screenshot": "En av skärmbilderna är inte en PNG-, JPEG- eller WebP-bild. Ta bort den och försök igen.",
-      "no_server": "REMA hittar inte sin feedbackserver just nu. Ditt meddelande finns kvar här, så försök igen senare.",
+      "no_server": "RHEMA hittar inte sin feedbackserver just nu. Ditt meddelande finns kvar här, så försök igen senare.",
       "network": "Det gick inte att nå feedbackservern. Kontrollera anslutningen; ditt meddelande finns kvar här.",
       "rate_limited": "Du har skickat mycket feedback på kort tid. Försök igen om en stund.",
       "rejected": "Feedbacken kunde inte tas emot. Försök korta ner den och skicka igen.",
@@ -168,10 +168,10 @@
       "retry": "Försök igen"
     },
     "tour": {
-      "features": "Vad REMA gör",
+      "features": "Vad RHEMA gör",
       "count": "{{current}} av {{total}}",
       "next": "Nästa",
-      "finish": "Öppna REMA",
+      "finish": "Öppna RHEMA",
       "tabs": {
         "dictate": "Diktering",
         "ask": "Assistent",
@@ -249,7 +249,7 @@
       "ready": "Du är klar"
     },
     "speechToText": {
-      "title": "Hur ska REMA höra dig?",
+      "title": "Hur ska RHEMA höra dig?",
       "subtitle": "Det här förvandlar din röst till text, direkt på din dator. Välj en, byt när du vill.",
       "cards": {
         "fast": {
@@ -314,7 +314,7 @@
       "downloadingVoice": "Din röstmodell landar. {{percentage}}% klart.",
       "downloadingGeneric": "Laddar fortfarande ner. {{percentage}}% klart.",
       "signOff": "Det var allt. Säg något nu.",
-      "openApp": "Öppna REMA"
+      "openApp": "Öppna RHEMA"
     },
     "errors": {
       "selectModel": "Kunde inte välja den modellen. Försök igen.",
@@ -446,7 +446,7 @@
     },
     "permissions": {
       "title": "Behörigheter krävs",
-      "description": "REMA behöver ett par behörigheter för att fungera korrekt.",
+      "description": "RHEMA behöver ett par behörigheter för att fungera korrekt.",
       "microphone": {
         "title": "Mikrofonåtkomst",
         "description": "Krävs för att höra din röst för transkription."
@@ -456,7 +456,7 @@
         "description": "Krävs för att skriva transkriberad text i dina program.",
         "stuckHint": "Redan påslaget i Systeminställningar? Efter en uppdatering kan macOS behålla en behörighet som inte längre matchar den här versionen.",
         "reset": "Återställ behörighet",
-        "resetDone": "Slå nu på REMA igen i Systeminställningar."
+        "resetDone": "Slå nu på RHEMA igen i Systeminställningar."
       },
       "grant": "Bevilja behörighet",
       "granted": "Beviljad",
@@ -465,7 +465,7 @@
       "errors": {
         "checkFailed": "Det gick inte att kontrollera behörigheterna. Försök igen.",
         "requestFailed": "Det gick inte att begära behörighet. Försök igen.",
-        "resetFailed": "Det gick inte att återställa behörigheten. Ta bort REMA från listan Hjälpmedel och lägg till det igen."
+        "resetFailed": "Det gick inte att återställa behörigheten. Ta bort RHEMA från listan Hjälpmedel och lägg till det igen."
       }
     },
     "frame": {
@@ -655,7 +655,7 @@
           },
           "command": {
             "name": "Röstkommando",
-            "description": "Säg vad du vill få gjort, till exempel ”öppna YouTube”, så gör REMA det."
+            "description": "Säg vad du vill få gjort, till exempel ”öppna YouTube”, så gör RHEMA det."
           },
           "hands_free": {
             "name": "Handsfree",
@@ -699,7 +699,7 @@
       },
       "handsFree": {
         "unavailableKeys": "Fungerar när diktering bara består av modifierartangenter, som Ctrl + Win. Med {{keys}}, stäng av ”Håll för att prata” i stället: varje diktering fortsätter då tills du trycker på tangenterna igen.",
-        "unavailableEngine": "Kräver tangentbordsmotorn REMA Keys ({{where}}). Eller stäng av ”Håll för att prata”: varje diktering fortsätter då tills du trycker på tangenterna igen.",
+        "unavailableEngine": "Kräver tangentbordsmotorn RHEMA Keys ({{where}}). Eller stäng av ”Håll för att prata”: varje diktering fortsätter då tills du trycker på tangenterna igen.",
         "taken": "{{name}} använder redan {{keys}}, så den här tangenten gör ingenting förrän en av dem ändras.",
         "needsKey": "Välj en tangent, till exempel mellanslag eller Enter. En modifierartangent ensam kan inte vara handsfree-tangenten.",
         "pressKey": "Tryck på en tangent…",
@@ -756,9 +756,9 @@
       "clearSearch": "Rensa sökning",
       "noSearchResults": "Inga modeller heter ”{{query}}”.",
       "olderHint": "Äldre format. {{model}} ({{size}}) är den nyare versionen av den här modellen.",
-      "retiredHint": "Använder en äldre motor som REMA inte längre har. Hämta {{model}} ({{size}}) i stället.",
+      "retiredHint": "Använder en äldre motor som RHEMA inte längre har. Hämta {{model}} ({{size}}) i stället.",
       "retired": {
-        "notice": "De här modellerna använde en äldre motor som REMA inte längre har.",
+        "notice": "De här modellerna använde en äldre motor som RHEMA inte längre har.",
         "newVersion": "Ny version: {{model}} · {{size}}",
         "getNewVersion": "Hämta ny version",
         "useNewVersion": "Använd ny version",
@@ -817,7 +817,7 @@
         "rescanning": "Söker igen…",
         "rescanDone_one": "{{count}} lokal modell hittad.",
         "rescanDone_other": "{{count}} lokala modeller hittade.",
-        "footnote": "Länkade mappar genomsöks igen när REMA startar, så modeller du lägger till i dem senare dyker upp av sig själva. Att ta bort länken till en mapp eller ta bort en modell tar bara bort den från den här listan — dina filer ligger kvar där de är.",
+        "footnote": "Länkade mappar genomsöks igen när RHEMA startar, så modeller du lägger till i dem senare dyker upp av sig själva. Att ta bort länken till en mapp eller ta bort en modell tar bara bort den från den här listan — dina filer ligger kvar där de är.",
         "removeTitle": "Ta bort från listan?",
         "removeConfirm": "Ta bort ”{{modelName}}” från din modellista?\n\nSjälva filen ligger kvar där den är:\n{{path}}",
         "missingBadge": "Filen saknas",
@@ -907,7 +907,7 @@
         "label": "Musknappar som kortkommandon",
         "description": "Använd musens mittenknapp, Bakåt eller Framåt som kortkommando: klicka på kortkommandots tangenter och tryck sedan på knappen. Så länge den är ett kortkommando gör knappen inget annat.",
         "linux": "På Linux fungerar bara mittenknappen.",
-        "needsEngine": "Kräver tangentbordsimplementeringen REMA Keys."
+        "needsEngine": "Kräver tangentbordsimplementeringen RHEMA Keys."
       },
       "longFormChunking": {
         "title": "Dela upp långa inspelningar",
@@ -925,11 +925,11 @@
       },
       "autostart": {
         "label": "Starta vid uppstart",
-        "description": "Öppna REMA automatiskt när du loggar in."
+        "description": "Öppna RHEMA automatiskt när du loggar in."
       },
       "showTrayIcon": {
         "label": "Visa ikon i systemfältet",
-        "description": "Behåll REMA i systemfältet."
+        "description": "Behåll RHEMA i systemfältet."
       },
       "trayIconColor": {
         "label": "Färgad ikon i systemfältet",
@@ -937,7 +937,7 @@
       },
       "closeBehavior": {
         "label": "Avsluta när jag stänger fönstret",
-        "description": "När det är av fortsätter REMA att köras i systemfältet när du stänger fönstret, så att dina kortkommandon fortfarande fungerar. När det är på avslutas appen helt när du stänger fönstret."
+        "description": "När det är av fortsätter RHEMA att köras i systemfältet när du stänger fönstret, så att dina kortkommandon fortfarande fungerar. När det är på avslutas appen helt när du stänger fönstret."
       },
       "overlayStyle": {
         "title": "Överlagring",
@@ -1031,8 +1031,8 @@
       },
       "customWords": {
         "title": "Anpassade ord",
-        "description": "Namn, produkter och fraser som REMA ska stava på ditt sätt.",
-        "info": "Exempel: lägg till ”Kokoro” om REMA skriver ”Coco row”.",
+        "description": "Namn, produkter och fraser som RHEMA ska stava på ditt sätt.",
+        "info": "Exempel: lägg till ”Kokoro” om RHEMA skriver ”Coco row”.",
         "placeholder": "Lägg till ett namn, en term eller en kort fras",
         "add": "Lägg till",
         "empty": "Inga anpassade ord ännu.",
@@ -1041,7 +1041,7 @@
       },
       "autoLearn": {
         "label": "Lär dig ord jag rättar",
-        "description": "Kommer ihåg din stavning när du rättar ett ord som REMA uppfattade fel.",
+        "description": "Kommer ihåg din stavning när du rättar ett ord som RHEMA uppfattade fel.",
         "info": "Den läser bara fältet den just skrev i, under ungefär en minut. Inget laddas upp, och varje ord den lär sig visas här.",
         "unsupported": "Att lära sig av rättningar finns än så länge bara på Windows. Du kan fortfarande lägga till ord för hand ovan.",
         "learnedTitle": "Inlärt från dina rättningar",
@@ -1055,7 +1055,7 @@
         "title": "Textersättningar",
         "description": "Ersätt en fras i din transkribering med text du använder ofta. Exempel: ”min e-post” blir ”alex@example.com”.",
         "rulesTitle": "Ersättningsregler",
-        "rulesHint": "Välj vad REMA hör och vad som ska infogas.",
+        "rulesHint": "Välj vad RHEMA hör och vad som ska infogas.",
         "empty": "Skapa en regel för en fras du säger ofta.",
         "addFirst": "Skapa första regeln",
         "addRule": "Lägg till ersättning",
@@ -1433,7 +1433,7 @@
       },
       "updateChecks": {
         "label": "Sök efter uppdateringar automatiskt",
-        "description": "Letar efter en ny version när REMA startar och var 12:e timme. Du kan alltid söka manuellt."
+        "description": "Letar efter en ny version när RHEMA startar och var 12:e timme. Du kan alltid söka manuellt."
       },
       "soundTheme": {
         "label": "Ljudtema",
@@ -1491,7 +1491,7 @@
       "smartSpacing": {
         "label": "Smart mellanrum",
         "description": "Anpassar varje diktering till texten som redan finns i fältet, så att du kan pausa och fortsätta utan att orden klistras ihop.",
-        "info": "Innan inklistring tittar REMA på de få tecknen runt markören och lägger bara till ett mellanslag där det behövs. Om en app döljer sin text används i stället den egna senaste dikteringen. Inget sparas eller skickas någonstans. På macOS används behörigheten för hjälpmedel som REMA redan har. På Linux delar Chrome-, Electron- och Qt-appar bara sin text när skrivbordets hjälpmedelsinställning är på."
+        "info": "Innan inklistring tittar RHEMA på de få tecknen runt markören och lägger bara till ett mellanslag där det behövs. Om en app döljer sin text används i stället den egna senaste dikteringen. Inget sparas eller skickas någonstans. På macOS används behörigheten för hjälpmedel som RHEMA redan har. På Linux delar Chrome-, Electron- och Qt-appar bara sin text när skrivbordets hjälpmedelsinställning är på."
       },
       "smartSpacingFixCase": {
         "label": "Rätta versaler",
@@ -1499,7 +1499,7 @@
       },
       "smartSpacingJoin": {
         "label": "Sätt ihop avbrutna meningar",
-        "description": "Tar bort punkten som REMA lade till när du stannade mitt i en mening, som i \"I went to the.\""
+        "description": "Tar bort punkten som RHEMA lade till när du stannade mitt i en mening, som i \"I went to the.\""
       },
       "keyboardImplementation": {
         "title": "Tangentbordsimplementering",
@@ -1631,7 +1631,7 @@
       },
       "appDataDirectory": {
         "title": "Mapp för appdata",
-        "description": "Där REMA sparar dina modeller, din historik och dina inställningar."
+        "description": "Där RHEMA sparar dina modeller, din historik och dina inställningar."
       },
       "sourceCode": {
         "title": "Källkod",
@@ -1640,12 +1640,12 @@
       },
       "license": {
         "title": "Licens",
-        "description": "REMA är öppen källkod under MIT-licensen. Meddelanden om tredje part finns i licensen.",
+        "description": "RHEMA är öppen källkod under MIT-licensen. Meddelanden om tredje part finns i licensen.",
         "button": "Visa licensen"
       },
       "supportDevelopment": {
         "title": "Stöd utvecklingen",
-        "description": "Hjälp oss att fortsätta bygga REMA",
+        "description": "Hjälp oss att fortsätta bygga RHEMA",
         "button": "Donera"
       }
     },
@@ -1653,7 +1653,7 @@
       "enable": {
         "title": "Assistent",
         "label": "Aktivera assistenten",
-        "description": "Stäng av det här för att göra REMA till enbart diktering. Den flytande panelen stängs och laddas aldrig, dess kortkommandon frigörs och minnet den använder lämnas tillbaka. Generera med Flow och AI-rensning fortsätter att fungera."
+        "description": "Stäng av det här för att göra RHEMA till enbart diktering. Den flytande panelen stängs och laddas aldrig, dess kortkommandon frigörs och minnet den använder lämnas tillbaka. Generera med Flow och AI-rensning fortsätter att fungera."
       },
       "shortcuts": {
         "title": "Kortkommandon"
@@ -1692,7 +1692,7 @@
         "deleteModelFailed": "Kunde inte ta bort modellen.",
         "finderSectionTitle": "Fler modeller på enheten",
         "finderTitle": "Utforska Hugging Face",
-        "finderDescription": "Sök bland tusentals GGUF-modeller och ladda ner en direkt till REMA.",
+        "finderDescription": "Sök bland tusentals GGUF-modeller och ladda ner en direkt till RHEMA.",
         "finderAction": "Hitta en modell",
         "huggingFaceTitle": "Dina modeller",
         "catalogEmpty": "Inga rekommenderade lokala modeller är tillgängliga just nu."
@@ -1815,7 +1815,7 @@
           "label": "När skärmen fångas"
         },
         "screenRecording": {
-          "description": "Skärmvisning kräver behörigheten Skärminspelning i macOS. Bevilja den i Systeminställningar och starta sedan om REMA för att den ska börja gälla.",
+          "description": "Skärmvisning kräver behörigheten Skärminspelning i macOS. Bevilja den i Systeminställningar och starta sedan om RHEMA för att den ska börja gälla.",
           "grant": "Öppna systeminställningar"
         }
       },
@@ -1992,7 +1992,7 @@
         "testGpuMoved": "Grafikkortet förvrängde provet, så det tystades. Kokoro använder nu processorn, så testa igen för att höra det.",
         "testGpuForced": "Grafikkortet förvrängde provet, så det tystades. Ställ in Körs på till Automatiskt eller Processor.",
         "testGpuSuspect": "Provet blev förvrängt, så det tystades. Testa igen för att kontrollera grafikkortet.",
-        "testPhrase": "Hej! Det här är ett test av REMAs röstuppläsning.",
+        "testPhrase": "Hej! Det här är ett test av RHEMAs röstuppläsning.",
         "downloadStart": "Laddar ner Kokoro-rösten…",
         "downloadProgress": "Laddar ner Kokoro-rösten… {{progress}}%",
         "downloadReady": "Kokoro-rösten är klar ✓",
@@ -2094,7 +2094,7 @@
     "account": {
       "signedOut": {
         "title": "Anslut din telefon",
-        "body": "Logga in här och i REMA-appen på telefonen med samma konto. Sedan kan du diktera och skriva på den här datorn från telefonen.",
+        "body": "Logga in här och i RHEMA-appen på telefonen med samma konto. Sedan kan du diktera och skriva på den här datorn från telefonen.",
         "modeLabel": "Logga in eller skapa ett konto",
         "signIn": "Logga in",
         "createAccount": "Skapa konto",
@@ -2115,7 +2115,7 @@
         "online": "Ansluten",
         "connecting": "Ansluter…",
         "offline": "Inte ansluten",
-        "offlineHint": "REMA når inte servern just nu och fortsätter att försöka. Tills dess kan telefonen inte använda den här datorn."
+        "offlineHint": "RHEMA når inte servern just nu och fortsätter att försöka. Tills dess kan telefonen inte använda den här datorn."
       },
       "phone": {
         "title": "Telefon",
@@ -2123,12 +2123,12 @@
         "remoteInputHint": "Låter telefonen diktera och skriva på den här datorn.",
         "remoteWindows": "Låt telefoner se och använda fönster",
         "remoteWindowsHint": "Telefonen kan lista öppna fönster, titta på ett live och skriva, trycka på tangenter eller klicka i det. Ett kort här visar när en telefon tittar, med Stoppa.",
-        "install": "Installera REMA-appen på telefonen och logga in som {{email}}."
+        "install": "Installera RHEMA-appen på telefonen och logga in som {{email}}."
       },
       "keys": {
         "title": "API-nycklar",
         "sync": "Synka API-nycklar",
-        "syncHint": "Nycklar du lägger till på den här datorn sparas krypterade i ditt REMA-konto och dyker upp på dina andra datorer."
+        "syncHint": "Nycklar du lägger till på den här datorn sparas krypterade i ditt RHEMA-konto och dyker upp på dina andra datorer."
       },
       "devices": {
         "title": "Enheter",
@@ -2156,7 +2156,7 @@
       "server": {
         "title": "Kontoserver",
         "using": "Använder {{host}}",
-        "notFound": "Servern går inte att hitta just nu. REMA fortsätter att försöka."
+        "notFound": "Servern går inte att hitta just nu. RHEMA fortsätter att försöka."
       },
       "errors": {
         "generic": "Något gick fel. Försök igen.",
@@ -2277,7 +2277,7 @@
     "list": {
       "title": "Inspelade möten",
       "emptyTitle": "Inga möten än",
-      "emptyHint": "Starta inspelningen före ett samtal så sparar REMA transkriptionen, uppdelad efter vem som pratade.",
+      "emptyHint": "Starta inspelningen före ett samtal så sparar RHEMA transkriptionen, uppdelad efter vem som pratade.",
       "loadMore": "Ladda fler",
       "speakers_one": "{{count}} talare",
       "speakers_other": "{{count}} talare",
@@ -2441,7 +2441,7 @@
   },
   "accessibility": {
     "permissionsRequired": "Behörigheter för hjälpmedel krävs",
-    "permissionsDescription": "REMA behöver behörighet för hjälpmedel för att kunna skriva transkriberad text.",
+    "permissionsDescription": "RHEMA behöver behörighet för hjälpmedel för att kunna skriva transkriberad text.",
     "openSettings": "Öppna systeminställningar",
     "dismiss": "Avvisa"
   },
@@ -2470,7 +2470,7 @@
   },
   "appLanguage": {
     "title": "Appens språk",
-    "description": "Ändra språket i REMA-gränssnittet"
+    "description": "Ändra språket i RHEMA-gränssnittet"
   },
   "overlay": {
     "preparing": "Förbereder mikrofonen…",
@@ -2863,7 +2863,7 @@
       "performance": "Prestanda"
     },
     "about": {
-      "appName": "REMA",
+      "appName": "RHEMA",
       "version": "Version {{version}}",
       "project": "Projekt",
       "docs": "Dokumentation",
@@ -2881,7 +2881,7 @@
     "subtitleTap": "Tryck på ditt kortkommando i valfri app, prata och tryck igen. Dina ord visas där markören är.",
     "needsModel": {
       "title": "Välj en talmodell för att börja diktera.",
-      "description": "REMA behöver en modell för tal till text innan den kan skriva det du säger.",
+      "description": "RHEMA behöver en modell för tal till text innan den kan skriva det du säger.",
       "action": "Välj en modell"
     },
     "stats": {
@@ -2957,8 +2957,8 @@
         "open": "Tangentbordsinställningar"
       },
       "linux": {
-        "wayland": "Under Wayland skickar skrivbordet bara de här tangenterna till REMA medan något av dess fönster ligger överst. Lägg till dem som kortkommandon i systeminställningarna för att använda dem i alla appar.",
-        "noAccess": "REMA Keys kan inte läsa tangentbordet på den här datorn, så de här kortkommandona gör inget än.",
+        "wayland": "Under Wayland skickar skrivbordet bara de här tangenterna till RHEMA medan något av dess fönster ligger överst. Lägg till dem som kortkommandon i systeminställningarna för att använda dem i alla appar.",
+        "noAccess": "RHEMA Keys kan inte läsa tangentbordet på den här datorn, så de här kortkommandona gör inget än.",
         "setUp": "Ställ in",
         "where": {
           "gnome": "Öppna Inställningar → Tangentbord → Visa och anpassa kortkommandon → Anpassade kortkommandon, lägg till ett för varje kommando nedan och tryck på de tangenter du vill ha.",
@@ -2966,7 +2966,7 @@
           "other": "Lägg till ett eget kortkommando i skrivbordets tangentbordsinställningar, eller en bind-rad i kompositorns konfiguration, för varje kommando nedan."
         },
         "tapOnly": "Ett kortkommando som läggs till så fungerar som ”Tryck för att växla”: tryck en gång för att starta och en gång till för att stoppa.",
-        "access": "Eller låt REMA Keys läsa tangentbordet. Kör det här i en terminal och logga sedan ut och in igen:",
+        "access": "Eller låt RHEMA Keys läsa tangentbordet. Kör det här i en terminal och logga sedan ut och in igen:",
         "copy": "Kopiera",
         "copied": "Kopierat"
       }
@@ -2996,7 +2996,7 @@
     }
   },
   "speechUpdate": {
-    "title": "{{model}} använde en äldre motor som REMA inte längre har.",
+    "title": "{{model}} använde en äldre motor som RHEMA inte längre har.",
     "newVersion": "Den nya versionen är {{model}}.",
     "ready": "{{model}} är hämtad och klar.",
     "noVersion": "Välj en annan modell för att fortsätta diktera.",
@@ -3005,12 +3005,12 @@
     "retry": "Försök igen",
     "chooseAnother": "Välj en annan modell",
     "progressLabel": "Hämtar den nya versionen",
-    "dialogTitle": "REMA har en ny talmotor",
+    "dialogTitle": "RHEMA har en ny talmotor",
     "dialogBody": "Den är snabbare och stabilare, så du stöter på färre problem. {{model}} körde på den gamla motorn och behöver sin nya version för att fortsätta fungera.",
     "later": "Senare"
   },
   "modelsHub": {
-    "description": "Varje uppgift i REMA utförs av en modell du väljer. Kör den på den här datorn för integritet, eller i molnet för hastighet.",
+    "description": "Varje uppgift i RHEMA utförs av en modell du väljer. Kör den på den här datorn för integritet, eller i molnet för hastighet.",
     "addLocal": "Lägg till en modellfil",
     "privacyNote": "Modeller på den här datorn skickar aldrig din röst eller text någonstans. Molnmodeller skickar den till leverantören du valt, med din API-nyckel.",
     "inUse": "Används",
@@ -3170,12 +3170,12 @@
     "shortcutRow": "Kortkommando"
   },
   "dictionary": {
-    "description": "Lär REMA de namn och termer du använder, och skapa förkortningar som expanderar till längre text.",
+    "description": "Lär RHEMA de namn och termer du använder, och skapa förkortningar som expanderar till längre text.",
     "words": {
       "title": "Dina ord",
-      "description": "Namn, fackuttryck och stavningar som REMA alltid ska få rätt.",
+      "description": "Namn, fackuttryck och stavningar som RHEMA alltid ska få rätt.",
       "placeholder": "Lägg till ett namn, en term eller en stavning…",
-      "empty": "Inget här än. Lägg till orden som REMA fortsätter att få fel."
+      "empty": "Inget här än. Lägg till orden som RHEMA fortsätter att få fel."
     },
     "replacements": {
       "title": "Ersättningar",
@@ -3184,7 +3184,7 @@
     "addWord": "Lägg till ord"
   },
   "commandsPage": {
-    "description": "Säg vad du vill få gjort, så gör REMA det på den här datorn: öppnar en webbplats, spelar en låt, byter app, skriver ett mejl.",
+    "description": "Säg vad du vill få gjort, så gör RHEMA det på den här datorn: öppnar en webbplats, spelar en låt, byter app, skriver ett mejl.",
     "enable": "Röstkommandon",
     "offNotice": "Röstkommandon är avstängda. Slå på dem för att ge deras kortkommando något att göra; det du säger skickas då till modellen som kör kommandona.",
     "shortcut": {
@@ -3568,16 +3568,16 @@
   },
   "freeCredit": {
     "title": "Gratiskredit",
-    "explain": "Varje REMA-konto ingår {{amount}} i AI-användning, som delas av tal till text, AI-städning, assistenten, röstkommandon och upplästa svar. Ingen API-nyckel behövs.",
+    "explain": "Varje RHEMA-konto ingår {{amount}} i AI-användning, som delas av tal till text, AI-städning, assistenten, röstkommandon och upplästa svar. Ingen API-nyckel behövs.",
     "balance": "Gratiskredit: {{remaining}} kvar av {{limit}}",
     "checking": "Kontrollerar din gratiskredit…",
-    "option": "Använd REMA free ({{amount}} ingår)",
-    "use": "Använd REMA free",
+    "option": "Använd RHEMA free ({{amount}} ingår)",
+    "use": "Använd RHEMA free",
     "inUse": "Används",
     "exhausted": "Din gratiskredit är slut. Lägg till en egen API-nyckel för att fortsätta använda molnfunktionerna.",
-    "disabled": "REMA free är inte tillgängligt just nu. Lägg till en egen API-nyckel för att fortsätta använda molnfunktionerna.",
+    "disabled": "RHEMA free är inte tillgängligt just nu. Lägg till en egen API-nyckel för att fortsätta använda molnfunktionerna.",
     "addKey": "Lägg till egen nyckel",
-    "failed": "Det gick inte att byta till REMA free.",
+    "failed": "Det gick inte att byta till RHEMA free.",
     "setupHint": "Du är inloggad, så du kan transkribera i molnet med din gratiskredit utan att ladda ner något.",
     "jobs": {
       "stt": "Tal till text",
@@ -3638,7 +3638,7 @@
     "or": "eller",
     "changeOther": "Ändra de andra tangenterna för {{name}}",
     "pressKeysOrButton": "Tryck på tangenter eller en musknapp…",
-    "mouseNeedsKeysEngine": "Musknappar kräver tangentbordsimplementeringen REMA Keys (Inställningar → Avancerat → Experimentellt).",
+    "mouseNeedsKeysEngine": "Musknappar kräver tangentbordsimplementeringen RHEMA Keys (Inställningar → Avancerat → Experimentellt).",
     "mouse": {
       "middle": "Mittenknapp på musen",
       "back": "Musknapp Bakåt",
@@ -3717,7 +3717,7 @@
     }
   },
   "insights": {
-    "about": "Hur du använder REMA, räknat på den här datorn.",
+    "about": "Hur du använder RHEMA, räknat på den här datorn.",
     "nothingYet": "Din statistik visas när du har dikterat, frågat assistenten eller spelat in ett möte.",
     "goHome": "Visa dina kortkommandon",
     "figures": {
@@ -3777,7 +3777,7 @@
     },
     "share": {
       "button": "Dela",
-      "nothingYet": "Det finns något att dela när du har använt REMA.",
+      "nothingYet": "Det finns något att dela när du har använt RHEMA.",
       "title": "Dela din statistik",
       "private": "Skapas på den här datorn. Inget laddas upp.",
       "size": "Storlek",
@@ -3808,13 +3808,13 @@
       "openSite": "Öppna {{site}}",
       "openFailed": "Det gick inte att öppna {{site}}",
       "more": "Fler appar",
-      "sheetTitle": "Min REMA-statistik",
+      "sheetTitle": "Min RHEMA-statistik",
       "shareFailed": "Det gick inte att öppna Dela",
       "drawFailed": "Korten kunde inte ritas. Stäng och försök igen.",
       "tagline": "Gratis · Öppen källkod · Fungerar offline",
       "cards": {
         "highlights": {
-          "title": "Mitt REMA i siffror",
+          "title": "Mitt RHEMA i siffror",
           "words_one": "talat ord",
           "words_other": "talade ord",
           "streak_one": "dag i rad",
@@ -3877,12 +3877,12 @@
         }
       },
       "post": {
-        "dictation_one": "Med REMA har jag pratat in {{formatted}} ord på datorn i stället för att skriva det.",
-        "dictation_other": "Med REMA har jag pratat in {{formatted}} ord på datorn i stället för att skriva dem.",
-        "asks_one": "Jag har ställt {{formatted}} fråga till REMAs assistent utan att byta flik.",
-        "asks_other": "Jag har ställt {{formatted}} frågor till REMAs assistent utan att byta flik.",
-        "meetings_one": "REMA har spelat in {{formatted}} möte och skrivit anteckningarna åt mig.",
-        "meetings_other": "REMA har spelat in {{formatted}} möten och skrivit anteckningarna åt mig."
+        "dictation_one": "Med RHEMA har jag pratat in {{formatted}} ord på datorn i stället för att skriva det.",
+        "dictation_other": "Med RHEMA har jag pratat in {{formatted}} ord på datorn i stället för att skriva dem.",
+        "asks_one": "Jag har ställt {{formatted}} fråga till RHEMAs assistent utan att byta flik.",
+        "asks_other": "Jag har ställt {{formatted}} frågor till RHEMAs assistent utan att byta flik.",
+        "meetings_one": "RHEMA har spelat in {{formatted}} möte och skrivit anteckningarna åt mig.",
+        "meetings_other": "RHEMA har spelat in {{formatted}} möten och skrivit anteckningarna åt mig."
       }
     }
   },
@@ -3890,11 +3890,11 @@
     "restored": "Dina inställningar var skadade och har återställts från en säkerhetskopia.",
     "restoredDescription": "De senaste ändringarna kan saknas.",
     "unrecoverableTitle": "Det gick inte att återställa dina inställningar",
-    "unrecoverableDescription": "REMA startade med standardinställningarna. Den skadade filen sparades som {{file}}.",
+    "unrecoverableDescription": "RHEMA startade med standardinställningarna. Den skadade filen sparades som {{file}}.",
     "notSavingTitle": "Ändringar i inställningarna sparas inte",
-    "notSavingDescription": "Inställningsfilen kunde inte läsas och har därför lämnats orörd. Starta om REMA för att försöka igen.",
+    "notSavingDescription": "Inställningsfilen kunde inte läsas och har därför lämnats orörd. Starta om RHEMA för att försöka igen.",
     "saveFailingTitle": "Inställningarna sparas inte",
-    "saveFailingDescription": "Dina senaste ändringar har inte sparats än. REMA fortsätter att försöka.",
+    "saveFailingDescription": "Dina senaste ändringar har inte sparats än. RHEMA fortsätter att försöka.",
     "dismiss": "Stäng"
   },
   "commandMode": {

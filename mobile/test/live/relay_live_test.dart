@@ -1,8 +1,8 @@
 // Live checks against a running account server, through the app's own
 // ApiClient, SessionStore and RelayClient, with a bare socket playing the
-// computer. Skipped unless REMA_LIVE_SERVER is set:
+// computer. Skipped unless RHEMA_LIVE_SERVER is set:
 //
-//   REMA_LIVE_SERVER=http://127.0.0.1:8787 flutter test test/live
+//   RHEMA_LIVE_SERVER=http://127.0.0.1:8787 flutter test test/live
 //
 // Each run signs up a throwaway account and deletes it at the end.
 
@@ -15,14 +15,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/config.dart';
-import 'package:rema_mobile/src/core/models.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/core/server_finder.dart';
-import 'package:rema_mobile/src/core/session_store.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/config.dart';
+import 'package:rhema_mobile/src/core/models.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/core/server_finder.dart';
+import 'package:rhema_mobile/src/core/session_store.dart';
 
-final _server = Platform.environment['REMA_LIVE_SERVER'];
+final _server = Platform.environment['RHEMA_LIVE_SERVER'];
 const _wait = Duration(seconds: 10);
 
 DeviceInfo _computer(String name) => DeviceInfo(
@@ -287,6 +287,6 @@ void main() {
       await _until(relay.status, (s) => s == RelayStatus.disconnected);
       expect(session.signedIn, isFalse);
     },
-    skip: _server == null ? 'set REMA_LIVE_SERVER to run' : false,
+    skip: _server == null ? 'set RHEMA_LIVE_SERVER to run' : false,
   );
 }

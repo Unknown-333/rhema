@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { withoutRemaFree } from "@/lib/freeCredit";
+import { withoutRhemaFree } from "@/lib/freeCredit";
 import { useTranslation } from "react-i18next";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { toast } from "sonner";
@@ -105,7 +105,7 @@ const TTS_SPEED_PRESETS = [0.5, 1, 1.5, 2, 3];
  *  These are intentionally not translated — they're meme sample lines. */
 const TEST_PHRASES = [
   "Wagwan brother.",
-  "Hi! This is a test of REMA's voice output.",
+  "Hi! This is a test of RHEMA's voice output.",
   "Ayo, is this thing on?",
   "Greetings, human. Your voice assistant has entered the chat.",
   "Testing, testing, one two... yeah we good.",
@@ -246,7 +246,7 @@ export const AssistantSettings: React.FC<AssistantSettingsProps> = ({
     updatePostProcessBaseUrl,
   } = useSettings();
 
-  const providers = withoutRemaFree(settings?.post_process_providers || []);
+  const providers = withoutRhemaFree(settings?.post_process_providers || []);
   const selectedProviderId = settings?.assistant_provider_id || "custom";
   const selectedProvider = providers.find((p) => p.id === selectedProviderId);
 
@@ -663,7 +663,7 @@ export const AssistantSettings: React.FC<AssistantSettingsProps> = ({
   const ttsDtypeBase = ttsDtype.endsWith("-cpu")
     ? ttsDtype.slice(0, -"-cpu".length)
     : ttsDtype;
-  const kokoroReadyKey = `rema.kokoro.ready.${ttsDtypeBase}`;
+  const kokoroReadyKey = `rhema.kokoro.ready.${ttsDtypeBase}`;
   /** Whether Kokoro's weights are already on this device; `null` until the
    *  cache has been checked, so the row doesn't flash a Download button for
    *  the few milliseconds the check takes. */
@@ -1517,7 +1517,7 @@ export const AssistantSettings: React.FC<AssistantSettingsProps> = ({
                       },
                       {
                         key: "cloud",
-                        engines: withoutRemaFree(
+                        engines: withoutRhemaFree(
                           TTS_ENGINES.filter((e) => !e.local),
                         ),
                       },

@@ -2,7 +2,7 @@
 
 **Effective date:** October 3, 2026
 
-REMA is a free, open-source desktop voice assistant for Windows, macOS, and
+RHEMA is a free, open-source desktop voice assistant for Windows, macOS, and
 Linux. It is designed to be **local-first**: your voice is processed on your own
 computer, and the app works without an account, sign-in, or any tracking.
 
@@ -14,13 +14,13 @@ your device. If anything here is unclear, please open an issue on our
 
 ## The short version
 
-- **Nothing is collected automatically.** REMA has no analytics, no
+- **Nothing is collected automatically.** RHEMA has no analytics, no
   telemetry, no tracking, no advertising, and no user accounts. The only thing
   that ever reaches the developer is feedback you choose to send.
 - **Your voice is transcribed on your device** and is never uploaded to us. It
   only leaves your computer if you pick a cloud speech service yourself.
 - **The only server we run is the feedback service**, and it receives only what
-  you send from the feedback dialog. There is no "REMA cloud" for your
+  you send from the feedback dialog. There is no "RHEMA cloud" for your
   voice, text, or conversations.
 - The app only makes a network connection in a few clearly-defined situations,
   described below — and the features that send your content to a third party are
@@ -28,10 +28,10 @@ your device. If anything here is unclear, please open an issue on our
 
 ---
 
-## Information REMA does **not** collect
+## Information RHEMA does **not** collect
 
 We want to be explicit, because "we don't collect data" is easy to say and
-harder to prove. REMA contains **no** analytics or telemetry libraries and
+harder to prove. RHEMA contains **no** analytics or telemetry libraries and
 sends **no** usage data, crash reports, device identifiers, or behavioral data to
 the developer. Specifically, we never collect or transmit to ourselves:
 
@@ -45,7 +45,7 @@ the developer. Specifically, we never collect or transmit to ourselves:
 
 Apart from feedback you send on purpose, none of this ever reaches us, so there
 is nothing to sell or share. Feedback is used only to fix and improve
-REMA, and it is never sold.
+RHEMA, and it is never sold.
 
 ---
 
@@ -78,7 +78,7 @@ The following is stored **locally on your computer** and never sent to us:
 
 ## Optional network connections
 
-REMA connects to the internet only in the situations below. Some are
+RHEMA connects to the internet only in the situations below. Some are
 standard app maintenance; the ones that send your content are **optional,
 off by default, and routed to a provider you choose**, never through us. The one
 exception is feedback (section 8), which comes to us, and only when you send
@@ -89,12 +89,12 @@ it.
 To tell you when a new version is available, the app checks a file published on
 our GitHub Releases page. This is a normal file download; as with any web
 request, the server (GitHub) can see your IP address and general request
-metadata. No personal data is sent by REMA. You can ignore or disable
+metadata. No personal data is sent by RHEMA. You can ignore or disable
 update checks in Settings.
 
 ### 2. Downloading models and engines
 
-When you choose to download a speech, language, or voice model, REMA
+When you choose to download a speech, language, or voice model, RHEMA
 fetches the model file from its host — typically Hugging Face, or a mirror on
 GitHub. The local AI engine (llama.cpp) may likewise be fetched from GitHub. These
 are plain file downloads of publicly available software; no personal data or
@@ -120,7 +120,7 @@ control which provider that is:
 - a **cloud provider you choose** (e.g. OpenAI, Anthropic, Azure, OpenRouter,
   and others) using **your own API key**.
 
-REMA does not proxy or copy this traffic — it goes directly from your
+RHEMA does not proxy or copy this traffic — it goes directly from your
 machine to the provider you selected. What that provider does with the data is
 governed by **their** privacy policy.
 
@@ -164,7 +164,7 @@ you:
 
 No logs, recordings, transcripts, settings, or identifiers are included.
 
-**Where it goes.** The app sends the report to the REMA account server it
+**Where it goes.** The app sends the report to the RHEMA account server it
 is connected to (`POST /v1/feedback`, see `server/PROTOCOL.md`), which stores
 it in that server's database. With no account server configured, nothing is
 sent.
@@ -182,21 +182,21 @@ left one, or describe the report so it can be found.
 ## Third-party providers
 
 The optional cloud features above rely on services you choose and authenticate
-with your own credentials. REMA is not affiliated with these providers and
+with your own credentials. RHEMA is not affiliated with these providers and
 has no visibility into the data you exchange with them. When you use such a
 service, its own terms and privacy policy apply.
 
 The feedback service is the exception: the developer runs it, on Cloudflare,
 and keeps reports in a private GitHub repository. Cloudflare and GitHub process
 those reports on the developer's behalf. If you prefer that nothing ever
-leaves your machine, you can run REMA with only local models and keep every
+leaves your machine, you can run RHEMA with only local models and keep every
 optional cloud feature disabled.
 
 ---
 
 ## Children's privacy
 
-REMA is a general-purpose productivity tool and is not directed at
+RHEMA is a general-purpose productivity tool and is not directed at
 children. We do not knowingly collect information from anyone, including
 children.
 
@@ -207,11 +207,11 @@ than in plain-text files, and are never written to logs. Because your content is
 processed locally and not stored on any server we control, there is no central
 database of user data that could be breached. The one exception is feedback you
 send, which is kept in a private repository that only the developer can access. As with any software, keep your
-operating system and REMA up to date.
+operating system and RHEMA up to date.
 
 ## Open source
 
-REMA is open source under the MIT license. You can inspect exactly what the
+RHEMA is open source under the MIT license. You can inspect exactly what the
 app does — including every network call — in the source code at
 <https://github.com/Unknown-333/rhema>.
 
@@ -224,11 +224,11 @@ full history of this document is publicly visible.
 ## Contact
 
 Questions about privacy? Please open an issue on the
-[REMA GitHub repository](https://github.com/Unknown-333/rhema),
+[RHEMA GitHub repository](https://github.com/Unknown-333/rhema),
 or use **Send feedback** in the app for anything you'd rather not post in
 public.
 
 ---
 
-_REMA is a local-first, open-source project (MIT). Third-party notices are in
+_RHEMA is a local-first, open-source project (MIT). Third-party notices are in
 [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)._

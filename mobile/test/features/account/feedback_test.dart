@@ -5,18 +5,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/app_services.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/core/session_store.dart';
-import 'package:rema_mobile/src/features/account/feedback.dart';
-import 'package:rema_mobile/src/features/account/feedback_screen.dart';
-import 'package:rema_mobile/src/features/account/strings.dart';
-import 'package:rema_mobile/src/theme.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/app_services.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/core/session_store.dart';
+import 'package:rhema_mobile/src/features/account/feedback.dart';
+import 'package:rhema_mobile/src/features/account/feedback_screen.dart';
+import 'package:rhema_mobile/src/features/account/strings.dart';
+import 'package:rhema_mobile/src/theme.dart';
 
 import '../../helpers.dart';
 
-const line = 'REMA phone 1.0.0 · Android 14';
+const line = 'RHEMA phone 1.0.0 · Android 14';
 
 http.Response created() => http.Response(
   jsonEncode({'id': 'f-1'}),
@@ -75,11 +75,11 @@ void main() {
           os: 'android',
           osVersion: '14',
         ),
-        'REMA phone 1.0.0 · Android 14',
+        'RHEMA phone 1.0.0 · Android 14',
       );
       expect(
         FeedbackRules.systemLine(appVersion: '1.0.0', os: 'ios', osVersion: ''),
-        'REMA phone 1.0.0 · iOS',
+        'RHEMA phone 1.0.0 · iOS',
       );
       final long = FeedbackRules.systemLine(
         appVersion: '1.0.0',

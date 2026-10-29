@@ -2,9 +2,9 @@
 
 ## 0.1.0 (unreleased)
 
-First REMA build.
+First RHEMA build.
 
-- New name, identifiers (`com.rema.desktop`, `com.rema.mobile`), logo, icons
+- New name, identifiers (`com.rhema.desktop`, `com.rhema.mobile`), logo, icons
   and wordmark.
-- Local databases are `rema.db` (history) and `rema_meetings.db` (meetings).
-- Environment variables use the `REMA_` prefix.
+- Local databases are `rhema.db` (history) and `rhema_meetings.db` (meetings).
+- Environment variables use the `RHEMA_` prefix.

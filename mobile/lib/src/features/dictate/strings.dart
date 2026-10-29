@@ -19,14 +19,14 @@ abstract final class DictateStrings {
 
   static const noComputerTitle = 'Add your computer';
   static String noComputerBody(String email) =>
-      'Open REMA on your computer and sign in with $email. '
+      'Open RHEMA on your computer and sign in with $email. '
       'It shows up here once it is signed in.';
   static String offlineTitle(String name) => '$name is offline';
   static String offlineNote(String name) =>
-      '$name is offline. Open REMA on it to dictate from your phone.';
-  static String updateTitle(String name) => 'Update REMA on $name';
+      '$name is offline. Open RHEMA on it to dictate from your phone.';
+  static String updateTitle(String name) => 'Update RHEMA on $name';
   static String updateNote(String name) =>
-      'Update REMA on $name to dictate from your phone.';
+      'Update RHEMA on $name to dictate from your phone.';
   static String hintPaste(String name) =>
       'Tap the mic and speak. The text goes wherever the cursor is on $name.';
   static const hintKeep =
@@ -58,7 +58,7 @@ abstract final class DictateStrings {
   static String pasting(String name) => 'Pasting on $name…';
   static String approval(String name) => 'Allow this phone on $name';
   static const approvalDetail =
-      "Look at the computer's screen. REMA is asking there.";
+      "Look at the computer's screen. RHEMA is asking there.";
   static const cancelling = 'Cancelling…';
   static const cancel = 'Cancel';
   static String pasted(String name) => 'Pasted on $name';
@@ -66,7 +66,7 @@ abstract final class DictateStrings {
   static String returned(String name) => 'Transcribed on $name';
   static String pasteOffNote(String name) =>
       "Pasting is turned off on $name, so the text came back here. Turn it "
-      "on in REMA's Settings, under Dictation, Paste method.";
+      "on in RHEMA's Settings, under Dictation, Paste method.";
   static const result = 'Your text';
   static const copy = 'Copy';
   static const copied = 'Copied';
@@ -132,11 +132,11 @@ abstract final class DictateStrings {
   /// phone sets itself (offline, not_connected, interrupted, timeout, mic_*).
   static String error(String code, String name) => switch (code) {
     'remote_input_off' =>
-      'Phone dictation is off on $name. Turn it on in REMA on that '
+      'Phone dictation is off on $name. Turn it on in RHEMA on that '
           'computer, then try again.',
     'busy' => '$name is busy with another request. Try again in a moment.',
     'no_speech_model' =>
-      '$name has no speech model yet. Download one in REMA on that '
+      '$name has no speech model yet. Download one in RHEMA on that '
           'computer.',
     'bad_audio' => "$name couldn't read that recording. Record it again.",
     'no_speech' => "Nothing was heard. Try again a bit closer to the phone.",
@@ -145,13 +145,13 @@ abstract final class DictateStrings {
       "$name couldn't paste the text. Click into a text field there and try "
           'again.',
     'paste_off' =>
-      "Pasting is turned off on $name. Turn it on in REMA's Settings, "
+      "Pasting is turned off on $name. Turn it on in RHEMA's Settings, "
           'under Dictation, Paste method.',
-    'unsupported' => 'Update REMA on $name to use this.',
+    'unsupported' => 'Update RHEMA on $name to use this.',
     'cancelled' => 'Cancelled.',
     'remote_windows_off' =>
       "$name doesn't let phones use its windows. Turn on \"Let phones see "
-          'and use windows" in REMA on that computer, under Settings, Account.',
+          'and use windows" in RHEMA on that computer, under Settings, Account.',
     'target_gone' =>
       'That window closed on $name, or it has been a while since you chose '
           'it. Choose the window again.',
@@ -163,9 +163,9 @@ abstract final class DictateStrings {
       "$name doesn't press keys that close apps or windows, lock it, or "
           'sign out.',
     'not_approved' =>
-      "This phone isn't allowed on $name. Allow it in REMA's Settings on "
+      "This phone isn't allowed on $name. Allow it in RHEMA's Settings on "
           'that computer, under Account, then try again.',
-    'offline' => '$name is offline. Open REMA on it and try again.',
+    'offline' => '$name is offline. Open RHEMA on it and try again.',
     'not_connected' =>
       "You're not connected to the server. Check your connection and try "
           'again.',
@@ -174,7 +174,7 @@ abstract final class DictateStrings {
           'anyway. Check $name before you try again.',
     'timeout' => "$name didn't answer in time. Try again.",
     'mic_denied' =>
-      'REMA needs the microphone to hear you. Allow it for REMA in '
+      'RHEMA needs the microphone to hear you. Allow it for RHEMA in '
           "your phone's Settings, then try again.",
     'mic_failed' => "Couldn't use the microphone. Try again.",
     'mic_busy' =>

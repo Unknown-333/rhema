@@ -36,9 +36,9 @@ String turnStatus(AssistantTurn turn, {required bool cancelling}) {
 
 /// The answer's Markdown, in the app's type (§3.4).
 MarkdownStyleSheet answerMarkdown(BuildContext context) {
-  final t = context.rema;
-  final body = RemaType.body.copyWith(color: t.ink);
-  final heading = RemaType.title2.copyWith(color: t.ink);
+  final t = context.rhema;
+  final body = RhemaType.body.copyWith(color: t.ink);
+  final heading = RhemaType.title2.copyWith(color: t.ink);
   const headingPad = EdgeInsets.only(top: 4, bottom: 0);
   return MarkdownStyleSheet(
     p: body,
@@ -50,9 +50,9 @@ MarkdownStyleSheet answerMarkdown(BuildContext context) {
     h1: heading,
     h2: heading,
     h3: heading,
-    h4: RemaType.bodyStrong.copyWith(color: t.ink),
-    h5: RemaType.bodyStrong.copyWith(color: t.ink),
-    h6: RemaType.bodyStrong.copyWith(color: t.ink),
+    h4: RhemaType.bodyStrong.copyWith(color: t.ink),
+    h5: RhemaType.bodyStrong.copyWith(color: t.ink),
+    h6: RhemaType.bodyStrong.copyWith(color: t.ink),
     h1Padding: headingPad,
     h2Padding: headingPad,
     h3Padding: headingPad,
@@ -67,7 +67,7 @@ MarkdownStyleSheet answerMarkdown(BuildContext context) {
       decoration: TextDecoration.underline,
       decorationColor: t.accent,
     ),
-    code: RemaType.mono.copyWith(color: t.ink, backgroundColor: t.fill),
+    code: RhemaType.mono.copyWith(color: t.ink, backgroundColor: t.fill),
     codeblockPadding: const EdgeInsets.all(12),
     codeblockDecoration: BoxDecoration(
       color: t.fill,
@@ -78,11 +78,11 @@ MarkdownStyleSheet answerMarkdown(BuildContext context) {
     blockquoteDecoration: BoxDecoration(
       border: BorderDirectional(start: BorderSide(color: t.border, width: 2)),
     ),
-    tableHead: RemaType.rowBody.copyWith(
+    tableHead: RhemaType.rowBody.copyWith(
       color: t.ink,
       fontWeight: FontWeight.w600,
     ),
-    tableBody: RemaType.rowBody.copyWith(color: t.ink),
+    tableBody: RhemaType.rowBody.copyWith(color: t.ink),
     tableBorder: TableBorder.all(color: t.hairline),
     tableCellsPadding: const EdgeInsets.all(8),
     tableHeadCellsPadding: const EdgeInsets.all(8),
@@ -113,7 +113,7 @@ class TurnView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final c = controller;
     final latest = identical(c.turns.lastOrNull, turn);
     final answer = turn.answer.trim();
@@ -150,7 +150,7 @@ class TurnView extends StatelessWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const RemaOrb(size: 18, mood: OrbMood.thinking),
+                  const RhemaOrb(size: 18, mood: OrbMood.thinking),
                   const SizedBox(width: Space.s12),
                   Flexible(
                     child: ShimmerText(
@@ -224,7 +224,7 @@ class TurnView extends StatelessWidget {
                   child: Text(
                     AssistantStrings.newConversation(turn.computerName),
                     textAlign: TextAlign.center,
-                    style: RemaType.footnote.copyWith(color: t.muted),
+                    style: RhemaType.footnote.copyWith(color: t.muted),
                   ),
                 ),
                 const SizedBox(width: Space.s12),
@@ -239,7 +239,7 @@ class TurnView extends StatelessWidget {
             turn.question ?? AssistantStrings.voiceQuestion,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: RemaType.footnote.copyWith(color: t.muted),
+            style: RhemaType.footnote.copyWith(color: t.muted),
           )
         else
           _QuestionBubble(turn: turn),
@@ -257,7 +257,7 @@ class _QuestionBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final question = turn.question;
     return Align(
       alignment: AlignmentDirectional.centerEnd,
@@ -290,7 +290,7 @@ class _QuestionBubble extends StatelessWidget {
                     Flexible(
                       child: Text(
                         question ?? AssistantStrings.voiceQuestion,
-                        style: RemaType.body.copyWith(
+                        style: RhemaType.body.copyWith(
                           color: question == null ? t.muted : t.ink,
                         ),
                       ),
@@ -316,7 +316,7 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Padding(
       padding: const EdgeInsets.only(top: Space.s16),
       child: Container(
@@ -332,7 +332,7 @@ class _Actions extends StatelessWidget {
           children: [
             Text(
               AssistantStrings.didOn(computerName),
-              style: RemaType.footnote.copyWith(color: t.muted),
+              style: RhemaType.footnote.copyWith(color: t.muted),
             ),
             const SizedBox(height: Space.s8),
             for (final (i, action) in actions.indexed) ...[
@@ -353,7 +353,7 @@ class _ActionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final (IconData icon, Color color, Color wash) = switch (action.status) {
       'done' => (AppIcons.check, t.success, t.successSoft),
       'failed' => (AppIcons.close, t.danger, t.dangerSoft),
@@ -377,7 +377,7 @@ class _ActionRow extends StatelessWidget {
           Expanded(
             child: Text(
               action.label,
-              style: RemaType.rowTitle.copyWith(color: t.ink),
+              style: RhemaType.rowTitle.copyWith(color: t.ink),
             ),
           ),
         ],
@@ -396,7 +396,7 @@ class _PendingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final pending = turn.pending!;
     final c = controller;
     final enabled = turn.awaitingConfirmation && c.idle;
@@ -432,14 +432,14 @@ class _PendingCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   AssistantStrings.goAhead,
-                  style: RemaType.footnote.copyWith(color: t.muted),
+                  style: RhemaType.footnote.copyWith(color: t.muted),
                 ),
               ],
             ),
             const SizedBox(height: Space.s4),
             Text(
               pending.summary,
-              style: RemaType.bodyStrong.copyWith(color: t.ink),
+              style: RhemaType.bodyStrong.copyWith(color: t.ink),
             ),
             if (turn.confirmFeedback case final feedback?
                 when feedback.isNotEmpty)
@@ -449,7 +449,7 @@ class _PendingCard extends StatelessWidget {
                   liveRegion: true,
                   child: Text(
                     feedback,
-                    style: RemaType.rowBody.copyWith(color: t.ink),
+                    style: RhemaType.rowBody.copyWith(color: t.ink),
                   ),
                 ),
               ),
@@ -462,7 +462,7 @@ class _PendingCard extends StatelessWidget {
                     // A confirmation is a command request: its errors are
                     // the command's.
                     CommandStrings.error(error, turn.computerName),
-                    style: RemaType.rowBody.copyWith(color: t.danger),
+                    style: RhemaType.rowBody.copyWith(color: t.danger),
                   ),
                 ),
               ),
@@ -480,7 +480,7 @@ class _PendingCard extends StatelessWidget {
                         liveRegion: true,
                         child: Text(
                           label,
-                          style: RemaType.rowBody.copyWith(color: t.ink),
+                          style: RhemaType.rowBody.copyWith(color: t.ink),
                         ),
                       ),
                     ),
@@ -549,7 +549,7 @@ class _CopyButtonState extends State<_CopyButton> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     // The glyph lines up with the answer's text.
     return Padding(
       padding: const EdgeInsets.only(top: Space.s8),

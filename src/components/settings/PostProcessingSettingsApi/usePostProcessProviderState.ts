@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { withoutRemaFree } from "@/lib/freeCredit";
+import { withoutRhemaFree } from "@/lib/freeCredit";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { useSettings } from "../../../hooks/useSettings";
@@ -53,7 +53,7 @@ export const usePostProcessProviderState = (): PostProcessProviderState => {
 
   // Settings are guaranteed to have providers after migration
   const providers = useMemo(
-    () => withoutRemaFree(settings?.post_process_providers || []),
+    () => withoutRhemaFree(settings?.post_process_providers || []),
     [settings?.post_process_providers],
   );
 

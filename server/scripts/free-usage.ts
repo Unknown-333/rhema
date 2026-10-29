@@ -2,12 +2,12 @@
  * Free credit usage from the server's database: the totals, the heaviest
  * accounts, and spend per kind over the last 30 days.
  *
- *   bun scripts/free-usage.ts [path/to/rema-server.db]     (default: DATABASE_PATH or ./data/rema-server.db)
- *   docker exec rema-server bun scripts/free-usage.ts /data/rema-server.db
+ *   bun scripts/free-usage.ts [path/to/rhema-server.db]     (default: DATABASE_PATH or ./data/rhema-server.db)
+ *   docker exec rhema-server bun scripts/free-usage.ts /data/rhema-server.db
  */
 import { Database } from "bun:sqlite";
 
-const path = process.argv[2] ?? process.env.DATABASE_PATH ?? "./data/rema-server.db";
+const path = process.argv[2] ?? process.env.DATABASE_PATH ?? "./data/rhema-server.db";
 const db = new Database(path, { readonly: true });
 
 const exists = db

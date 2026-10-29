@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Android 12+ draws its own splash: the app icon on REMA's canvas. -->
+    <!-- Android 12+ draws its own splash: the app icon on RHEMA's canvas. -->
     <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowSplashScreenBackground">@color/rema_canvas</item>
-        <item name="android:windowBackground">@color/rema_canvas</item>
+        <item name="android:windowSplashScreenBackground">@color/rhema_canvas</item>
+        <item name="android:windowBackground">@color/rhema_canvas</item>
     </style>
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@color/rema_canvas</item>
+        <item name="android:windowBackground">@color/rhema_canvas</item>
     </style>
 </resources>

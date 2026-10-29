@@ -28,7 +28,7 @@ export const parseKokoroDevice = (
  * choosing "Graphics card" explicitly tries WebGPU again (after a driver
  * update, say), and a clean run there clears it.
  */
-const GPU_BROKEN_KEY = "rema.kokoro.gpuBroken";
+const GPU_BROKEN_KEY = "rhema.kokoro.gpuBroken";
 
 /** This WebView's own verdict, which holds even when storage is unavailable. */
 let gpuBrokenThisSession = false;

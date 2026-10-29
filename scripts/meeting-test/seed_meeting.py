@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Inject a generated fixture into rema_meetings.db as a finished, un-diarized meeting.
+"""Inject a generated fixture into rhema_meetings.db as a finished, un-diarized meeting.
 
     python seed_meeting.py                  seed a new [TEST] meeting
     python seed_meeting.py --reset           un-diarize the newest [TEST] meeting
@@ -19,7 +19,7 @@ The seeded rows carry the ground-truth transcript text, so transcription is held
 constant and any change in the score is attributable to the pass you edited.
 
 Safety. This only ever INSERTs, and only titles prefixed "[TEST]". The database
-is copied to rema_meetings.db.bak-<timestamp> before any write, and --cleanup refuses
+is copied to rhema_meetings.db.bak-<timestamp> before any write, and --cleanup refuses
 to touch a meeting whose title lacks the prefix.
 """
 
@@ -35,7 +35,7 @@ import time
 from pathlib import Path
 
 TEST_PREFIX = "[TEST]"
-IDENTIFIER = "com.rema.desktop"
+IDENTIFIER = "com.rhema.desktop"
 SPEAKER_MODEL = "wespeaker_en_voxceleb_resnet34_LM.onnx"
 # `diarize::model::MIN_PLAUSIBLE_BYTES` -- a shorter file is a truncated download
 # that reports "not installed" rather than failing to load.
@@ -117,7 +117,7 @@ def seed(args: argparse.Namespace) -> None:
             die(f"{fixture / name} not found; run make_fixture.py first")
 
     data_dir = app_data_dir(args.app_data)
-    db_path = data_dir / "rema_meetings.db"
+    db_path = data_dir / "rhema_meetings.db"
     audio_dir = data_dir / "meetings"
     audio_dir.mkdir(parents=True, exist_ok=True)
 
@@ -213,7 +213,7 @@ def reset(args: argparse.Namespace) -> None:
     which is the whole point of a fixture.
     """
     data_dir = app_data_dir(args.app_data)
-    db_path = data_dir / "rema_meetings.db"
+    db_path = data_dir / "rhema_meetings.db"
     conn = connect(db_path)
     meeting_id = args.id or newest_test_meeting(conn)
 
@@ -241,8 +241,8 @@ def reset(args: argparse.Namespace) -> None:
 
 def show(args: argparse.Namespace) -> None:
     data_dir = app_data_dir(args.app_data)
-    conn = connect(data_dir / "rema_meetings.db")
-    print(f"{data_dir / 'rema_meetings.db'}\n")
+    conn = connect(data_dir / "rhema_meetings.db")
+    print(f"{data_dir / 'rhema_meetings.db'}\n")
     print(f"{'id':>4}  {'status':<11} {'diar':<5} {'segs':>5}  {'spk':>4}  title")
     for row in conn.execute(
         """SELECT m.id, m.status, m.diarized, m.title,
@@ -259,7 +259,7 @@ def show(args: argparse.Namespace) -> None:
 
 def cleanup(args: argparse.Namespace) -> None:
     data_dir = app_data_dir(args.app_data)
-    db_path = data_dir / "rema_meetings.db"
+    db_path = data_dir / "rhema_meetings.db"
     audio_dir = data_dir / "meetings"
     conn = connect(db_path)
 

@@ -7,13 +7,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/app_services.dart';
-import 'package:rema_mobile/src/core/relay_client.dart';
-import 'package:rema_mobile/src/core/server_finder.dart';
-import 'package:rema_mobile/src/core/session_store.dart';
-import 'package:rema_mobile/src/features/auth/sign_in_screen.dart';
-import 'package:rema_mobile/src/theme.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/app_services.dart';
+import 'package:rhema_mobile/src/core/relay_client.dart';
+import 'package:rhema_mobile/src/core/server_finder.dart';
+import 'package:rhema_mobile/src/core/session_store.dart';
+import 'package:rhema_mobile/src/features/auth/sign_in_screen.dart';
+import 'package:rhema_mobile/src/theme.dart';
 
 import '../../helpers.dart';
 

@@ -252,8 +252,8 @@ describe("secrets", () => {
   });
 
   test("deleting the account removes its secrets", async () => {
-    const dir = mkdtempSync(join(tmpdir(), "rema-secrets-"));
-    const databasePath = join(dir, "rema-server.db");
+    const dir = mkdtempSync(join(tmpdir(), "rhema-secrets-"));
+    const databasePath = join(dir, "rhema-server.db");
     const own = await harness({ databasePath });
     try {
       const a = (await own.signup("a@example.com")).token;
@@ -283,12 +283,12 @@ describe("secrets", () => {
 describe("secrets at rest", () => {
   let dir: string;
   beforeEach(() => {
-    dir = mkdtempSync(join(tmpdir(), "rema-secrets-"));
+    dir = mkdtempSync(join(tmpdir(), "rhema-secrets-"));
   });
   afterEach(() => rmSync(dir, { recursive: true, force: true }));
 
   test("the key file is created once and reused across restarts", async () => {
-    const databasePath = join(dir, "rema-server.db");
+    const databasePath = join(dir, "rhema-server.db");
     const keyPath = join(dir, SECRETS_KEY_FILE);
     expect(existsSync(keyPath)).toBe(false);
 
@@ -310,7 +310,7 @@ describe("secrets at rest", () => {
   });
 
   test("the database holds ciphertext bound to its key, account and name", async () => {
-    const databasePath = join(dir, "rema-server.db");
+    const databasePath = join(dir, "rhema-server.db");
     const envKey = Buffer.alloc(32, 7).toString("base64");
     const app = await harness({ databasePath, secretsKey: envKey });
     const signed = await app.signup();
@@ -363,7 +363,7 @@ describe("secrets at rest", () => {
   });
 
   test("a malformed key is refused at start", () => {
-    expect(() => resolveSecretsKey(join(dir, "rema-server.db"), "c2hvcnQ=")).toThrow(
+    expect(() => resolveSecretsKey(join(dir, "rhema-server.db"), "c2hvcnQ=")).toThrow(
       /32 bytes/,
     );
   });
@@ -371,8 +371,8 @@ describe("secrets at rest", () => {
 
 describe("migration", () => {
   test("a version 1 database gains the secrets and feedback tables and keeps its accounts", () => {
-    const dir = mkdtempSync(join(tmpdir(), "rema-migrate-"));
-    const path = join(dir, "rema-server.db");
+    const dir = mkdtempSync(join(tmpdir(), "rhema-migrate-"));
+    const path = join(dir, "rhema-server.db");
     const v1 = new Store(path);
     v1.insertUser(
       {

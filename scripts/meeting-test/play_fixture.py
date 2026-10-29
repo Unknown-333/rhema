@@ -79,7 +79,7 @@ def list_devices() -> None:
             print(f"  {index:>3}  {device['name']}{default}")
     print(
         "\nPick the *input* side of a virtual cable (e.g. 'CABLE Input (VB-Audio)').\n"
-        "Then set REMA's microphone to the matching 'CABLE Output'."
+        "Then set RHEMA's microphone to the matching 'CABLE Output'."
     )
 
 
@@ -170,7 +170,7 @@ def main() -> None:
         else:
             mine = sum(1 for u in truth["utterances"] if u["source"] == "mic")
             print(f"         your {mine} lines are cued below with >>> -- read them aloud")
-    print("\nStart the meeting in REMA now.")
+    print("\nStart the meeting in RHEMA now.")
     for remaining in range(args.countdown, 0, -1):
         print(f"  starting in {remaining}...", end="\r", flush=True)
         time.sleep(1)
@@ -222,7 +222,7 @@ def main() -> None:
     finally:
         silence()
 
-    print("\ndone. Stop the meeting in REMA, then:")
+    print("\ndone. Stop the meeting in RHEMA, then:")
     print("  python seed_meeting.py --list          find the new meeting id")
     print("  python score_meeting.py --id <id>      grade it")
     print("\nOn a recorded run, expect a non-zero WER (that is the transcription\n"

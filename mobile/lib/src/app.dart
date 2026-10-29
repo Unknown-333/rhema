@@ -10,8 +10,8 @@ import 'features/auth/sign_in_screen.dart';
 import 'shell/features.dart';
 import 'theme.dart';
 
-class RemaApp extends StatefulWidget {
-  const RemaApp({
+class RhemaApp extends StatefulWidget {
+  const RhemaApp({
     super.key,
     required this.session,
     required this.api,
@@ -25,10 +25,10 @@ class RemaApp extends StatefulWidget {
   final SharedPreferences prefs;
 
   @override
-  State<RemaApp> createState() => _RemaAppState();
+  State<RhemaApp> createState() => _RhemaAppState();
 }
 
-class _RemaAppState extends State<RemaApp> {
+class _RhemaAppState extends State<RhemaApp> {
   final _navigator = GlobalKey<NavigatorState>();
   late final AppLifecycleListener _lifecycle;
   var _foreground = true;
@@ -84,7 +84,7 @@ class _RemaAppState extends State<RemaApp> {
       child: MaterialApp(
         navigatorKey: _navigator,
         debugShowCheckedModeBanner: false,
-        title: 'REMA',
+        title: 'RHEMA',
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
         // Text grows with the system setting, up to 130%; the status and

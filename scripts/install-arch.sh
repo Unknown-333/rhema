@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Build REMA from this checkout and install it for the current user.
+# Build RHEMA from this checkout and install it for the current user.
 # The default layout is self-contained under ~/.local:
 #
-#   bin/rema -> ../lib/rema/bin/rema
-#   lib/rema/lib/{libtranscribe,libggml*,REMA/resources}
+#   bin/rhema -> ../lib/rhema/bin/rhema
+#   lib/rhema/lib/{libtranscribe,libggml*,RHEMA/resources}
 #
 # Keeping the executable and libraries in that shape satisfies the
 # $ORIGIN/../lib rpath embedded by src-tauri/build.rs without putting generic
@@ -21,7 +21,7 @@ Options:
   --skip-build   Install an existing release build without rebuilding it
   -h, --help     Show this help
 
-After installation, run REMA with: rema
+After installation, run RHEMA with: rhema
 EOF
 }
 
@@ -136,12 +136,12 @@ if [[ ! -s "$vad_model" ]]; then
   exit 1
 fi
 
-release_binary="$repo_root/src-tauri/target/release/rema"
+release_binary="$repo_root/src-tauri/target/release/rhema"
 if $build_release; then
-  echo "Building the REMA frontend..."
+  echo "Building the RHEMA frontend..."
   (
     cd "$repo_root"
-    bun_scratch_dir="$(mktemp -d /tmp/rema-bun.XXXXXX)"
+    bun_scratch_dir="$(mktemp -d /tmp/rhema-bun.XXXXXX)"
     trap 'rm -rf -- "$bun_scratch_dir"' EXIT
     mkdir -p "$bun_scratch_dir/install" "$bun_scratch_dir/tmp"
     BUN_INSTALL="$bun_scratch_dir/install" \
@@ -150,7 +150,7 @@ if $build_release; then
     bun run build
   )
 
-  echo "Building the REMA release binary..."
+  echo "Building the RHEMA release binary..."
   (
     cd "$repo_root/src-tauri"
     # CMake 4 removed compatibility with policies used by a few native speech
@@ -182,29 +182,29 @@ if ((${#transcribe_libraries[@]} == 0 || ${#cpu_backends[@]} == 0)); then
   exit 1
 fi
 
-app_root="$install_prefix/lib/rema"
+app_root="$install_prefix/lib/rhema"
 app_bin_dir="$app_root/bin"
 app_lib_dir="$app_root/lib"
-resource_dir="$app_lib_dir/REMA"
+resource_dir="$app_lib_dir/RHEMA"
 
-echo "Installing REMA below $install_prefix..."
-install -Dm755 "$release_binary" "$app_bin_dir/rema"
+echo "Installing RHEMA below $install_prefix..."
+install -Dm755 "$release_binary" "$app_bin_dir/rhema"
 install -d "$app_lib_dir" "$resource_dir" "$install_prefix/bin"
 bash "$repo_root/scripts/ci/stage-transcribe-libs.sh" "$transcribe_lib_dir" "$app_lib_dir"
 cp -a "$repo_root/src-tauri/resources" "$resource_dir/"
 
-ln -sfn ../lib/rema/bin/rema "$install_prefix/bin/rema"
+ln -sfn ../lib/rhema/bin/rhema "$install_prefix/bin/rhema"
 
 desktop_dir="$install_prefix/share/applications"
 icon_root="$install_prefix/share/icons/hicolor"
-install -Dm644 "$repo_root/packaging/linux/rema.desktop" \
-  "$desktop_dir/rema.desktop"
+install -Dm644 "$repo_root/packaging/linux/rhema.desktop" \
+  "$desktop_dir/rhema.desktop"
 install -Dm644 "$repo_root/src-tauri/icons/32x32.png" \
-  "$icon_root/32x32/apps/rema.png"
+  "$icon_root/32x32/apps/rhema.png"
 install -Dm644 "$repo_root/src-tauri/icons/128x128.png" \
-  "$icon_root/128x128/apps/rema.png"
+  "$icon_root/128x128/apps/rhema.png"
 install -Dm644 "$repo_root/src-tauri/icons/128x128@2x.png" \
-  "$icon_root/256x256/apps/rema.png"
+  "$icon_root/256x256/apps/rhema.png"
 
 if command -v update-desktop-database >/dev/null 2>&1; then
   update-desktop-database "$desktop_dir" >/dev/null 2>&1 || true
@@ -223,4 +223,4 @@ case ":$PATH:" in
 esac
 
 echo
-echo "REMA installed successfully. Run it with: rema"
+echo "RHEMA installed successfully. Run it with: rhema"

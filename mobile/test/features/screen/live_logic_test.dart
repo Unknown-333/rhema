@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/features/screen/live_protocol.dart';
-import 'package:rema_mobile/src/features/screen/strings.dart';
-import 'package:rema_mobile/src/features/screen/view_geometry.dart';
+import 'package:rhema_mobile/src/features/screen/live_protocol.dart';
+import 'package:rhema_mobile/src/features/screen/strings.dart';
+import 'package:rhema_mobile/src/features/screen/view_geometry.dart';
 
 void main() {
   // A phone in portrait watching a 16:9 picture: bars above and below.

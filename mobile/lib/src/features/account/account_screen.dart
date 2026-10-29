@@ -94,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final session = _services.session;
     final relay = _services.relay;
     final busy = _signingOut || _deleting;
@@ -131,7 +131,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         header: true,
                         child: Text(
                           AccountStrings.title,
-                          style: RemaType.title2.copyWith(color: t.ink),
+                          style: RhemaType.title2.copyWith(color: t.ink),
                         ),
                       ),
                     ],
@@ -170,7 +170,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ListRow(
                               leading: const Spinner(size: 18),
                               title: AccountStrings.connecting,
-                              titleStyle: RemaType.rowBody.copyWith(
+                              titleStyle: RhemaType.rowBody.copyWith(
                                 color: t.muted,
                               ),
                             )
@@ -222,7 +222,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                   ? AccountStrings.developmentServer
                                   : AccountStrings.server,
                               subtitle: Uri.parse(url).authority,
-                              subtitleStyle: RemaType.mono.copyWith(
+                              subtitleStyle: RhemaType.mono.copyWith(
                                 color: t.muted,
                               ),
                             ),
@@ -264,7 +264,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ListRow(
                             leading: RowGlyph(AppIcons.delete, color: t.danger),
                             title: AccountStrings.deleteAccount,
-                            titleStyle: RemaType.rowTitle.copyWith(
+                            titleStyle: RhemaType.rowTitle.copyWith(
                               color: t.danger,
                             ),
                             semanticLabel: AccountStrings.deleteAccount,
@@ -284,7 +284,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             const SizedBox(height: Space.s8),
                             Text(
                               AccountStrings.version(appVersion),
-                              style: RemaType.footnote.copyWith(
+                              style: RhemaType.footnote.copyWith(
                                 color: t.muted,
                               ),
                             ),
@@ -296,11 +296,11 @@ class _AccountScreenState extends State<AccountScreen> {
                               foreground: t.muted,
                               onPressed: () => showLicensePage(
                                 context: context,
-                                applicationName: 'REMA',
+                                applicationName: 'RHEMA',
                                 applicationVersion: appVersion,
                                 applicationIcon: const Padding(
                                   padding: EdgeInsets.all(Space.s12),
-                                  child: RemaMark(size: 48),
+                                  child: RhemaMark(size: 48),
                                 ),
                               ),
                             ),
@@ -326,7 +326,7 @@ class _Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final name = user.name?.trim();
     final shown = name == null || name.isEmpty ? user.email : name;
     return Padding(
@@ -338,12 +338,12 @@ class _Profile extends StatelessWidget {
             height: 64,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              gradient: RemaColors.gradient,
+              gradient: RhemaColors.gradient,
               shape: BoxShape.circle,
             ),
             child: Text(
               shown.characters.first.toUpperCase(),
-              style: RemaType.title1.copyWith(color: Colors.white),
+              style: RhemaType.title1.copyWith(color: Colors.white),
             ),
           ),
           const SizedBox(height: Space.s12),
@@ -352,7 +352,7 @@ class _Profile extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: RemaType.title2.copyWith(color: t.ink),
+            style: RhemaType.title2.copyWith(color: t.ink),
           ),
           if (shown != user.email) ...[
             const SizedBox(height: Space.s2),
@@ -361,7 +361,7 @@ class _Profile extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: RemaType.footnote.copyWith(color: t.muted),
+              style: RhemaType.footnote.copyWith(color: t.muted),
             ),
           ],
         ],

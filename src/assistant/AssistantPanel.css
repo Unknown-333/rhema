@@ -1,6 +1,6 @@
 /* The assistant's windows: the quick ask, the call, and the reminder popup.
  *
- * One dark visual language: REMA's deep blue-violet card, soft off-white ink,
+ * One dark visual language: RHEMA's deep blue-violet card, soft off-white ink,
  * hairline edges.
  * The quick ask and the call are one family and are drawn from the same parts:
  * the quick ask's waiting pill *is* the call's status bubble (same surface, same
@@ -9,7 +9,7 @@
  * assistant's surfaces. A teal sparkle, a teal ring and a teal edge used to mark
  * the quick ask as "the assistant"; beside the monochrome call they read as a
  * different app, and the mark said nothing the words next to it did not.
- * (`--as-accent*`, now REMA coral, survives only for thumbnail hover and a few
+ * (`--as-accent*`, now RHEMA coral, survives only for thumbnail hover and a few
  * focus rings; the call's orb is the one place the brand's colours are drawn.)
  *
  * Tokens live on `.assistant-scope` so the settings preview and the reminder
@@ -29,7 +29,7 @@
    * on <html> and the settings preview inline on this element; declaring them
    * here would shadow both. */
 
-  /* REMA's dark card (#17192F) and ink (#F2F1F7), from docs/rema-brand.md
+  /* RHEMA's dark card (#17192F) and ink (#F2F1F7), from docs/rhema-brand.md
    * §5. A deep blue-violet rather than the graphite it replaced, so the floating
    * windows read as the same product as the main window's dark theme. */
   --as-surface: rgba(18, 20, 40, var(--as-alpha, 1));
@@ -44,7 +44,7 @@
   --as-hairline: rgba(255, 255, 255, 0.09);
   --as-hairline-strong: rgba(255, 255, 255, 0.15);
   /* The ink tile's indigo glowing from the top corner (the brand's dark
-     icon, docs/rema-brand.md §4), under a faint sheen along the top of
+     icon, docs/rhema-brand.md §4), under a faint sheen along the top of
      every surface and a
      brighter hairline on its top edge, so a floating object reads as a
      material rather than a flat fill. The windows are transparent and cannot
@@ -70,7 +70,7 @@
   --as-inset-bg: rgba(0, 0, 0, 0.28);
   --as-user-bg: rgba(255, 255, 255, 0.08);
 
-  /* REMA coral, dark-mode value (#FF6A52, 6.6:1 on the dark canvas). Kept to
+  /* RHEMA coral, dark-mode value (#FF6A52, 6.6:1 on the dark canvas). Kept to
      graphics: focus rings and a thumbnail's hover edge, never a fill behind
      text or a badge. */
   --as-accent: #ff6a52;

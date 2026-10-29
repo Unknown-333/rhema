@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=REMA
+Name=RHEMA
 Comment=Local voice dictation and AI assistant
-Exec=rema
-Icon=rema
+Exec=rhema
+Icon=rhema
 Terminal=false
 Categories=AudioVideo;Audio;
 StartupNotify=true
-StartupWMClass=REMA
+StartupWMClass=RHEMA

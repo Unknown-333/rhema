@@ -1,4 +1,4 @@
-; Custom NSIS template for REMA with portable mode support.
+; Custom NSIS template for RHEMA with portable mode support.
 ; Based on tauri-apps/tauri@tauri-v2.9.1 crates/tauri-bundler/src/bundle/windows/nsis/installer.nsi
 ; Portable changes are marked with "; --- PORTABLE MODE ---" comments.
 ;
@@ -78,14 +78,14 @@ Var OldMainBinaryName
 ; --- PORTABLE MODE ---
 Var PortableMode
 
-; --- RENAME --- The app was called REMA before it was REMA. The product
+; --- RENAME --- The app was called RHEMA before it was RHEMA. The product
 ; name keys the uninstall entry, the install folder and the shortcuts, so this
-; installer would not see a REMA install at all and both would stay on the
+; installer would not see a RHEMA install at all and both would stay on the
 ; machine. RemoveLegacyInstall takes the old program away (files, uninstall
 ; entry, shortcuts, autostart value) and never touches its data: the app moves
 ; that to the new name itself on first launch.
-!define LEGACY_PRODUCTNAME "REMA"
-!define LEGACY_MAINBINARYNAME "rema.exe"
+!define LEGACY_PRODUCTNAME "RHEMA"
+!define LEGACY_MAINBINARYNAME "rhema.exe"
 !define LEGACY_UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${LEGACY_PRODUCTNAME}"
 
 Name "${PRODUCTNAME}"
@@ -630,7 +630,7 @@ Function .onInit
 
   ; --- PORTABLE MODE --- Auto-detect portable mode during updates.
   ; Preserve portable installs that use the current magic-string marker, the
-  ; "REMA Portable Mode" and "Handy Portable Mode" markers written under
+  ; "RHEMA Portable Mode" and "Handy Portable Mode" markers written under
   ; the app's earlier names, or the legacy empty marker created by even older
   ; Handy releases. Require Data/ for the legacy empty-marker case so stale
   ; scoop side-effect files do not accidentally opt an updater run into
@@ -641,9 +641,9 @@ Function .onInit
     FileOpen $1 "$INSTDIR\portable" r
     FileRead $1 $2
     FileClose $1
-    ${If} $2 == "REMA Portable Mode"
+    ${If} $2 == "RHEMA Portable Mode"
       StrCpy $PortableMode 1
-    ${OrIf} $2 == "REMA Portable Mode"
+    ${OrIf} $2 == "RHEMA Portable Mode"
       StrCpy $PortableMode 1
     ${OrIf} $2 == "Handy Portable Mode"
       StrCpy $PortableMode 1
@@ -779,7 +779,7 @@ Section Install
 
   !insertmacro CheckIfAppIsRunning "${MAINBINARYNAME}.exe" "${PRODUCTNAME}"
 
-  ; --- RENAME --- Take an installed REMA away before the new files land,
+  ; --- RENAME --- Take an installed RHEMA away before the new files land,
   ; so its uninstaller can never remove a file this install just wrote.
   ${If} $PortableMode <> 1
     Call RemoveLegacyInstall
@@ -822,9 +822,9 @@ Section Install
   ; --- PORTABLE MODE --- Create portable marker and Data directory
   ${If} $PortableMode = 1
     FileOpen $0 "$INSTDIR\portable" w
-    FileWrite $0 "REMA Portable Mode"
+    FileWrite $0 "RHEMA Portable Mode"
     FileClose $0
-    ; --- RENAME --- A portable REMA updated in place keeps its Data, but
+    ; --- RENAME --- A portable RHEMA updated in place keeps its Data, but
     ; its old executable would sit beside the new one.
     !if "${MAINBINARYNAME}.exe" != "${LEGACY_MAINBINARYNAME}"
       Delete "$INSTDIR\${LEGACY_MAINBINARYNAME}"
@@ -1055,7 +1055,7 @@ Section Uninstall
   ${EndIf}
 SectionEnd
 
-; --- RENAME --- Remove an installed REMA (see LEGACY_PRODUCTNAME). Its
+; --- RENAME --- Remove an installed RHEMA (see LEGACY_PRODUCTNAME). Its
 ; uninstaller runs silently with /UPDATE, which is the mode in which it keeps
 ; the app data (a silent run never ticks "Delete app data" either, so the data
 ; is guarded twice) and leaves shortcuts and the autostart value alone; those

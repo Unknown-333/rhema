@@ -1,6 +1,6 @@
-# REMA for phones
+# RHEMA for phones
 
-The Android and iOS app. Sign in with the same account as REMA on your
+The Android and iOS app. Sign in with the same account as RHEMA on your
 computer, and the phone becomes a wireless mic and keyboard for it: speak on
 the phone, and the computer transcribes with its own speech model and pastes
 at its cursor (or sends the text back); type on the phone, and the computer
@@ -31,7 +31,7 @@ emulator, `http://localhost:8787` from the iOS simulator.
 The app has no server setting: the account server's address only ever comes
 from discovery ([`PROTOCOL.md`](../server/PROTOCOL.md), "Finding the
 server"). The app asks `discoveryUrl` in `lib/src/core/config.dart`
-(`https://discovery.rema.invalid`) at launch, and again when the server
+(`https://discovery.rhema.invalid`) at launch, and again when the server
 does not answer (at most once a minute), and keeps the last answer. The answer
 is JSON such as `{"apiBaseUrl":"http://192.168.1.20:8787"}` (`apiBaseUrl`
 first, then the older `domain`, then the answer's only string field); the app
@@ -53,7 +53,7 @@ is signed out unless it is the server discovery names.
 
 Until discovery has answered once, a debug or profile build uses the
 development machine (above). For development only, `flutter run
---dart-define=REMA_SERVER_URL=http://192.168.1.20:8787` pins the server and
+--dart-define=RHEMA_SERVER_URL=http://192.168.1.20:8787` pins the server and
 turns discovery off; release builds ignore it.
 
 ## Release builds
@@ -72,7 +72,7 @@ Shown only when the server says it is set up (`GET /v1/config` →
 `google: true`). The app opens an auth session (Custom Tabs on Android,
 `ASWebAuthenticationSession` on iOS) at
 `{server}/v1/auth/google/start` with a PKCE challenge, and the server sends the
-browser back to **`rema://auth/callback`**. Android catches that scheme with
+browser back to **`rhema://auth/callback`**. Android catches that scheme with
 flutter_web_auth_2's `CallbackActivity` (in `AndroidManifest.xml`); iOS needs no
 registration because the auth session receives it directly.
 
@@ -82,7 +82,7 @@ registration because the auth session receives it directly.
 lib/src/
   core/       server URL and discovery, HTTP client, session storage, the relay socket
   design/     the design system: tokens (colour, type, spacing, motion), the theme,
-              the REMA mark, and the shared pieces (surfaces, notices, the mic,
+              the RHEMA mark, and the shared pieces (surfaces, notices, the mic,
               the composer)
   features/   assistant/ (Ask), command/ (Do), dictate/ (Dictate), screen/ (Screen
               and the live view), auth/, account/: one folder per feature, its
@@ -93,7 +93,7 @@ lib/src/
 
 The pages are Ask, Do, Dictate and Screen, in a navigation bar (a rail on wide
 screens); Account opens from the avatar in the top bar. Screens use only the
-theme and `context.rema` for colour, never colours of their own, so light
+theme and `context.rhema` for colour, never colours of their own, so light
 and dark stay one system. The type is Inter and Plus Jakarta Sans, bundled
 under `assets/fonts/` with their OFL licences.
 
@@ -141,7 +141,7 @@ removes it.
 
 ## App identity
 
-- Android `applicationId` / iOS bundle id: `com.rema.mobile`
-- Name on the home screen: REMA
+- Android `applicationId` / iOS bundle id: `com.rhema.mobile`
+- Name on the home screen: RHEMA
 - `appVersion` sent to the server is `lib/src/core/config.dart`'s
   `appVersion`; keep it equal to `version` in `pubspec.yaml`.

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/core/config.dart';
+import 'package:rhema_mobile/src/core/config.dart';
 
 void main() {
-  test('a release build ignores REMA_SERVER_URL: discovery only', () {
+  test('a release build ignores RHEMA_SERVER_URL: discovery only', () {
     expect(pinnedServerUrl(release: true), isNull);
     // These tests are built without the define.
     expect(pinnedServerUrl(release: false), isNull);

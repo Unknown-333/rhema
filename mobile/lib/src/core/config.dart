@@ -9,20 +9,20 @@ const appVersion = '0.1.0';
 /// Where the app asks for the account server's current address
 /// (PROTOCOL.md, "Finding the server"). The server's own address changes from
 /// time to time, so it is never built in.
-const discoveryUrl = 'https://discovery.rema.invalid';
+const discoveryUrl = 'https://discovery.rhema.invalid';
 
-/// The build's `--dart-define=REMA_SERVER_URL`, a developer override that
+/// The build's `--dart-define=RHEMA_SERVER_URL`, a developer override that
 /// pins the server (discovery is then off), or null without one. Ignored in
 /// [release] builds, which only ever use the server discovery names. An
 /// invalid one throws: `main` calls this first, so such a build fails at
 /// launch.
 String? pinnedServerUrl({bool release = kReleaseMode}) {
-  const fromBuild = String.fromEnvironment('REMA_SERVER_URL');
+  const fromBuild = String.fromEnvironment('RHEMA_SERVER_URL');
   if (release || fromBuild.isEmpty) return null;
   return serverOrigin(fromBuild, release: false) ??
       (throw StateError(
-        'REMA_SERVER_URL is "$fromBuild". Build with '
-        '--dart-define=REMA_SERVER_URL=http://192.168.1.20:8787',
+        'RHEMA_SERVER_URL is "$fromBuild". Build with '
+        '--dart-define=RHEMA_SERVER_URL=http://192.168.1.20:8787',
       ));
 }
 

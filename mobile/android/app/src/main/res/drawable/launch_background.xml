@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The splash before Flutter's first frame: REMA's canvas with the mark. -->
+<!-- The splash before Flutter's first frame: RHEMA's canvas with the mark. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/rema_canvas" />
+    <item android:drawable="@color/rhema_canvas" />
     <item>
         <bitmap
             android:gravity="center"

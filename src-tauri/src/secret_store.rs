@@ -27,11 +27,11 @@ use log::{debug, warn};
 
 /// Keyring *service* name. Matches the app's bundle identifier so all secrets
 /// are grouped under the app in the OS credential viewer.
-const SERVICE: &str = "com.rema.desktop";
+const SERVICE: &str = "com.rhema.desktop";
 
 /// Account used only to detect whether the keychain backend works at all. It is
 /// never written, so the probe is non-destructive.
-const PROBE_ACCOUNT: &str = "__rema_keychain_probe__";
+const PROBE_ACCOUNT: &str = "__rhema_keychain_probe__";
 
 /// Account name for the single assistant TTS API key.
 pub const ACCOUNT_ASSISTANT_TTS: &str = "assistant_tts";

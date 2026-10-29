@@ -154,7 +154,7 @@ class _HomeShellState extends State<HomeShell> {
               body: rail && navigable
                   ? Row(
                       children: [
-                        RemaNavRail(
+                        RhemaNavRail(
                           tabs: tabs,
                           shown: shown,
                           onSelect: _select,
@@ -162,7 +162,7 @@ class _HomeShellState extends State<HomeShell> {
                         VerticalDivider(
                           width: 1,
                           thickness: 1,
-                          color: context.rema.hairline,
+                          color: context.rhema.hairline,
                         ),
                         Expanded(child: body),
                       ],
@@ -170,7 +170,7 @@ class _HomeShellState extends State<HomeShell> {
                   : body,
               bottomNavigationBar: rail || !navigable
                   ? null
-                  : RemaNavBar(
+                  : RhemaNavBar(
                       tabs: tabs,
                       shown: shown,
                       onSelect: _select,
@@ -227,8 +227,8 @@ class _PageFadeState extends State<_PageFade>
 
 /// The bottom navigation (§3.2): the canvas colour, four items, the
 /// selected one a filled glyph and an ink label. No pill, no accent.
-class RemaNavBar extends StatelessWidget {
-  const RemaNavBar({
+class RhemaNavBar extends StatelessWidget {
+  const RhemaNavBar({
     super.key,
     required this.tabs,
     required this.shown,
@@ -245,7 +245,7 @@ class RemaNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return AnimatedContainer(
       duration: Motion.quick,
       decoration: BoxDecoration(
@@ -297,7 +297,7 @@ class _NavItemState extends State<_NavItem> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     final selected = widget.selected;
     final color = selected ? t.ink : t.muted;
     return Semantics(
@@ -345,7 +345,7 @@ class _NavItemState extends State<_NavItem> {
                 widget.tab.label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: RemaType.caption.copyWith(
+                style: RhemaType.caption.copyWith(
                   color: color,
                   fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
                 ),
@@ -358,8 +358,8 @@ class _NavItemState extends State<_NavItem> {
   }
 }
 
-class RemaNavRail extends StatelessWidget {
-  const RemaNavRail({
+class RhemaNavRail extends StatelessWidget {
+  const RhemaNavRail({
     super.key,
     required this.tabs,
     required this.shown,
@@ -372,7 +372,7 @@ class RemaNavRail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     // A short window (a phone on its side) scrolls the rail.
     return ColoredBox(
       color: t.canvas,
@@ -385,7 +385,7 @@ class RemaNavRail extends StatelessWidget {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: Space.s16),
-                  child: RemaMark(size: 24),
+                  child: RhemaMark(size: 24),
                 ),
                 for (final (i, tab) in tabs.indexed)
                   SizedBox(
@@ -422,7 +422,7 @@ class _Header extends StatelessWidget {
     final services = AppServices.of(context);
     final controller = DictateScope.of(context);
     final relay = services.relay;
-    final t = context.rema;
+    final t = context.rhema;
     return ListenableBuilder(
       listenable: Listenable.merge([
         controller,
@@ -501,7 +501,7 @@ class _LiveViewButtonState extends State<_LiveViewButton> {
   Widget build(BuildContext context) {
     final live = LiveScope.maybeOf(context);
     if (live == null) return const SizedBox.shrink();
-    final t = context.rema;
+    final t = context.rhema;
     return ListenableBuilder(
       listenable: live,
       builder: (context, _) {
@@ -563,7 +563,7 @@ class _AccountButton extends StatelessWidget {
             .toUpperCase(),
       null => '?',
     };
-    final t = context.rema;
+    final t = context.rhema;
     return Tooltip(
       message: ShellStrings.account,
       excludeFromSemantics: true,
@@ -589,7 +589,7 @@ class _AccountButton extends StatelessWidget {
                   ),
                   child: Text(
                     initial,
-                    style: RemaType.label.copyWith(
+                    style: RhemaType.label.copyWith(
                       color: t.ink,
                       fontWeight: FontWeight.w600,
                     ),

@@ -10,7 +10,7 @@ interface ServerSettingProps {
 
 /**
  * Which account server this app signs in to, read-only: the address always
- * comes from REMA's discovery address (`src-tauri/src/account/discovery.rs`)
+ * comes from RHEMA's discovery address (`src-tauri/src/account/discovery.rs`)
  * and is never chosen or typed here.
  */
 export const ServerSetting: React.FC<ServerSettingProps> = ({ serverUrl }) => {

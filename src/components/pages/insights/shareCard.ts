@@ -33,7 +33,7 @@ import {
  * posts.
  */
 
-const FAMILY = "REMA Card";
+const FAMILY = "RHEMA Card";
 const FONT = `"${FAMILY}", "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif`;
 
 interface Palette {
@@ -52,9 +52,9 @@ interface Palette {
 }
 
 /**
- * REMA's card set: every ground is a tone of the
+ * RHEMA's card set: every ground is a tone of the
  * brand — ink navy, coral, rose, apricot, peach, lavender, the ink tile's
- * indigo and the paper canvas — so a deck reads as one set and as REMA,
+ * indigo and the paper canvas — so a deck reads as one set and as RHEMA,
  * while light and dark grounds alternate so neighbouring cards never blur
  * together. Checked for contrast with the ribbon at its strongest: the figure
  * (`ink`) is at least 4.2:1 and the captions (`soft`) at least 3:1 wherever

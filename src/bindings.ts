@@ -4084,7 +4084,7 @@ async refreshFreeCredit() : Promise<FreeCreditStatus> {
     return await TAURI_INVOKE("refresh_free_credit");
 },
 /**
- * "Use REMA free" for one job.
+ * "Use RHEMA free" for one job.
  */
 async chooseFreeCredit(job: FreeCreditJob) : Promise<Result<FreeCreditStatus, string>> {
     try {
@@ -4593,7 +4593,7 @@ smart_spacing?: boolean;
  */
 smart_spacing_fix_case?: boolean; 
 /**
- * Smart spacing: remove the period REMA itself pasted at the end of
+ * Smart spacing: remove the period RHEMA itself pasted at the end of
  * an unfinished sentence ("I went to the.") when the next dictation
  * continues it.
  */
@@ -4601,7 +4601,7 @@ smart_spacing_join_sentences?: boolean; app_language?: string; experimental_enab
 /**
  * Experimental: let the middle, Back and Forward mouse buttons be a
  * shortcut's keys. Off, a stored mouse button is kept but not registered,
- * and the shortcut editor ignores the mouse. Only the REMA Keys
+ * and the shortcut editor ignores the mouse. Only the RHEMA Keys
  * engine can see mouse buttons at all.
  */
 mouse_button_shortcuts?: boolean; show_tray_icon?: boolean; 
@@ -4623,7 +4623,7 @@ transcribe_gpu_device?: string | null; extra_recording_buffer_ms?: number;
  * Master switch for the assistant experience: the floating panel window,
  * its two hotkeys, spoken replies, profiles and personal memory.
  * 
- * Off makes REMA dictation-only and, crucially, never creates the
+ * Off makes RHEMA dictation-only and, crucially, never creates the
  * always-on-top panel WebView — a whole renderer process plus whatever it
  * loads (the local TTS model above all) that otherwise lives for as long as
  * the app does. Kept separate from the provider/model settings on purpose:
@@ -5501,7 +5501,7 @@ export type CloudSttUnavailableReason = "not_enabled" | "selected_provider_missi
  */
 "unsupported_language" | 
 /**
- * REMA free is chosen and nobody is signed in to a REMA account.
+ * RHEMA free is chosen and nobody is signed in to a RHEMA account.
  */
 "sign_in_required"
 /**
@@ -5773,11 +5773,11 @@ export type FeedbackSystemInfo = { app_version: string; os: string; arch: string
  */
 export type FreeCreditBalance = { limit_usd: number; used_usd: number; remaining_usd: number; enabled: boolean }
 /**
- * A job the UI can point at REMA free.
+ * A job the UI can point at RHEMA free.
  */
 export type FreeCreditJob = "assistant" | "cleanup" | "command" | "stt" | "voice"
 /**
- * Which jobs run on REMA free right now, chosen or as the fallback.
+ * Which jobs run on RHEMA free right now, chosen or as the fallback.
  */
 export type FreeCreditJobs = { assistant: boolean; cleanup: boolean; command: boolean; stt: boolean; voice: boolean }
 /**
@@ -5931,7 +5931,7 @@ active_days: number;
  */
 first_day: string | null }
 /**
- * What the REMA keys engine is missing. Each needs its own fix.
+ * What the RHEMA keys engine is missing. Each needs its own fix.
  */
 export type KeyboardAccessGap = 
 /**
@@ -6405,7 +6405,7 @@ export type PostProcessReadiness = { state: "ready"; source: PostProcessConfigSo
 export type PostProcessTone = "none" | "formal" | "casual" | "professional" | "friendly" | "concise"
 export type PostProcessUnavailableReason = "no_providers" | "selected_provider_missing" | "no_model_configured" | "no_prompt_selected" | "selected_prompt_missing" | "selected_prompt_empty" | "missing_api_key" | 
 /**
- * REMA free is chosen and nobody is signed in to a REMA account.
+ * RHEMA free is chosen and nobody is signed in to a RHEMA account.
  */
 "sign_in_required"
 /**
@@ -6593,7 +6593,7 @@ access_command: string;
  */
 commands: DesktopShortcutCommand[] }
 /**
- * Whether shortcuts pressed in other apps reach REMA.
+ * Whether shortcuts pressed in other apps reach RHEMA.
  */
 export type ShortcutReach = 
 /**
@@ -6606,7 +6606,7 @@ export type ShortcutReach =
  */
 "wayland_x11_only" | 
 /**
- * The REMA keys engine cannot open the keyboard devices.
+ * The RHEMA keys engine cannot open the keyboard devices.
  */
 "no_keyboard_access"
 export type SkipReason = 
@@ -6624,7 +6624,7 @@ export type SkipReason =
 "model_unusable"
 export type SoundTheme = 
 /**
- * REMA's own start/stop cues — the default. Ships a matching lock
+ * RHEMA's own start/stop cues — the default. Ships a matching lock
  * cue (`popo_lock.wav`) used by every theme for tap-to-lock.
  */
 "dictation" | "marimba" | "pop" | "click" | "custom"

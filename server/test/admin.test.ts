@@ -48,8 +48,8 @@ async function setup(
   adminToken: string | null = ADMIN,
   adminEmails: string[] = [OWNER],
 ) {
-  dir = mkdtempSync(join(tmpdir(), "rema-admin-"));
-  const databasePath = join(dir, "rema-server.db");
+  dir = mkdtempSync(join(tmpdir(), "rhema-admin-"));
+  const databasePath = join(dir, "rhema-server.db");
   h = await harness({ adminToken, adminEmails, databasePath });
   db = new Database(databasePath);
   db.run("PRAGMA busy_timeout = 5000");

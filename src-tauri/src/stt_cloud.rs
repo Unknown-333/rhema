@@ -120,7 +120,7 @@ pub(crate) fn resolve_cloud_stt(
     resolve_cloud_stt_with(settings, crate::free_credit::access().as_ref())
 }
 
-/// The cloud provider a recording goes to: the chosen one, or REMA free when
+/// The cloud provider a recording goes to: the chosen one, or RHEMA free when
 /// the chosen one still needs a key the user never saved and the account's
 /// free credit can serve. Only ever on the cloud engine: choosing cloud is the
 /// user's consent to send audio out, so the local engine is never switched.
@@ -184,7 +184,7 @@ pub(crate) fn resolve_cloud_stt_with(
         });
     }
 
-    // REMA free: the account session is the credential and the account
+    // RHEMA free: the account session is the credential and the account
     // server the address, both taken now rather than stored.
     if provider.id == crate::free_credit::PROVIDER_ID {
         let Some(free) = free else {
@@ -900,7 +900,7 @@ pub(crate) fn prewarm_cloud_stt(settings: &AppSettings) {
     let Ok(cfg) = resolve_cloud_stt(settings) else {
         return;
     };
-    // A warm-up is a real, metered transcription: on REMA free it would
+    // A warm-up is a real, metered transcription: on RHEMA free it would
     // spend the user's free credit (and the owner's money) on a tone.
     if cfg.provider.id == crate::free_credit::PROVIDER_ID {
         return;
@@ -1244,11 +1244,11 @@ impl CloudRequest {
         let mut headers = reqwest::header::HeaderMap::new();
         headers.insert(
             "HTTP-Referer",
-            reqwest::header::HeaderValue::from_static("https://github.com/OWNER/rema"),
+            reqwest::header::HeaderValue::from_static("https://github.com/Unknown-333/rhema"),
         );
         headers.insert(
             "X-Title",
-            reqwest::header::HeaderValue::from_static("REMA"),
+            reqwest::header::HeaderValue::from_static("RHEMA"),
         );
         // No overall timeout here: it differs per request (it grows with the
         // recording, see `request_timeout`) and is set in `post`. Baking it in
@@ -1557,7 +1557,7 @@ impl CloudRequest {
             }
         })?;
         if !status.is_success() {
-            // REMA free's refusals in words the user can act on. The
+            // RHEMA free's refusals in words the user can act on. The
             // message names no status, so it is never retried as transient.
             if let Some(message) = crate::free_credit::note_failure(&url, status.as_u16(), &body) {
                 return Err(message);
@@ -1977,7 +1977,7 @@ mod tests {
         for provider in crate::settings::default_cloud_stt_providers() {
             assert_eq!(
                 provider.key_optional,
-                // REMA free's credential is the account session.
+                // RHEMA free's credential is the account session.
                 provider.id == "custom" || provider.id == crate::free_credit::PROVIDER_ID,
                 "{} has the wrong key requirement",
                 provider.id
@@ -2041,7 +2041,7 @@ mod tests {
 
     #[test]
     fn azure_definition_selects_mai_and_maps_every_setting() {
-        let words = vec!["REMA".to_string(), "Kiro".to_string()];
+        let words = vec!["RHEMA".to_string(), "Kiro".to_string()];
         let definition = azure_definition("MAI-Transcribe-2", Some("ne"), &words, true);
         assert_eq!(definition["enhancedMode"]["enabled"], true);
         assert_eq!(definition["enhancedMode"]["model"], "MAI-Transcribe-2");
@@ -2052,7 +2052,7 @@ mod tests {
         assert_eq!(definition["locales"], serde_json::json!(["ne"]));
         assert_eq!(
             definition["phraseList"]["phrases"],
-            serde_json::json!(["REMA", "Kiro"])
+            serde_json::json!(["RHEMA", "Kiro"])
         );
 
         // Azure's default style is verbatim, so "off" is sent explicitly too,
@@ -2335,7 +2335,7 @@ mod tests {
     fn a_provider_that_ignores_hints_keeps_the_local_word_pass() {
         let mut settings = get_default_settings();
         settings.stt_engine_mode = SttEngineMode::Cloud;
-        settings.custom_words = vec!["REMA".to_string(), "Kiro".to_string()];
+        settings.custom_words = vec!["RHEMA".to_string(), "Kiro".to_string()];
         settings
             .cloud_stt_api_keys
             .insert("openrouter".to_string(), "key".to_string());

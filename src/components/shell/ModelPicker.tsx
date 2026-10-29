@@ -36,7 +36,7 @@ import {
   ttsNeedsSetup,
 } from "./ProviderSetup";
 import { TTS_ENGINE_IDS, ttsEngineSpec } from "@/lib/ttsEngines";
-import { isRemaFree } from "@/lib/freeCredit";
+import { isRhemaFree } from "@/lib/freeCredit";
 import { useFreeOption } from "@/components/freeCredit/useFreeOption";
 
 /**
@@ -57,7 +57,7 @@ const KEYLESS_LLM = new Set([
   "local",
   "custom",
   "apple_intelligence",
-  "rema_free",
+  "rhema_free",
 ]);
 const BUILTIN = "builtin";
 const APPLE = "apple_intelligence";
@@ -156,13 +156,13 @@ export const LlmModelPicker: React.FC<{
 
     // Apple Intelligence runs on the Mac and needs nothing; the assistant
     // cannot use it at all.
-    // REMA free is listed while there is credit to spend, or while it is
+    // RHEMA free is listed while there is credit to spend, or while it is
     // the one in use; it never needs setting up.
     const providers = (settings?.post_process_providers ?? []).filter(
       (provider) =>
         provider.id !== BUILTIN &&
         (isCleanup || provider.id !== APPLE) &&
-        (!isRemaFree(provider.id) ||
+        (!isRhemaFree(provider.id) ||
           free.available ||
           provider.id === providerId),
     );
@@ -173,7 +173,7 @@ export const LlmModelPicker: React.FC<{
     const cloud = providers
       .filter((provider) => isReady(provider.id))
       .map<LogoSelectOption>((provider) => {
-        if (isRemaFree(provider.id)) {
+        if (isRhemaFree(provider.id)) {
           return {
             value: `cloud:${provider.id}`,
             label: free.label,
@@ -328,7 +328,7 @@ export const SttModelPicker: React.FC<{ className?: string }> = ({
     const cloud = cloudProviders
       .filter(
         (provider) =>
-          (!isRemaFree(provider.id) ||
+          (!isRhemaFree(provider.id) ||
             free.available ||
             provider.id === chosen) &&
           (cloudKeys[provider.id] || cloudSttKeyOptional(provider)) &&
@@ -341,7 +341,7 @@ export const SttModelPicker: React.FC<{ className?: string }> = ({
         const model =
           settings?.cloud_stt_models?.[provider.id]?.trim() ||
           provider.default_model;
-        if (isRemaFree(provider.id)) {
+        if (isRhemaFree(provider.id)) {
           return {
             value: `cloud:${provider.id}`,
             label: free.label,
@@ -454,13 +454,13 @@ export const VoicePicker: React.FC<{ className?: string }> = ({
   const free = useFreeOption();
 
   const engines = TTS_ENGINE_IDS.filter(
-    (engine) => !isRemaFree(engine) || free.available || engine === current,
+    (engine) => !isRhemaFree(engine) || free.available || engine === current,
   );
   const options = engines.map<LogoSelectOption>((engine) => {
     const local = !!ttsEngineSpec(engine)?.local;
     return {
       value: engine,
-      label: isRemaFree(engine)
+      label: isRhemaFree(engine)
         ? free.label
         : t(`settings.assistant.tts.engines.${engine}`),
       hint: local

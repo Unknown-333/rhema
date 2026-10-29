@@ -110,14 +110,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = context.rema;
+    final t = context.rhema;
     return Scaffold(
       appBar: AppBar(title: const Text(FeedbackStrings.title)),
       body: SafeArea(top: false, child: _sent ? _sentView(t) : _form(t)),
     );
   }
 
-  Widget _sentView(RemaColors t) => Padding(
+  Widget _sentView(RhemaColors t) => Padding(
     padding: const EdgeInsets.all(Space.s24),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +127,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           child: Text(
             FeedbackStrings.sentTitle,
             textAlign: TextAlign.center,
-            style: RemaType.title2.copyWith(color: t.ink),
+            style: RhemaType.title2.copyWith(color: t.ink),
           ),
         ),
         const SizedBox(height: Space.s8),
@@ -136,7 +136,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               ? FeedbackStrings.sentBody
               : FeedbackStrings.sentWithEmail(_sentTo!),
           textAlign: TextAlign.center,
-          style: RemaType.body.copyWith(color: t.muted),
+          style: RhemaType.body.copyWith(color: t.muted),
         ),
         const SizedBox(height: Space.s24),
         Btn(FeedbackStrings.done, onPressed: () => Navigator.maybePop(context)),
@@ -144,7 +144,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     ),
   );
 
-  Widget _form(RemaColors t) {
+  Widget _form(RhemaColors t) {
     final length = FeedbackRules.length(_message.text);
     final email = _email.text.trim();
     final emailBad = email.isNotEmpty && !FeedbackRules.looksLikeEmail(email);
@@ -153,7 +153,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       children: [
         Text(
           FeedbackStrings.intro,
-          style: RemaType.body.copyWith(color: t.muted),
+          style: RhemaType.body.copyWith(color: t.muted),
         ),
         const SizedBox(height: Space.s16),
         TextField(
@@ -162,7 +162,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           minLines: 6,
           maxLines: 12,
           textCapitalization: TextCapitalization.sentences,
-          style: RemaType.body.copyWith(color: t.ink),
+          style: RhemaType.body.copyWith(color: t.ink),
           decoration: InputDecoration(
             labelText: FeedbackStrings.message,
             hintText: FeedbackStrings.messageHint,
@@ -182,7 +182,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           keyboardType: TextInputType.emailAddress,
           autocorrect: false,
           autofillHints: const [AutofillHints.email],
-          style: RemaType.body.copyWith(color: t.ink),
+          style: RhemaType.body.copyWith(color: t.ink),
           decoration: InputDecoration(
             labelText: FeedbackStrings.email,
             errorText: emailBad ? FeedbackStrings.emailInvalid : null,
@@ -198,11 +198,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               : (on) => setState(() => _includeSystem = on ?? false),
           title: Text(
             FeedbackStrings.includeSystem,
-            style: RemaType.body.copyWith(color: t.ink),
+            style: RhemaType.body.copyWith(color: t.ink),
           ),
           subtitle: Text(
             FeedbackStrings.sentAs(_system),
-            style: RemaType.footnote.copyWith(color: t.muted),
+            style: RhemaType.footnote.copyWith(color: t.muted),
           ),
         ),
         if (_error case final error?) ...[

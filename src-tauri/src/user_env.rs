@@ -3,9 +3,9 @@
 //! their name without the app's prefix.
 
 /// Prefix of the environment variables the app reads.
-pub const ENV_PREFIX: &str = "REMA_";
+pub const ENV_PREFIX: &str = "RHEMA_";
 
-/// The variable `REMA_<suffix>`, if it is set.
+/// The variable `RHEMA_<suffix>`, if it is set.
 pub fn user_env_var_os(suffix: &str) -> Option<std::ffi::OsString> {
     read_prefixed(suffix, |name| std::env::var_os(name))
 }
@@ -25,7 +25,7 @@ mod tests {
 
     #[test]
     fn reads_the_prefixed_name_only() {
-        let env = |name: &str| (name == "REMA_ALLOW_WAYLAND").then(|| "1".to_string());
+        let env = |name: &str| (name == "RHEMA_ALLOW_WAYLAND").then(|| "1".to_string());
         assert_eq!(read_prefixed("ALLOW_WAYLAND", env), Some("1".to_string()));
         assert_eq!(read_prefixed("ALLOW_WAYLAND", |_| None::<String>), None);
         assert_eq!(read_prefixed("OTHER", env), None);

@@ -190,7 +190,7 @@ impl MeetingStore {
     pub fn new(app_handle: &tauri::AppHandle) -> Result<Self> {
         let app_data_dir = crate::portable::app_data_dir(app_handle)?;
         let audio_dir = app_data_dir.join("meetings");
-        let db_path = app_data_dir.join("rema_meetings.db");
+        let db_path = app_data_dir.join("rhema_meetings.db");
 
         if !audio_dir.exists() {
             fs::create_dir_all(&audio_dir)
@@ -210,7 +210,7 @@ impl MeetingStore {
         let audio_dir = dir.path().join("meetings");
         fs::create_dir_all(&audio_dir).expect("audio dir");
         let store = Self {
-            db_path: dir.path().join("rema_meetings.db"),
+            db_path: dir.path().join("rhema_meetings.db"),
             audio_dir,
         };
         store.init().expect("migrations");
@@ -1199,7 +1199,7 @@ mod tests {
         let audio_dir = dir.path().join("meetings");
         fs::create_dir_all(&audio_dir).expect("audio dir");
         let store = MeetingStore {
-            db_path: dir.path().join("rema_meetings.db"),
+            db_path: dir.path().join("rhema_meetings.db"),
             audio_dir,
         };
         store.init().expect("migrations");
@@ -1339,7 +1339,7 @@ mod tests {
     #[test]
     fn meetings_recorded_before_usage_existed_are_seeded() {
         let dir = tempfile::tempdir().expect("tempdir");
-        let path = dir.path().join("rema_meetings.db");
+        let path = dir.path().join("rhema_meetings.db");
         let mut conn = Connection::open(&path).unwrap();
         Migrations::new(MIGRATIONS[..2].to_vec())
             .to_latest(&mut conn)

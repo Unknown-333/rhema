@@ -63,7 +63,7 @@ export interface Options {
   google: { clientId: string; clientSecret: string; tokenUrl?: string } | null;
   /** Take the client address from X-Forwarded-For (behind exactly one reverse proxy). */
   trustProxy: boolean;
-  /** Base64 of the 32-byte key for stored API keys (`REMA_SECRETS_KEY`); unset uses `secrets.key` beside the database. */
+  /** Base64 of the 32-byte key for stored API keys (`RHEMA_SECRETS_KEY`); unset uses `secrets.key` beside the database. */
   secretsKey?: string;
   /** Where live-view TURN credentials come from (PROTOCOL.md, "TURN"); null offers STUN only. */
   turn?: TurnConfig | null;

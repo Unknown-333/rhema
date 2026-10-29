@@ -1,6 +1,6 @@
-# REMA account server
+# RHEMA account server
 
-The small server behind REMA accounts. It signs people in (email and password,
+The small server behind RHEMA accounts. It signs people in (email and password,
 or Google) on the desktop app and the phone app, keeps the list of devices on each
 account, and relays messages between a person's own devices, which is what lets a
 phone use the computer as its microphone and keyboard.
@@ -32,7 +32,7 @@ It listens on `http://localhost:8787` and keeps its database in `./data/`.
 ## How the apps find it
 
 The apps don't hard-code this server's address. They read it from
-`https://discovery.rema.invalid`, which must answer JSON naming the current
+`https://discovery.rhema.invalid`, which must answer JSON naming the current
 domain:
 
 ```json
@@ -61,11 +61,11 @@ address decides where people's sign-ins go, so keep it locked down.
 | --------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `PORT`                      | `8787`                   | Port to listen on.                                                                                                                                |
 | `HOST`                      | `0.0.0.0`                | Address to listen on.                                                                                                                             |
-| `DATABASE_PATH`             | `./data/rema-server.db`       | SQLite file. Its folder is created if missing.             |
+| `DATABASE_PATH`             | `./data/rhema-server.db`       | SQLite file. Its folder is created if missing.             |
 | `PUBLIC_URL`                | `http://localhost:$PORT` | The address people's browsers reach the server at. Google sends them back to `$PUBLIC_URL/v1/auth/google/callback`.                               |
 | `GOOGLE_CLIENT_ID`          | unset                    | Google OAuth client. Google sign-in is on only when both Google variables are set.                                                                |
 | `GOOGLE_CLIENT_SECRET`      | unset                    | Stays on the server; the apps never see it.                                                                                                       |
-| `REMA_SECRETS_KEY`        | unset                    | Base64 of 32 random bytes: the key that encrypts stored API keys. Unset uses (and on first start creates) `secrets.key` beside the database.      |
+| `RHEMA_SECRETS_KEY`        | unset                    | Base64 of 32 random bytes: the key that encrypts stored API keys. Unset uses (and on first start creates) `secrets.key` beside the database.      |
 | `TRUST_PROXY`               | unset                    | `1` takes the client's address from the last `X-Forwarded-For` entry, for rate limiting. Set it only behind exactly one reverse proxy.            |
 | `CLOUDFLARE_TURN_KEY_ID`    | unset                    | With `CLOUDFLARE_TURN_API_TOKEN`: a Cloudflare Realtime TURN key. The server asks Cloudflare for short-lived TURN credentials for each live view. |
 | `CLOUDFLARE_TURN_API_TOKEN` | unset                    | The API token of that TURN key. Stays on the server.                                                                                              |
@@ -149,8 +149,8 @@ account and signing up again with the same address does not renew the credit;
 that hash (and the usage rows) stay after an account is deleted. To read it:
 
 ```sh
-bun scripts/free-usage.ts ./data/rema-server.db                       # locally
-docker exec rema-server bun scripts/free-usage.ts /data/rema-server.db
+bun scripts/free-usage.ts ./data/rhema-server.db                       # locally
+docker exec rhema-server bun scripts/free-usage.ts /data/rhema-server.db
 ```
 
 which prints the totals, spend per kind and model over 30 days, and the top 20
@@ -202,14 +202,14 @@ the PKCE verifier can use.
 ## Deploy
 
 ```sh
-docker build -t rema-server server
-docker run -d --name rema-server --restart unless-stopped \
+docker build -t rhema-server server
+docker run -d --name rhema-server --restart unless-stopped \
   -p 127.0.0.1:8787:8787 \
-  -v rema-data:/data \
+  -v rhema-data:/data \
   -e PUBLIC_URL=https://sync.example.com -e TRUST_PROXY=1 \
   -e GOOGLE_CLIENT_ID=... -e GOOGLE_CLIENT_SECRET=... \
   -e ADMIN_EMAILS=owner@example.com \
-  rema-server
+  rhema-server
 ```
 
 The image runs as a non-root user and keeps the database on the `/data` volume.
@@ -226,8 +226,8 @@ The image runs as a non-root user and keeps the database on the `/data` volume.
   runs:
 
   ```sh
-  docker exec rema-server bun -e \
-    'new (require("bun:sqlite").Database)("/data/rema-server.db").run("VACUUM INTO ?", ["/data/backup.db"])'
+  docker exec rhema-server bun -e \
+    'new (require("bun:sqlite").Database)("/data/rhema-server.db").run("VACUUM INTO ?", ["/data/backup.db"])'
   ```
 
   then move `/data/backup.db` off the machine.
@@ -242,7 +242,7 @@ ciphertext cannot be copied onto another account or name. The database never
 holds a value in plaintext, and the logs never contain one (only the name,
 which is in the request path, and the status).
 
-The encryption key comes from `REMA_SECRETS_KEY` when it is set. Otherwise it
+The encryption key comes from `RHEMA_SECRETS_KEY` when it is set. Otherwise it
 is the file `secrets.key` in the database's folder (`./data/secrets.key`
 locally, `/data/secrets.key` in the Docker image), created with 32 random bytes
 on first start, mode 0600 where the OS has Unix modes. The start-up log names

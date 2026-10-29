@@ -7,7 +7,7 @@ import {
   offersFreeCredit,
   remainingFraction,
   servesAnyJob,
-  withoutRemaFree,
+  withoutRhemaFree,
 } from "./freeCredit";
 
 const NOTHING = {
@@ -138,7 +138,7 @@ describe("offersFreeCredit", () => {
 
 test("provider lists leave it out", () => {
   expect(
-    withoutRemaFree([{ id: "openai" }, { id: "rema_free" }]).map(
+    withoutRhemaFree([{ id: "openai" }, { id: "rhema_free" }]).map(
       (p) => p.id,
     ),
   ).toEqual(["openai"]);

@@ -94,7 +94,7 @@ class WebRtcLink implements RtcLink {
     // A track sent without a stream (no msid) still needs one to render.
     var stream = event.streams.firstOrNull;
     if (stream == null) {
-      stream = await createLocalMediaStream('rema-live');
+      stream = await createLocalMediaStream('rhema-live');
       await stream.addTrack(track);
     }
     if (_closed) return;

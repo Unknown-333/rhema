@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rema_mobile/src/features/dictate/key_pad.dart';
+import 'package:rhema_mobile/src/features/dictate/key_pad.dart';
 
 void main() {
   /// The pad alone, [width] wide, recording what it presses.

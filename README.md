@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="brand/png/lockup-dark-h256.png" alt="REMA" height="72" />
+  <img src="brand/png/lockup-dark-h256.png" alt="RHEMA" height="72" />
 </p>
 
 <p align="center"><strong>Say it once, and it lands right.</strong></p>
 
-REMA is a local-first voice computing hub for Windows, macOS and Linux. Hold a
+RHEMA is a local-first voice computing hub for Windows, macOS and Linux. Hold a
 key, speak, let go: finished text appears where your cursor is, in any app.
 Speech recognition and cleanup run on your own machine. A phone app turns your
 phone into a wireless mic and remote for the computer.
 
-> **Status: 0.1.0, pre-release.** REMA is being rebuilt into its own product.
+> **Status: 0.1.0, pre-release.** RHEMA is being rebuilt into its own product.
 > The roadmap is in the project plan; expect the UI and settings to change.
 
 ## What it does
@@ -27,7 +27,7 @@ phone into a wireless mic and remote for the computer.
 - **Live preview.** A small always-on-top pill shows what it hears while you
   speak.
 - **Voice commands.** "Switch to Slack", "pause the music", "open the project
-  report": REMA does it in your own apps, and asks before anything irreversible.
+  report": RHEMA does it in your own apps, and asks before anything irreversible.
 - **Meetings.** Records your microphone and the computer's sound as two lanes,
   transcribes them and writes notes when the call ends.
 - **Phone remote.** Dictate into the computer from your phone, pick the window

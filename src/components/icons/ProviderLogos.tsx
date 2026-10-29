@@ -394,7 +394,7 @@ const E = {
   tavily: { glyph: logo(TavilyLogo), tile: "tavily" },
   exa: { glyph: logo(ExaLogo), tile: "exa" },
   builtin: { glyph: lucide(Cpu), tile: "ours" },
-  remaFree: { glyph: lucide(Gift), tile: "ours" },
+  rhemaFree: { glyph: lucide(Gift), tile: "ours" },
   custom: { glyph: lucide(Plug), tile: "generic" },
   customMic: { glyph: lucide(Mic), tile: "generic" },
   kokoro: { glyph: lucide(AudioLines), tile: "ours" },
@@ -429,7 +429,7 @@ const EXACT: Record<string, Entry> = {
   apple_intelligence: E.apple,
   bedrock_mantle: E.aws,
   builtin: E.builtin,
-  rema_free: E.remaFree,
+  rhema_free: E.rhemaFree,
   local: E.ollama,
   custom: E.custom,
   // Cloud STT extras

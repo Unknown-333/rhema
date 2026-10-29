@@ -1,4 +1,4 @@
-//! REMA accounts: sign in on this computer and on a phone, and the phone
+//! RHEMA accounts: sign in on this computer and on a phone, and the phone
 //! can then use this computer as its speech engine and keyboard.
 //!
 //! The account server (`server/`, contract in `server/PROTOCOL.md`) keeps
@@ -356,7 +356,7 @@ impl AccountManager {
         for task in inner.tasks.drain(..) {
             task.abort();
         }
-        // REMA free authenticates with this session, on this server.
+        // RHEMA free authenticates with this session, on this server.
         crate::free_credit::set_session(
             server_url(&self.app).filter(|url| server_allowed(url)),
             Some(token.to_string()),

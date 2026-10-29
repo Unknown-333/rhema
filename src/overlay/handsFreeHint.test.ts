@@ -36,10 +36,10 @@ describe("hands-free hint", () => {
   test("a missing or damaged value starts over", () => {
     const storage = memory();
     expect(readHint(storage)).toEqual({ shown: 0, learned: false });
-    storage.setItem("rema.overlay.handsFreeHint", "{not json");
+    storage.setItem("rhema.overlay.handsFreeHint", "{not json");
     expect(readHint(storage)).toEqual({ shown: 0, learned: false });
     storage.setItem(
-      "rema.overlay.handsFreeHint",
+      "rhema.overlay.handsFreeHint",
       JSON.stringify({ shown: -3, learned: "yes" }),
     );
     expect(readHint(storage)).toEqual({ shown: 0, learned: false });

@@ -29,7 +29,7 @@ Future<void> main() async {
   });
   // Drawn edge to edge, under transparent system bars.
   unawaited(SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge));
-  // A build made with an invalid REMA_SERVER_URL stops here.
+  // A build made with an invalid RHEMA_SERVER_URL stops here.
   final pinned = pinnedServerUrl();
   final prefs = await SharedPreferences.getInstance();
   final session = SessionStore(
@@ -40,7 +40,7 @@ Future<void> main() async {
   );
   await session.load();
   runApp(
-    RemaApp(
+    RhemaApp(
       session: session,
       api: ApiClient(session),
       relay: RelayClient(session, handlers: relayHandlers),

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Score a meeting in rema_meetings.db against the fixture's ground truth.
+"""Score a meeting in rhema_meetings.db against the fixture's ground truth.
 
     python score_meeting.py                 newest [TEST] meeting
     python score_meeting.py --id 3
@@ -47,7 +47,7 @@ import sys
 from itertools import permutations
 from pathlib import Path
 
-IDENTIFIER = "com.rema.desktop"
+IDENTIFIER = "com.rhema.desktop"
 TEST_PREFIX = "[TEST]"
 
 # Anything at or under these passes. Loose on purpose: they exist to catch a
@@ -161,7 +161,7 @@ def load(args: argparse.Namespace):
         die(f"{truth_path} not found; run make_fixture.py first")
     truth = json.loads(truth_path.read_text(encoding="utf-8"))
 
-    db_path = app_data_dir(args.app_data) / "rema_meetings.db"
+    db_path = app_data_dir(args.app_data) / "rhema_meetings.db"
     if not db_path.is_file():
         die(f"{db_path} does not exist")
     conn = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)

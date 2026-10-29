@@ -7,7 +7,7 @@ param(
   [int]$Ngl = 0
 )
 
-$M = "$env:APPDATA\com.rema.desktop\models"
+$M = "$env:APPDATA\com.rhema.desktop\models"
 $E = "$M\engine\llama-server.exe"
 
 $system = @"

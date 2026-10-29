@@ -2,7 +2,7 @@
 //!
 //! ```text
 //!   microphone ──▶ ChunkAccumulator ──┐
-//!                                     ├──▶ transcription worker ──▶ rema_meetings.db
+//!                                     ├──▶ transcription worker ──▶ rhema_meetings.db
 //!   system audio ─▶ ChunkAccumulator ──┘            │
 //!         │                                          └──▶ "meeting-segment" event
 //!         └──▶ .wav on disk (for later re-transcription and diarization)

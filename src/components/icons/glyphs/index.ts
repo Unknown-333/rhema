@@ -11,7 +11,7 @@
  *
  * The feature names (`HomeGlyph`, `MeetingsGlyph`, …) are the one place a
  * page or job is given its icon, so the navigation, the palette and the
- * Settings tabs cannot disagree. The window's earlier hand-drawn set (REMA
+ * Settings tabs cannot disagree. The window's earlier hand-drawn set (RHEMA
  * Glyphs) was replaced because its shapes and optical weights were uneven
  * beside each other; the floating windows keep their own icons.
  */

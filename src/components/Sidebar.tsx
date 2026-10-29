@@ -80,7 +80,7 @@ const NavButton: React.FC<{
 };
 
 /**
- * What REMA is listening with, at the foot of the navigation: the speech
+ * What RHEMA is listening with, at the foot of the navigation: the speech
  * model's name, and under it its state behind a small light that is green
  * while it can listen. A click opens its settings. On a narrow window only
  * the icon stays.

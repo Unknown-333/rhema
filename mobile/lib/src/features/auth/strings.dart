@@ -2,7 +2,7 @@ import '../../core/api_client.dart';
 import '../../core/strings.dart';
 
 abstract final class AuthStrings {
-  static const signInTitle = 'Sign in to REMA';
+  static const signInTitle = 'Sign in to RHEMA';
   static const createTitle = 'Create your account';
   static const subtitle =
       'Use the same account on this phone and your computer.';

@@ -1,4 +1,4 @@
-//! Quieting the computer's other audio while REMA records: lowering it
+//! Quieting the computer's other audio while RHEMA records: lowering it
 //! ("ducking") or muting it, then bringing it back.
 //!
 //! It all runs on one worker thread, in the order it was asked for. The volume
@@ -1199,7 +1199,7 @@ mod tests {
         assert!(!failed.status.success());
 
         assert!(output_within(
-            &mut Command::new("rema-no-such-tool"),
+            &mut Command::new("rhema-no-such-tool"),
             Duration::from_secs(10)
         )
         .is_none());
@@ -1210,7 +1210,7 @@ mod tests {
     fn a_tool_that_hangs_is_killed_and_reaped_at_the_deadline() {
         use std::process::{Command, Stdio};
         let pid_file = std::env::temp_dir().join(format!(
-            "rema-ducking-hang-{}-{:?}",
+            "rhema-ducking-hang-{}-{:?}",
             std::process::id(),
             thread::current().id()
         ));

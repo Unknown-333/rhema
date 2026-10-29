@@ -71,7 +71,7 @@ interface UpdateState {
 }
 
 const DEFAULT_RELEASE_PAGE =
-  "https://github.com/OWNER/rema/releases/latest";
+  "https://github.com/Unknown-333/rhema/releases/latest";
 
 /** The plugin's handle for the found update. Not serialisable, so not in state. */
 let pending: Update | null = null;
@@ -111,7 +111,7 @@ export const useUpdateStore = create<UpdateState>((set, get) => ({
 
   check: async ({ manual = false } = {}) => {
     // Private builds have no update service or signing key.
-    if (!import.meta.env.VITE_REMA_UPDATES_ENABLED) return;
+    if (!import.meta.env.VITE_RHEMA_UPDATES_ENABLED) return;
     const { phase } = get();
     if (BUSY.includes(phase)) return;
     // A found update stays found; a background re-check must not hide the pill.

@@ -215,7 +215,7 @@ pub fn system_prompt() -> &'static str {
 }
 
 const SYSTEM_PROMPT: &str = "\
-You are REMA command mode, running on the user's own computer. The user speaks a command \
+You are RHEMA command mode, running on the user's own computer. The user speaks a command \
 and you carry it out by calling the tools you are given. The tools act visibly, in the user's \
 own apps and browser, where the user is already signed in.
 

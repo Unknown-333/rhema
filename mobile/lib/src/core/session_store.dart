@@ -19,7 +19,7 @@ enum ServerChoice {
   /// Named by discovery: always, in a release build.
   automatic,
 
-  /// A development build's `--dart-define=REMA_SERVER_URL`.
+  /// A development build's `--dart-define=RHEMA_SERVER_URL`.
   pinned,
 }
 

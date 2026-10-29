@@ -21,15 +21,15 @@ abstract final class ScreenStrings {
   static const inFront = DictateStrings.inFront;
   static String turnOnTitle(String name) => "See $name's screen here";
   static const turnOnSteps = [
-    'Open REMA on the computer',
+    'Open RHEMA on the computer',
     'Go to Settings, then Account',
     'Turn on "Let phones see and use windows"',
   ];
   static const turnOnBody = 'Then pull down here to refresh.';
   static String updateBody(String name) =>
-      'Update REMA on $name to see its screen from your phone.';
+      'Update RHEMA on $name to see its screen from your phone.';
   static String offlineBody(String name) =>
-      'Open REMA on $name to see its screen.';
+      'Open RHEMA on $name to see its screen.';
   static String waitingBody(String name) => 'Connecting to $name…';
   static String online(String platform) => DictateStrings.onlineOn(platform);
   static const offline = 'Offline';
@@ -49,7 +49,7 @@ abstract final class ScreenStrings {
   static const starting = 'Starting…';
   static const approval = 'Allow on computer';
   static const approvalDetail =
-      "Look at the computer's screen. REMA is asking there.";
+      "Look at the computer's screen. RHEMA is asking there.";
   static const connecting = 'Connecting…';
   static const live = 'Live';
   static const reconnecting = 'Reconnecting…';
@@ -116,11 +116,11 @@ abstract final class ScreenStrings {
     'replaced' => 'This view was replaced by a newer one from this phone.',
     'remote_windows_off' =>
       "$name doesn't let phones see and use windows. Turn on \"Let phones "
-          'see and use windows" in REMA on that computer, under Settings, '
+          'see and use windows" in RHEMA on that computer, under Settings, '
           'Account.',
     'timeout' => "$name didn't answer in time.",
     'not_allowed' => 'Switch to Control to click and scroll.',
-    'password_field' => "REMA doesn't type or click into password fields.",
+    'password_field' => "RHEMA doesn't type or click into password fields.",
     'tap_failed' => "Couldn't click there on $name. Try again.",
     'not_live' => 'Not connected to the window yet. Try again in a moment.',
     'confirm' => 'Confirm on the phone first.',

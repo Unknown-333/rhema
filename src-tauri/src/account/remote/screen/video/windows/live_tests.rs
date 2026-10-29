@@ -3,7 +3,7 @@
 //!
 //! `cargo test --lib account::remote::screen::video -- --ignored --nocapture --test-threads=1`
 //!
-//! Each run writes what it encoded to `<REMA_VIDEO_TEST_OUT or temp>/
+//! Each run writes what it encoded to `<RHEMA_VIDEO_TEST_OUT or temp>/
 //! live-view-<name>.h264` and decodes it again with Media Foundation's own
 //! H.264 decoder, so a stream that only looks right is caught too.
 
@@ -105,7 +105,7 @@ impl TestWindow {
                     style: CS_HREDRAW | CS_VREDRAW,
                     lpfnWndProc: Some(wndproc),
                     hInstance: instance.into(),
-                    lpszClassName: w!("RemaLiveViewTest"),
+                    lpszClassName: w!("RhemaLiveViewTest"),
                     ..Default::default()
                 };
                 RegisterClassW(&class);
@@ -113,8 +113,8 @@ impl TestWindow {
                     // Topmost, so the screen tests see it change whatever
                     // else is open.
                     WS_EX_TOPMOST,
-                    w!("RemaLiveViewTest"),
-                    w!("REMA live view test"),
+                    w!("RhemaLiveViewTest"),
+                    w!("RHEMA live view test"),
                     WS_OVERLAPPEDWINDOW | WS_VISIBLE,
                     40,
                     40,
@@ -252,7 +252,7 @@ fn check_frames(frames: &[EncodedFrame], max_long_side: u32) {
 }
 
 fn out_dir() -> std::path::PathBuf {
-    std::env::var_os("REMA_VIDEO_TEST_OUT")
+    std::env::var_os("RHEMA_VIDEO_TEST_OUT")
         .map(Into::into)
         .unwrap_or_else(std::env::temp_dir)
 }

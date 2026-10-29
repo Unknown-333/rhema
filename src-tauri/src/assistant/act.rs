@@ -137,7 +137,7 @@ pub fn result_for_model(report: &CommandReport) -> String {
         CommandStatus::Cancelled => format!("Not done: {summary} Tell the user briefly."),
         CommandStatus::Failed if not_configured(report) => format!(
             "Not done: actions on the computer are not set up ({summary}). Tell the user to choose \
-             a model for Commands in REMA."
+             a model for Commands in RHEMA."
         ),
         CommandStatus::Failed => format!(
             "It did not work: {summary} Tell the user in one short sentence what went wrong. Do not \

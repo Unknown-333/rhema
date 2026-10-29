@@ -59,7 +59,7 @@ abstract final class AssistantStrings {
   /// What the user asked, by voice, before the computer transcribed it.
   static const voiceQuestion = 'Voice question';
   static const you = 'You';
-  static String assistantOn(String name) => 'REMA on $name';
+  static String assistantOn(String name) => 'RHEMA on $name';
 
   // The status line under a question while it is answered.
   static String sending(String name) => 'Sending to $name…';
@@ -92,15 +92,15 @@ abstract final class AssistantStrings {
   static const confirmedAsks = 'It has a question';
 
   static String offlineBody(String name) =>
-      'Open REMA on $name to ask its assistant. Your chat stays here.';
+      'Open RHEMA on $name to ask its assistant. Your chat stays here.';
   static String offlineNote(String name) =>
-      '$name is offline. Open REMA on it to ask its assistant.';
-  static String updateTitle(String name) => 'Update REMA on $name';
+      '$name is offline. Open RHEMA on it to ask its assistant.';
+  static String updateTitle(String name) => 'Update RHEMA on $name';
   static const updateBody =
-      'This version of REMA there can’t take questions from your phone '
+      'This version of RHEMA there can’t take questions from your phone '
       'yet. Your chat stays here.';
   static String updateNote(String name) =>
-      'Update REMA on $name to ask its assistant from your phone.';
+      'Update RHEMA on $name to ask its assistant from your phone.';
 
   // In live view.
   static const askHere = 'Ask the assistant';
@@ -116,16 +116,16 @@ abstract final class AssistantStrings {
   /// request shares fall through to [DictateStrings.error].
   static String error(String code, String name, {String? message}) =>
       switch (code) {
-        'assistant_off' => 'Turn on the assistant in REMA on $name.',
+        'assistant_off' => 'Turn on the assistant in RHEMA on $name.',
         'not_configured' =>
-          'REMA on $name has no AI model set up for the assistant.',
+          'RHEMA on $name has no AI model set up for the assistant.',
         'busy' => '$name is still answering your last question.',
         'failed' =>
           message == null
               ? "The assistant on $name couldn't answer. Try again."
               : "The assistant on $name couldn't answer: $message",
         'unsupported' =>
-          'Update REMA on $name to ask its assistant from your phone.',
+          'Update RHEMA on $name to ask its assistant from your phone.',
         _ => DictateStrings.error(code, name),
       };
 }

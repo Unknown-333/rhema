@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/core/config.dart';
-import 'package:rema_mobile/src/core/server_finder.dart';
+import 'package:rhema_mobile/src/core/config.dart';
+import 'package:rhema_mobile/src/core/server_finder.dart';
 
 /// A release build's reading of the answer [json].
 String? parse(Object? json, {bool release = true}) =>
@@ -160,7 +160,7 @@ void main() {
     for (final (location, found) in [
       ('/v1/domain', 'https://sync.example.com'),
       ('https://elsewhere.example.com/', null),
-      ('http://discovery.rema.invalid/v1/domain', null),
+      ('http://discovery.rhema.invalid/v1/domain', null),
     ]) {
       final f = await finder((request) async {
         if (request.url.path == '/v1/domain') return answer('sync.example.com');
@@ -250,7 +250,7 @@ void main() {
         await SharedPreferences.getInstance(),
         httpClient: MockClient(
           (_) async => throw http.ClientException(
-            "Failed host lookup: 'discovery.rema.invalid' (OS Error: No "
+            "Failed host lookup: 'discovery.rhema.invalid' (OS Error: No "
             'address associated with hostname, errno = 7)',
           ),
         ),
@@ -271,14 +271,14 @@ void main() {
           return ['104.21.38.165'];
         },
         pinned: (host, ip) {
-          expect(host, 'discovery.rema.invalid');
+          expect(host, 'discovery.rhema.invalid');
           expect(ip, '104.21.38.165');
           return MockClient((_) async => http.Response(apiAnswer, 200));
         },
       );
       finder.enabled = true;
       await pumpEventQueue();
-      expect(asked, ['discovery.rema.invalid']);
+      expect(asked, ['discovery.rhema.invalid']);
       expect(finder.server, 'http://192.168.1.20:8787');
       expect(finder.lastError, isNull);
     });

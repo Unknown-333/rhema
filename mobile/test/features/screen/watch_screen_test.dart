@@ -6,15 +6,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rema_mobile/src/core/api_client.dart';
-import 'package:rema_mobile/src/core/app_services.dart';
-import 'package:rema_mobile/src/features/assistant/assistant_controller.dart';
-import 'package:rema_mobile/src/features/dictate/dictate_controller.dart';
-import 'package:rema_mobile/src/design/components.dart';
-import 'package:rema_mobile/src/features/screen/live_controller.dart';
-import 'package:rema_mobile/src/features/screen/live_protocol.dart';
-import 'package:rema_mobile/src/features/screen/watch_controller.dart';
-import 'package:rema_mobile/src/features/screen/watch_screen.dart';
+import 'package:rhema_mobile/src/core/api_client.dart';
+import 'package:rhema_mobile/src/core/app_services.dart';
+import 'package:rhema_mobile/src/features/assistant/assistant_controller.dart';
+import 'package:rhema_mobile/src/features/dictate/dictate_controller.dart';
+import 'package:rhema_mobile/src/design/components.dart';
+import 'package:rhema_mobile/src/features/screen/live_controller.dart';
+import 'package:rhema_mobile/src/features/screen/live_protocol.dart';
+import 'package:rhema_mobile/src/features/screen/watch_controller.dart';
+import 'package:rhema_mobile/src/features/screen/watch_screen.dart';
 
 import '../../app_test.dart' show lock;
 import '../../helpers.dart';
@@ -211,7 +211,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pump(const Duration(milliseconds: 500));
     expect(
-      find.text("REMA doesn't type or click into password fields."),
+      find.text("RHEMA doesn't type or click into password fields."),
       findsOneWidget,
     );
 

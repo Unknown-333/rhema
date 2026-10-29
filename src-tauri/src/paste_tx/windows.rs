@@ -57,7 +57,7 @@ use super::{
 };
 use crate::settings::AutoSubmitKey;
 
-const CLASS_NAME: PCWSTR = w!("RemaPasteTxWindow");
+const CLASS_NAME: PCWSTR = w!("RhemaPasteTxWindow");
 const TIMER_ID: usize = 1;
 const TIMER_INTERVAL_MS: u32 = 25;
 /// Clipboard formats larger than this are not snapshotted.
@@ -637,7 +637,7 @@ fn pump_thread(tx: Arc<WinTx>, ready: Sender<Ready>) {
         let hwnd = match CreateWindowExW(
             WINDOW_EX_STYLE::default(),
             CLASS_NAME,
-            w!("RemaPasteTx"),
+            w!("RhemaPasteTx"),
             WINDOW_STYLE::default(),
             0,
             0,
@@ -812,7 +812,7 @@ mod tests {
     /// `cargo test --lib paste_tx::windows::tests::manual -- --ignored --nocapture`
     /// and switch back to the field within three seconds. It writes the
     /// system clipboard and sends a real Ctrl+V, so it is never run in CI.
-    /// Expected: "REMA paste test" is pasted, and the clipboard holds
+    /// Expected: "RHEMA paste test" is pasted, and the clipboard holds
     /// what it held before, a second or so later.
     #[test]
     #[ignore = "writes the system clipboard and sends a real Ctrl+V"]
@@ -823,7 +823,7 @@ mod tests {
             None,
             &mut enigo,
             PasteRequest {
-                text: "REMA paste test",
+                text: "RHEMA paste test",
                 html: None,
                 paste_method: crate::settings::PasteMethod::CtrlV,
                 paste_delay: Duration::from_millis(60),

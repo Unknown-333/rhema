@@ -442,17 +442,17 @@ fn log_registered_devices(cpu_only: bool) {
 }
 
 /// Debug-build fault injection for exercising crash/hang recovery:
-/// `REMA_WORKER_FAULT=<abort|segv|hang>@<init|list|load|run|feed|finalize>`
+/// `RHEMA_WORKER_FAULT=<abort|segv|hang>@<init|list|load|run|feed|finalize>`
 /// (`abort` is what `GGML_ASSERT` ends in, `segv` a real invalid memory write;
 /// `init` is backend registration, before the hello). With
-/// `REMA_WORKER_FAULT_ONCE=<marker path>` it fires only in the first
+/// `RHEMA_WORKER_FAULT_ONCE=<marker path>` it fires only in the first
 /// worker to reach that stage (the marker file records that it fired). With
-/// `REMA_WORKER_FAULT_GPU_ONLY=1` it fires only on a GPU (backend init
+/// `RHEMA_WORKER_FAULT_GPU_ONLY=1` it fires only on a GPU (backend init
 /// and device listing count as GPU work unless the worker is CPU-only), so
 /// recovery on CPU can succeed. Compiled out of release builds entirely.
 #[cfg(debug_assertions)]
 fn inject_fault(stage: &str, on_gpu: bool) {
-    let Ok(spec) = std::env::var("REMA_WORKER_FAULT") else {
+    let Ok(spec) = std::env::var("RHEMA_WORKER_FAULT") else {
         return;
     };
     let Some((kind, at)) = spec.split_once('@') else {
@@ -461,10 +461,10 @@ fn inject_fault(stage: &str, on_gpu: bool) {
     if at != stage {
         return;
     }
-    if !on_gpu && std::env::var_os("REMA_WORKER_FAULT_GPU_ONLY").is_some() {
+    if !on_gpu && std::env::var_os("RHEMA_WORKER_FAULT_GPU_ONLY").is_some() {
         return;
     }
-    if let Some(marker) = std::env::var_os("REMA_WORKER_FAULT_ONCE") {
+    if let Some(marker) = std::env::var_os("RHEMA_WORKER_FAULT_ONCE") {
         if std::fs::OpenOptions::new()
             .write(true)
             .create_new(true)
@@ -555,12 +555,12 @@ fn init_logger() {
 }
 
 /// SIGUSR2 toggles transcription in the app (`signal_handle.rs`). Aimed at
-/// REMA by name (`pkill -USR2 -n rema`), it can reach this newer
+/// RHEMA by name (`pkill -USR2 -n rhema`), it can reach this newer
 /// process instead, and its default action would kill it.
 ///
 /// On Linux the worker has a name of its own (`set_process_name`), so a
 /// signal aimed at the app by name never lands here, and the signals are
-/// ignored. macOS cannot rename a process: the worker is `rema` too, and
+/// ignored. macOS cannot rename a process: the worker is `rhema` too, and
 /// the newest one whenever a model is loaded, so `pkill -n` picks it every
 /// time and the toggle went nowhere. There the worker passes the signal on to
 /// the app, which drops the second copy when a `pkill` without `-n` reached
@@ -593,13 +593,13 @@ extern "C" fn forward_to_app(signal: libc::c_int) {
 }
 
 /// Started from /proc/self/exe, the kernel names this process "exe". Name it
-/// as REMA's, but not `rema`: `pkill`/`killall` match names
-/// case-sensitively, so a `pkill -USR2 -n rema` keeps reaching the app.
+/// as RHEMA's, but not `rhema`: `pkill`/`killall` match names
+/// case-sensitively, so a `pkill -USR2 -n rhema` keeps reaching the app.
 #[cfg(target_os = "linux")]
 fn set_process_name() {
     // SAFETY: PR_SET_NAME copies a NUL-terminated name of up to 16 bytes.
     unsafe {
-        libc::prctl(libc::PR_SET_NAME, c"REMA-wkr".as_ptr());
+        libc::prctl(libc::PR_SET_NAME, c"RHEMA-wkr".as_ptr());
     }
 }
 

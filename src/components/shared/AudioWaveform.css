@@ -10,7 +10,7 @@
 .audio-waveform.md {
   height: 38px;
 }
-/* REMA coral: deep at the centre line, lighter toward the tips. */
+/* RHEMA coral: deep at the centre line, lighter toward the tips. */
 .audio-waveform .wave-base {
   stop-color: #ff6a52;
 }
