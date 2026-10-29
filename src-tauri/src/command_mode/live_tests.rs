@@ -658,10 +658,7 @@ async fn command_mode_live_email_file() {
         .expect("RHEMA_LIVE_OWN_EMAIL")
         .trim()
         .to_lowercase();
-    assert!(
-        own.contains('@'),
-        "RHEMA_LIVE_OWN_EMAIL must be an address"
-    );
+    assert!(own.contains('@'), "RHEMA_LIVE_OWN_EMAIL must be an address");
     let home = std::env::var_os("USERPROFILE").expect("USERPROFILE");
     let file = std::path::Path::new(&home)
         .join("Documents")

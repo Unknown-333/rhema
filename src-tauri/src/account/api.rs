@@ -777,10 +777,7 @@ mod tests {
     #[test]
     fn device_names_fit_the_protocol() {
         assert_eq!(device_name("ALEX-PC"), "ALEX-PC");
-        assert_eq!(
-            device_name("Alexs-MacBook-Pro.local"),
-            "Alexs-MacBook-Pro"
-        );
+        assert_eq!(device_name("Alexs-MacBook-Pro.local"), "Alexs-MacBook-Pro");
         assert_eq!(device_name("  "), "Computer");
         assert_eq!(device_name(&"x".repeat(100)).chars().count(), 64);
     }
